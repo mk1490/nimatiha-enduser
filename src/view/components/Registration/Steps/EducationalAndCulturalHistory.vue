@@ -5,44 +5,54 @@
       lazy-validation>
     <v-container>
       <div class="v-row">
-        <div
-            v-for="(item, index) in items"
-            class="v-col-12">
-          <div class="v-row">
-            <div class="v-col-12">
-              <v-checkbox
-                  density="compact"
-                  hide-details
-                  :label="item.title"
-                  @update:model-value="onSelection(index, $event)"
-              />
-            </div>
-            <div
-                v-if="item.selected"
-                class="v-col-12">
-              <div class="v-row">
-                <div class="v-col-6">
-                  <base-text-field
-                      label="عنوان رشته"
-                  />
+        <v-expansion-panels multiple>
+          <v-expansion-panel v-for="(categoryItem, categoryIndex) in Object.keys(categorizedItems())">
+            <v-expansion-panel-title>
+              {{ categorizedItems()[categoryItem][0].categoryTitle }}
+            </v-expansion-panel-title>
+            <v-expansion-panel-text>
+              <div
+                  class="v-col-12"
+                  v-for="(item, index) in (categorizedItems()[categoryItem])">
+                <div class="v-row">
+                  <div class="v-col-12">
+                    <v-checkbox
+                        :model-value="item.selected"
+                        density="compact"
+                        hide-details
+                        :label="item.title"
+                        @update:model-value="onSelection(item.title, categoryItem, $event)"
+                    />
+                  </div>
+                  <div
+                      v-if="item.selected"
+                      class="v-col-12">
+                    <div class="v-row">
+                      <div class="v-col-6">
+                        <base-text-field
+                            label="عنوان رشته"
+                        />
+                      </div>
+                      <div class="v-col-6">
+                        <base-text-field
+                            label="رتبه استانی یا کشوری"
+                        />
+                      </div>
+                      <div class="v-col-12">
+                        <base-select
+                            label="سطح"
+                            :items="['مبتدی','نیمه حرفه‌ای', 'حرفه‌ای']"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="v-col-6">
-                  <base-text-field
-                      label="رتبه استانی یا کشوری"
-                  />
-                </div>
-                <div class="v-col-12">
-                  <base-select
-                      label="سطح"
-                      :items="['مبتدی','نیمه حرفه‌ای', 'حرفه‌ای']"
-                  />
-                </div>
+
+
               </div>
-            </div>
-          </div>
-
-
-        </div>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </div>
     </v-container>
   </v-form>
@@ -55,25 +65,48 @@ import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 
 export default {
   name: 'EducationalAndCulturalHistory',
-  components: {BaseSelect, BaseTextArea, BaseTextField},
+  components: {BaseSelect, BaseTextField},
   created() {
     ['تجوید', 'مفاهیم', 'حفظ', 'احکام', 'قرائت', 'نهج البلاغه', 'مکبری', 'صحیفه سجادیه', 'سایر'].map(f => {
       this.items.push({
         title: f,
+        category: 'qurani',
+        categoryTitle: 'رشته‌های قرآنی'
+      })
+    });
+
+    ['سرود', 'نمایش', 'نقاشی', 'سفال‌گری', 'خوش‌نویسی', 'عکاسی', 'فتوشاپ', 'تدوین', 'نشریه', 'مدّاحی', 'سایر'].map(f => {
+      this.items.push({
+        title: f,
+        category: 'artistic',
+        categoryTitle: 'رشته‌های هنری'
+      })
+    });
+
+    ['والیبال', 'بسکتبال', 'هندبال', 'تنیس', 'فوتبال', 'کاراته', 'جودو', 'اسکیت', 'شنا', 'دوچرخه‌سواری', 'کشتی', 'زورخانه', 'کبدی', 'فوتسال', 'تیراندازی', 'سایر'].map(f => {
+      this.items.push({
+        title: f,
+        category: 'sport',
+        categoryTitle: 'رشته‌های ورزشی'
       })
     })
   },
   data() {
     return {
       isValid: false,
-      items: []
+      items: [],
     }
   },
   methods: {
-    onSelection(index, event) {
+    onSelection(categoryTitle, category, event) {
+      const index = this.items.findIndex(x => x.title === categoryTitle && x.category === category)
       this.items[index].selected = event;
+    },
+    categorizedItems() {
+      return Object.groupBy(this.items, ({category}) => category)
     }
-  }
+  },
+
 }
 </script>
 
