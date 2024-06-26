@@ -75,6 +75,34 @@
           />
         </div>
 
+
+        <div class="v-row">
+          <div class="v-col-12">
+            <base-text-field
+                label="معدل"
+                v-model="model.average"
+            />
+          </div>
+          <div class="v-col-12">
+            <base-text-field
+                label="نام مدرسه"
+                v-model="model.schoolName"
+            />
+          </div>
+          <div class="v-col-12">
+            <base-text-field
+                label="نام مدیر"
+                v-model="model.managerName"
+            />
+          </div>
+          <div class="v-col-12">
+            <base-text-field
+                label="نام معاون پرورشی"
+                v-model="model.breedingAssistantName"
+            />
+          </div>
+        </div>
+
       </div>
     </v-container>
   </v-form>
@@ -119,6 +147,10 @@ export default {
         schoolGrade: null,
         educationField: null,
         educationLocation: null,
+        average: null,
+        schoolName: null,
+        managerName: null,
+        breedingAssistantName: null,
       }
     }
   }

@@ -6,14 +6,38 @@
     <v-container>
       <div class="v-row">
         <div
+            v-for="(item, index) in items"
             class="v-col-12">
+          <v-checkbox
+              hide-details
+              @update:model-value="itemSelection(index, $event)"
+              :label="item.title"
+          />
           <div
-              v-for="item in items"
-              class="d-flex">
-            <v-checkbox
-                :label="item"
-            />
+              v-if="items[index].selected === true"
+              class="v-row">
+            <div
+                v-if="items[index].isOther === true"
+                class="v-col-12">
+
+              <base-text-area
+                  label="توضیحات"
+                  v-model="items[index].description"
+              />
+
+
+            </div>
+            <div class="v-col-6">
+              <base-text-field
+                  type="number"
+                  label="سابقه مسئولیت"/>
+            </div>
+            <div class="v-col-6">
+              <base-text-field
+                  label="سمت"/>
+            </div>
           </div>
+
         </div>
       </div>
     </v-container>
@@ -21,21 +45,29 @@
 </template>
 
 <script>
+import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
+import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+
 export default {
   name: "ExecutiveHistory",
+  components: {BaseTextArea, BaseTextField},
   created() {
-    this.items.push('بسیج');
-    this.items.push('انجمن اسلامی');
-    this.items.push('هیأت مذهبی');
-    this.items.push('هلال احمر');
-    this.items.push('سازمان دانش‌آموزی');
-    this.items.push('خبرگزاری پانا');
-    this.items.push('سایر');
+    ['بسیج', 'انجمن اسلامی', 'هیأت مذهبی', 'هلال احمر', 'سازمان دانش‌آموزی', 'خبرگزاری پانا', 'سایر'].map((f, i) => {
+      this.items.push({
+        title: f,
+        isOther: i === 6
+      });
+    })
   },
   data() {
     return {
       isValid: false,
       items: [],
+    }
+  },
+  methods: {
+    itemSelection(index, event) {
+      this.items[index].selected = event;
     }
   }
 }

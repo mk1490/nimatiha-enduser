@@ -38,12 +38,11 @@
 </template>
 
 <script>
-import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
 
 export default {
   name: 'EducationalAndCulturalHistory',
-  components: {BaseTextField, BaseSelect},
+  components: {BaseTextField},
   data() {
     return {
       isValid: false,
