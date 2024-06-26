@@ -76,12 +76,29 @@
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
+                          :value="4">
+                        <executive-history
+                            v-if="selectedStep === 4"
+                        />
+                      </v-stepper-window-item>
+
+
+                      <v-stepper-window-item
                           :value="5">
-                        <final-approval
+                        <educational-and-cultural-history
                             v-if="selectedStep === 5"
                         />
                       </v-stepper-window-item>
+
+                      <v-stepper-window-item
+                          :value="6">
+                        <educational-courses
+                            v-if="selectedStep === 6"
+                        />
+                      </v-stepper-window-item>
                     </v-stepper-window>
+
+
                     <v-stepper-actions
                         @click:next="next"
                         @click:prev="prev"
@@ -118,11 +135,15 @@ import FinalApproval from "@/view/components/Registration/Steps/FinalApproval.vu
 import ParentInformation from "@/view/components/Registration/Steps/ParentInformation.vue";
 import EducationalStatus from "@/view/components/Registration/Steps/EducationalStatus.vue";
 import ExecutiveHistory from "@/view/components/Registration/Steps/ExecutiveHistory.vue";
+import EducationalAndCulturalHistory from "@/view/components/Registration/Steps/EducationalAndCulturalHistory.vue";
+import EducationalCourses from "@/view/components/Registration/Steps/EducationalCourses.vue";
 
 
 export default {
   name: "RegistrationPage",
   components: {
+    EducationalCourses,
+    EducationalAndCulturalHistory,
     ExecutiveHistory,
     EducationalStatus,
     ParentInformation,
@@ -147,7 +168,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 3,
+      selectedStep: 2,
       trackingCode: null,
       model: {
         personal: {},
