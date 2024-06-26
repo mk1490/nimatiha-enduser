@@ -11,7 +11,7 @@
             <div
                 v-if="isAuth == false"
                 class="d-flex justify-center">
-              <v-card width="800">
+              <v-card width="500">
 
                 <v-card-title class="text-center">
                   احراز هویت
@@ -20,7 +20,6 @@
                   <authentication
                       @authSuccess="authSuccess"/>
                 </v-card-text>
-
               </v-card>
 
 
@@ -32,7 +31,7 @@
                 class="d-flex justify-center">
               <v-card
                   :width="800"
-                  title="درخواست عضویت در مؤسسه خیریه دست آفرینان"
+                  title="فرم اطلاعات یاوران ولایت"
                   class="elevation-0">
                 <v-card-text>
                   <v-stepper
@@ -42,19 +41,14 @@
                       @update:modelValue="selectedStep = $event"
                       :items="[
                       'تکمیل اطلاعات فردی',
-                      'بارگذاری مدارک',
-                      'محصولات قابل ارائه',
-                      'انتخاب بازارچه',
-                      'بازبینی و تأیید نهایی',
+                      'مشخّصات والدین',
+                      'وضعیت تحصیلی - آموزشی',
+                      'سوابق اجرایی',
+                      'سوابق آموزشی - فرهنگی',
+                      'دوره‌های آموزشی',
                       ]"
                       alt-labels>
 
-
-                    <!--                    <template v-slot:next>-->
-                    <!--                      <v-btn>-->
-                    <!--                        NEXTTT-->
-                    <!--                      </v-btn>-->
-                    <!--                    </template>-->
                     <v-stepper-window :model-value="selectedStep">
 
                       <v-stepper-window-item :value="1">
@@ -64,23 +58,21 @@
 
 
                       <v-stepper-window-item :value="2">
-                        <upload-documents
+                        <parent-information
                             v-if="selectedStep === 2"
-                            ref="uploadDocuments"
+                            ref="parentInformation"
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
                           :value="3">
-                        <step-two-product-items
-                            @update:modelValue="model.productItems = $event"
+                        <educational-status
+                            v-if="selectedStep === 3"
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
                           :value="4">
-                        <market-selection
-                            ref="marketSelection"
+                        <executive-history
                             v-if="selectedStep === 4"
-                            @update:modelValue="model.market.marketId= $event.market.id; model.market.deskIds = $event.desks"
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
@@ -120,21 +112,23 @@
 
 
 import RegistrationSuccessComponent from "@/view/components/Registration/Widgets/RegistrationSuccessComponent.vue";
-import StepOneGeneralInformation from "./Steps/StepOneGeneralInformation.vue";
-import StepTwoProductItems from "./Steps/StepTwoProductItems.vue";
+
 import Authentication from "./Steps/Authentication.vue";
-import UploadDocuments from "./Steps/UploadDocuments.vue";
-import MarketSelection from "./Steps/MarketSelection.vue";
 import FinalApproval from "@/view/components/Registration/Steps/FinalApproval.vue";
+import ParentInformation from "@/view/components/Registration/Steps/ParentInformation.vue";
+import EducationalStatus from "@/view/components/Registration/Steps/EducationalStatus.vue";
+import ExecutiveHistory from "@/view/components/Registration/Steps/ExecutiveHistory.vue";
 
 
 export default {
   name: "RegistrationPage",
   components: {
+    ExecutiveHistory,
+    EducationalStatus,
+    ParentInformation,
     FinalApproval,
-    MarketSelection,
-    UploadDocuments,
-    Authentication, StepTwoProductItems, StepOneGeneralInformation, RegistrationSuccessComponent
+    Authentication,
+    RegistrationSuccessComponent
   },
   async created() {
     /*this.httpGet(`/auth/initialize`, (data) => {
@@ -153,7 +147,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 6,
+      selectedStep: 3,
       trackingCode: null,
       model: {
         personal: {},

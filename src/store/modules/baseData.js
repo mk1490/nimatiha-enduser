@@ -6,6 +6,9 @@ const baseData = {
         educationLevels:  [],
         maritalStatus: [],
         disabilityStatus: [],
+        religionItems: [],
+        diseaseBackgroundItems: [],
+        lifeSituationItems: [],
         status: -1,
         name: '',
         family: '',
@@ -17,6 +20,9 @@ const baseData = {
         educationLevels: (state) =>state.educationLevels,
         maritalStatus: (state) =>state.maritalStatus,
         disabilityStatus: (state) =>state.disabilityStatus,
+        religionItems: (state) =>state.religionItems,
+        diseaseBackgroundItems: (state) =>state.diseaseBackgroundItems,
+        lifeSituationItems: (state) =>state.lifeSituationItems,
     },
 
     mutations: {
@@ -96,6 +102,9 @@ const baseData = {
         },
         SET_EDUCATION_LEVEL_ITEMS: (state, payload) => {
             state.educationLevels = payload
+        },
+        SET_RELIGION_ITEMS: (state, payload) => {
+            state.religionItems = payload
         },
     }, actions: {
         setInitializeData: (context, payload) => {

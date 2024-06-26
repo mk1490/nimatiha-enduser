@@ -61,10 +61,10 @@
         </div>
         <div class="v-col-4">
           <base-select
-              label="میزان تحصیلات"
-              :items="educationLevels"
-              v-model="model.educationLevel"
-              :rules="rules.educationLevel"
+              label="مذهب"
+              :items="religionItems"
+              v-model="model.religion"
+              :rules="rules.religion"
           />
         </div>
         <div class="v-col-12">
@@ -84,38 +84,20 @@
               :rules="rules.disabilityDescription"
           />
         </div>
-        <div :class="model.maritalStatus === 2 ? 'v-col-6' : 'v-col-12'">
+
+        <div class="v-col-12">
           <base-select
-              label="وضعیت ازدواج"
-              :items="maritalStatus"
-              v-model="model.maritalStatus"
-              :rules="rules.maritalStatus"
+              label="سابقه بیماری"
+              :items="diseaseBackgroundItems"
+              v-model="model.diseaseBackground"
+              :rules="rules.diseaseBackground"
           />
         </div>
 
         <div
-            v-if="model.maritalStatus === 2"
-            :class="model.maritalStatus === 2 ? 'v-col-6' : 'v-col-12'">
-          <base-text-field
-              label="شغل همسر"
-              v-model="model.partnerJob"
-              :rules="rules.partnerJob"
-          />
-        </div>
-        <div
-            v-if="model.maritalStatus !== 1"
-            class="v-col-sm-12 v-col-md-12 v-col-lg-12">
-          <base-text-field
-              label="تعداد فرزندان"
-              type="number"
-              v-model="model.childrenCounts"
-              :rules="rules.childrenCounts"
-          />
-        </div>
-        <div
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
           <base-text-area
-              label="نشانی"
+              label="نشانی محل سکونت"
               v-model="model.address"
               :rules="rules.address"
           />
@@ -169,7 +151,7 @@ export default {
         partnerJob: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         family: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         fatherName: [v => !!v || 'تکمیل این فیلد اجباری است.'],
-        disabilityDescription: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        religion: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         birthCertificateNumber: [
           v => !!v || 'تکمیل این فیلد اجباری است.',
           v => v && v.length <= 11 || 'شماره شناسنامه نمی‌تواند بیشتر از 11 رقم باشد.',
@@ -198,7 +180,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['educationLevels', 'maritalStatus', 'disabilityStatus'])
+    ...mapGetters([
+      'educationLevels',
+      'maritalStatus',
+      'disabilityStatus',
+      'religionItems',
+      'diseaseBackgroundItems'
+    ])
   }
 }
 </script>

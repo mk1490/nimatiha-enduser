@@ -36,6 +36,11 @@ export default {
         app.config.globalProperties.convertAmountToPlainAmountValue = (irrAmountValue) => {
             return Number.parseFloat(irrAmountValue.toString().replaceAll(',', ''));
         }
+        app.config.globalProperties.getKeyValueItem = (key, value) => {
+            return {
+                key, value
+            }
+        }
     }
 }
 
