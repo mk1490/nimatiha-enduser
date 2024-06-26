@@ -168,7 +168,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 3,
+      selectedStep: 4,
       trackingCode: null,
       model: {
         personal: {},

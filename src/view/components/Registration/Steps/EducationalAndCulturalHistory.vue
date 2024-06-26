@@ -5,32 +5,43 @@
       lazy-validation>
     <v-container>
       <div class="v-row">
-        <div class="v-col-6">
-          <v-checkbox
-              hide-details
-              label="تجوید"
-          />
-        </div>
-        <div class="v-col-6">
-          <v-checkbox
-              hide-details
-              label="مفاهیم"
-          />
-        </div>
-        <div class="v-col-12">
+        <div
+            v-for="(item, index) in items"
+            class="v-col-12">
           <div class="v-row">
-            <div class="v-col">
+            <div class="v-col-12">
               <v-checkbox
+                  density="compact"
                   hide-details
-                  label="حفظ"
+                  :label="item.title"
+                  @update:model-value="onSelection(index, $event)"
               />
             </div>
-            <div class="v-col">
-              <base-text-field
-                  label="تعداد جزء"
-              />
+            <div
+                v-if="item.selected"
+                class="v-col-12">
+              <div class="v-row">
+                <div class="v-col-6">
+                  <base-text-field
+                      label="عنوان رشته"
+                  />
+                </div>
+                <div class="v-col-6">
+                  <base-text-field
+                      label="رتبه استانی یا کشوری"
+                  />
+                </div>
+                <div class="v-col-12">
+                  <base-select
+                      label="سطح"
+                      :items="['مبتدی','نیمه حرفه‌ای', 'حرفه‌ای']"
+                  />
+                </div>
+              </div>
             </div>
           </div>
+
+
         </div>
       </div>
     </v-container>
@@ -39,13 +50,28 @@
 
 <script>
 import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
+import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 
 export default {
   name: 'EducationalAndCulturalHistory',
-  components: {BaseTextField},
+  components: {BaseSelect, BaseTextArea, BaseTextField},
+  created() {
+    ['تجوید', 'مفاهیم', 'حفظ', 'احکام', 'قرائت', 'نهج البلاغه', 'مکبری', 'صحیفه سجادیه', 'سایر'].map(f => {
+      this.items.push({
+        title: f,
+      })
+    })
+  },
   data() {
     return {
       isValid: false,
+      items: []
+    }
+  },
+  methods: {
+    onSelection(index, event) {
+      this.items[index].selected = event;
     }
   }
 }

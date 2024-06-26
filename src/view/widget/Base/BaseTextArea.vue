@@ -5,6 +5,7 @@
       :label="label"
       :type="type"
       :disabled="disabled"
+      :hint="hint"
       hide-details
       :variant="variant"
       outlined
@@ -20,6 +21,7 @@ export default {
   props: {
     value: undefined,
     label: String,
+    hint: String,
     disabled: Boolean,
     type: undefined,
     variant: {
