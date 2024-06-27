@@ -26,6 +26,7 @@
           <base-select
               label="تحصیلات"
               v-model="model.father.educationLevel"
+              :items="educationLevels"
           />
         </div>
         <div class="v-col-6">
@@ -58,6 +59,7 @@
           <base-select
               label="تحصیلات"
               v-model="model.mother.educationLevel"
+              :items="educationLevels"
           />
         </div>
         <div class="v-col-6">
@@ -77,7 +79,7 @@
         <div class="v-col-6">
           <base-select
               label="وضعیت تک فرزندی"
-              :items="singleChildItems"
+              :items="items.singleChildItems"
               v-model="model.singleChild"
           />
         </div>
@@ -99,16 +101,27 @@ import {mapGetters} from "vuex";
 
 export default {
   name: 'ParentInformation',
+  emits: ['update:modelValue'],
   components: {BaseSelect, BaseTextField},
   computed: {
-    ...mapGetters(['lifeSituationItems', 'singleChildItems'])
+    ...mapGetters(['lifeSituationItems', 'singleChildItems', 'educationLevels'])
   },
   created() {
-
+    this.httpGet(`/member-request/initialize/parent-information`, async (result) => {
+      await this.$store.commit('SET_EDUCATION_LEVEL_ITEMS', result.initialize.educationLevels);
+      await this.$store.commit('SET_LIFE_SITUATION_ITEMS', result.initialize.lifeSituationItems);
+      this.items.singleChildItems = result.initialize.singleChildItems;
+      Object.keys(result.model).map(f => {
+        this.model[f] = result.model[f];
+      })
+    })
   },
   data() {
     return {
       isValid: false,
+      items: {
+        singleChildItems: []
+      },
       model: {
         singleChild: null,
         familyMembers: 0,
@@ -127,7 +140,15 @@ export default {
 
       }
     }
-  }
+  },
+  watch: {
+    'model': {
+      handler() {
+        this.$emit('update:modelValue', this.model)
+      },
+      deep: true,
+    }
+  },
 }
 </script>
 

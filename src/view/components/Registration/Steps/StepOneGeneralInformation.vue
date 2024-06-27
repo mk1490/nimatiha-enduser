@@ -61,20 +61,13 @@
         </div>
         <div class="v-col-4">
           <base-select
-              label="مذهب"
-              :items="religionItems"
-              v-model="model.religion"
-              :rules="rules.religion"
-          />
-        </div>
-        <div class="v-col-12">
-          <base-select
               label="وضعیت معلولیت"
               :items="disabilityStatus"
               v-model="model.disabilityStatus"
               :rules="rules.disabilityStatus"
           />
         </div>
+
         <div
             v-if="model.disabilityStatus === 2"
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
@@ -85,14 +78,29 @@
           />
         </div>
 
+
         <div class="v-col-12">
-          <base-select
-              label="سابقه بیماری"
-              :items="diseaseBackgroundItems"
-              v-model="model.diseaseBackground"
-              :rules="rules.diseaseBackground"
-          />
+          <div class="v-row">
+            <div class="v-col">
+              <base-select
+                  label="مذهب"
+                  :items="religionItems"
+                  v-model="model.religion"
+                  :rules="rules.religion"
+              />
+            </div>
+
+            <div class="v-col">
+              <base-select
+                  label="سابقه بیماری"
+                  :items="diseaseBackgroundItems"
+                  v-model="model.diseaseBackground"
+                  :rules="rules.diseaseBackground"
+              />
+            </div>
+          </div>
         </div>
+
 
         <div
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
@@ -158,6 +166,7 @@ export default {
         mobileNumber: null,
         diseaseBackground: null,
         disabilityDescription: null,
+        city: null,
       },
       rules: {
         projectId: [v => !!v || 'انتخاب این فیلد اجباری است.'],
@@ -188,7 +197,7 @@ export default {
   },
   watch: {
     'model': {
-      handler(value) {
+      handler() {
         this.$emit('update:modelValue', this.model)
       },
       deep: true,

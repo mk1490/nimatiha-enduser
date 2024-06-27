@@ -116,6 +116,9 @@ const baseData = {
         SET_CITY_ITEMS: (state, payload) => {
             state.cityItems = payload
         },
+        SET_LIFE_SITUATION_ITEMS: (state, payload) => {
+            state.lifeSituationItems = payload
+        },
     }, actions: {
         setInitializeData: (context, payload) => {
             context.commit('SET_INIT_PROJECT_TITLE', payload.currentUserProjectTitle);

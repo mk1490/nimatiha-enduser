@@ -60,6 +60,7 @@
                         <parent-information
                             v-if="selectedStep === 2"
                             ref="parentInformation"
+                            @update:modelValue="model.parent = $event"
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
@@ -169,11 +170,11 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 0,
+      selectedStep: 1,
       trackingCode: null,
       model: {
         personal: {},
-        productItems: [],
+        parent: {},
         market: {
           marketId: null,
           deskIds: [],
@@ -224,12 +225,20 @@ export default {
           break;
         }
         case 2: {
-          if (!this.$refs.uploadDocuments.validate()) {
-            this.$toast.error('فایل‌های ضروری بارگذاری نشده‌اند')
-            return
-          }
-
-          this.selectedStep++;
+          this.httpPut(`/member-request/parent-information`, {
+            fatherName: this.model.parent.father.name,
+            fatherFamily: this.model.parent.father.family,
+            fatherEducationLevel: this.model.parent.father.educationLevel,
+            fatherEducationLevelFifeSituation: this.model.parent.father.lifeSituation,
+            motherName: this.model.parent.mother.name,
+            motherFamily: this.model.parent.mother.family,
+            motherEducationLevel: this.model.parent.mother.educationLevel,
+            motherEducationLevelFifeSituation: this.model.parent.mother.lifeSituation,
+            singleChild: this.model.parent.singleChild,
+            familyMembers: Number(this.model.parent.familyMembers),
+          }, () => {
+            this.selectedStep++;
+          })
           break;
         }
         case 3: {
