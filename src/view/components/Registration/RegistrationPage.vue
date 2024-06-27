@@ -67,6 +67,7 @@
                           :value="3">
                         <educational-status
                             v-if="selectedStep === 3"
+                            @update:modelValue="model.educational = $event"
                         />
                       </v-stepper-window-item>
                       <v-stepper-window-item
@@ -87,6 +88,7 @@
                           :value="5">
                         <educational-and-cultural-history
                             v-if="selectedStep === 5"
+
                         />
                       </v-stepper-window-item>
 
@@ -170,11 +172,13 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 1,
+      selectedStep: 2,
       trackingCode: null,
       model: {
         personal: {},
         parent: {},
+        educational: {},
+        educationalAndHistorical: {},
         market: {
           marketId: null,
           deskIds: [],
@@ -242,9 +246,7 @@ export default {
           break;
         }
         case 3: {
-          this.httpPut(`/member-request/product-items`, {
-            items: this.model.productItems
-          }, () => {
+          this.httpPut(`/member-request/educational`, this.model.educational, () => {
             this.selectedStep++;
           })
           break;

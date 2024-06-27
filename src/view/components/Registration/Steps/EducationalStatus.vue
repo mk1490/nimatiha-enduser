@@ -115,6 +115,7 @@ import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 export default {
   name: 'EducationalStatus',
   components: {BaseTextArea, BaseTextField, BaseSelect},
+  emits: ['update:modelValue'],
   data() {
     return {
       isValid: false,
@@ -153,7 +154,16 @@ export default {
         breedingAssistantName: null,
       }
     }
-  }
+  },
+  watch: {
+    'model': {
+      handler() {
+        this.$emit('update:modelValue', this.model)
+      },
+      deep: true,
+    }
+  },
+
 }
 </script>
 

@@ -60,11 +60,12 @@
 
 <script>
 import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
-import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+
 import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
 
 export default {
   name: 'EducationalAndCulturalHistory',
+  emits: ['update:modelValue'],
   components: {BaseSelect, BaseTextField},
   created() {
     ['تجوید', 'مفاهیم', 'حفظ', 'احکام', 'قرائت', 'نهج البلاغه', 'مکبری', 'صحیفه سجادیه', 'سایر'].map(f => {
@@ -104,6 +105,14 @@ export default {
     },
     categorizedItems() {
       return Object.groupBy(this.items, ({category}) => category)
+    }
+  },
+  watch: {
+    'model': {
+      handler() {
+        this.$emit('update:modelValue', this.model)
+      },
+      deep: true,
     }
   },
 
