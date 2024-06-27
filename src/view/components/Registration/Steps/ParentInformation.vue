@@ -75,8 +75,9 @@
           </v-label>
         </div>
         <div class="v-col-6">
-          <base-text-field
+          <base-select
               label="وضعیت تک فرزندی"
+              :items="singleChildItems"
               v-model="model.singleChild"
           />
         </div>
@@ -100,13 +101,16 @@ export default {
   name: 'ParentInformation',
   components: {BaseSelect, BaseTextField},
   computed: {
-    ...mapGetters(['lifeSituationItems'])
+    ...mapGetters(['lifeSituationItems', 'singleChildItems'])
+  },
+  created() {
+
   },
   data() {
     return {
       isValid: false,
       model: {
-        singleChild: 0,
+        singleChild: null,
         familyMembers: 0,
         father: {
           name: null,

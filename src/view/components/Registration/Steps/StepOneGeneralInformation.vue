@@ -96,6 +96,15 @@
 
         <div
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
+          <base-auto-complete
+              label="شهرستان محل سکونت"
+              :items="cityItems"
+              v-model="model.city"
+              :rules="rules.city"
+          />
+        </div>
+        <div
+            class="v-col-sm-12 v-col-md-12 v-col-lg-12">
           <base-text-area
               label="نشانی محل سکونت"
               v-model="model.address"
@@ -111,9 +120,13 @@
 <script>
 
 import {mapGetters} from "vuex";
+import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
+import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+import BaseAutoComplete from "@/view/widget/Base/BaseAutoComplete.vue";
 
 export default {
   name: 'StepOneGeneralInformation',
+  components: {BaseAutoComplete, BaseTextArea, BaseSelect},
   props: {
     modelValue: String,
   },
@@ -122,10 +135,11 @@ export default {
       Object.keys(result.model).map(f => {
         this.model[f] = result.model[f];
       })
-      this.$store.commit('SET_DISABILITY_ITEMS', result.initialize.disabilityStatus)
-      this.$store.commit('SET_MARITAL_ITEMS', result.initialize.maritalStatus)
       this.$store.commit('SET_EDUCATION_LEVEL_ITEMS', result.initialize.educationLevels)
-
+      this.$store.commit('SET_RELIGION_ITEMS', result.initialize.religionItems)
+      this.$store.commit('SET_DISABILITY_ITEMS', result.initialize.disabilityStatus)
+      this.$store.commit('SET_DISEASE_BACKGROUND_ITEMS', result.initialize.diseaseBackgroundItems)
+      this.$store.commit('SET_CITY_ITEMS', result.initialize.cityItems)
     })
   },
   emits: ['update:modelValue'],
@@ -136,14 +150,14 @@ export default {
         family: null,
         fatherName: null,
         educationLevel: null,
-        childrenCounts: 0,
         disabilityStatus: null,
-        partnerJob: null,
         maritalStatus: null,
         nationalCode: null,
         birthDate: null,
         address: null,
         mobileNumber: null,
+        diseaseBackground: null,
+        disabilityDescription: null,
       },
       rules: {
         projectId: [v => !!v || 'انتخاب این فیلد اجباری است.'],
@@ -152,6 +166,7 @@ export default {
         family: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         fatherName: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         religion: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        city: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         birthCertificateNumber: [
           v => !!v || 'تکمیل این فیلد اجباری است.',
           v => v && v.length <= 11 || 'شماره شناسنامه نمی‌تواند بیشتر از 11 رقم باشد.',
@@ -185,7 +200,8 @@ export default {
       'maritalStatus',
       'disabilityStatus',
       'religionItems',
-      'diseaseBackgroundItems'
+      'diseaseBackgroundItems',
+      'cityItems'
     ])
   }
 }

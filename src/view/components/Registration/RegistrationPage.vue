@@ -50,7 +50,6 @@
                       alt-labels>
 
                     <v-stepper-window :model-value="selectedStep">
-
                       <v-stepper-window-item :value="1">
                         <step-one-general-information
                             @update:modelValue="model.personal = $event"/>
@@ -137,11 +136,13 @@ import EducationalStatus from "@/view/components/Registration/Steps/EducationalS
 import ExecutiveHistory from "@/view/components/Registration/Steps/ExecutiveHistory.vue";
 import EducationalAndCulturalHistory from "@/view/components/Registration/Steps/EducationalAndCulturalHistory.vue";
 import EducationalCourses from "@/view/components/Registration/Steps/EducationalCourses.vue";
+import StepOneGeneralInformation from "@/view/components/Registration/Steps/StepOneGeneralInformation.vue";
 
 
 export default {
   name: "RegistrationPage",
   components: {
+    StepOneGeneralInformation,
     EducationalCourses,
     EducationalAndCulturalHistory,
     ExecutiveHistory,
@@ -168,7 +169,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 4,
+      selectedStep: 0,
       trackingCode: null,
       model: {
         personal: {},

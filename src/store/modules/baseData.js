@@ -9,6 +9,8 @@ const baseData = {
         religionItems: [],
         diseaseBackgroundItems: [],
         lifeSituationItems: [],
+        singleChildItems: [],
+        cityItems: [],
         status: -1,
         name: '',
         family: '',
@@ -23,6 +25,8 @@ const baseData = {
         religionItems: (state) =>state.religionItems,
         diseaseBackgroundItems: (state) =>state.diseaseBackgroundItems,
         lifeSituationItems: (state) =>state.lifeSituationItems,
+        cityItems: (state) =>state.cityItems,
+        singleChildItems: (state) =>state.singleChildItems,
     },
 
     mutations: {
@@ -105,6 +109,12 @@ const baseData = {
         },
         SET_RELIGION_ITEMS: (state, payload) => {
             state.religionItems = payload
+        },
+        SET_DISEASE_BACKGROUND_ITEMS: (state, payload) => {
+            state.diseaseBackgroundItems = payload
+        },
+        SET_CITY_ITEMS: (state, payload) => {
+            state.cityItems = payload
         },
     }, actions: {
         setInitializeData: (context, payload) => {
