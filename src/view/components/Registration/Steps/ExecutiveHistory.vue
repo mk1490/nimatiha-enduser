@@ -51,6 +51,7 @@ import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
 export default {
   name: "ExecutiveHistory",
   components: {BaseTextArea, BaseTextField},
+  emits: ['update:modelValue'],
   created() {
     ['بسیج', 'انجمن اسلامی', 'هیأت مذهبی', 'هلال احمر', 'سازمان دانش‌آموزی', 'خبرگزاری پانا', 'سایر'].map((f, i) => {
       this.items.push({
@@ -69,7 +70,15 @@ export default {
     itemSelection(index, event) {
       this.items[index].selected = event;
     }
-  }
+  },
+  watch: {
+    'items': {
+      handler() {
+        this.$emit('update:modelValue', this.model)
+      },
+      deep: true,
+    }
+  },
 }
 </script>
 <style scoped>

@@ -74,15 +74,9 @@
                           :value="4">
                         <executive-history
                             v-if="selectedStep === 4"
+                            @update:modelValue="model.executive = $event"
                         />
                       </v-stepper-window-item>
-                      <v-stepper-window-item
-                          :value="4">
-                        <executive-history
-                            v-if="selectedStep === 4"
-                        />
-                      </v-stepper-window-item>
-
 
                       <v-stepper-window-item
                           :value="5">
@@ -172,13 +166,14 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 2,
+      selectedStep: 3,
       trackingCode: null,
       model: {
         personal: {},
         parent: {},
         educational: {},
         educationalAndHistorical: {},
+        executive: {},
         market: {
           marketId: null,
           deskIds: [],
@@ -252,9 +247,7 @@ export default {
           break;
         }
         case 4: {
-          if (!this.$refs.marketSelection.validate())
-            return;
-          this.httpPut(`/member-request/market-selection`, this.model.market, () => {
+          this.httpPut(`/member-request/executive`, this.model.executive, () => {
             this.selectedStep++;
           })
           break;
