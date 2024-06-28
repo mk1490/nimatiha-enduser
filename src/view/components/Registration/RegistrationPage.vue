@@ -263,14 +263,14 @@ export default {
         }
         case 6: {
           this.httpPut(`/member-request/educational-courses`, this.model.educationalCourses, result => {
-            /*     this.$swal.fire({
+                 this.$swal.fire({
                    icon: 'success',
                    text: 'درخواست شما با موفقیت ثبت شد.'
                  }).then(() => {
                    localStorage.removeItem('accessToken');
                    this.selectedStep = 1;
                    this.isAuth = false;
-                 })*/
+                 })
           })
           break;
         }
