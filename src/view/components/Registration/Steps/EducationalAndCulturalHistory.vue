@@ -30,16 +30,19 @@
                     <div class="v-row">
                       <div class="v-col-6">
                         <base-text-field
+                            v-model="item.fieldTitle"
                             label="عنوان رشته"
                         />
                       </div>
                       <div class="v-col-6">
                         <base-text-field
+                            v-model="item.rank"
                             label="رتبه استانی یا کشوری"
                         />
                       </div>
                       <div class="v-col-12">
                         <base-select
+                            v-model="item.level"
                             label="سطح"
                             :items="['مبتدی','نیمه حرفه‌ای', 'حرفه‌ای']"
                         />
@@ -108,9 +111,9 @@ export default {
     }
   },
   watch: {
-    'model': {
+    'items': {
       handler() {
-        this.$emit('update:modelValue', this.model)
+        this.$emit('update:modelValue', this.items.filter(x => x.selected === true))
       },
       deep: true,
     }

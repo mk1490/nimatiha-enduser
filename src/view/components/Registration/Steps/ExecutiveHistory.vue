@@ -30,11 +30,14 @@
             <div class="v-col-6">
               <base-text-field
                   type="number"
+                  v-model="items[index].postHistory"
                   label="سابقه مسئولیت"/>
             </div>
             <div class="v-col-6">
               <base-text-field
+                  v-model="items[index].post"
                   label="سمت"/>
+
             </div>
           </div>
 
@@ -74,7 +77,7 @@ export default {
   watch: {
     'items': {
       handler() {
-        this.$emit('update:modelValue', this.model)
+        this.$emit('update:modelValue', this.items)
       },
       deep: true,
     }

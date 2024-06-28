@@ -82,6 +82,7 @@
                           :value="5">
                         <educational-and-cultural-history
                             v-if="selectedStep === 5"
+                            @update:modelValue="model.educationalAndHistorical = $event"
 
                         />
                       </v-stepper-window-item>
@@ -100,7 +101,7 @@
                         @click:prev="prev"
                         :disabled="false"
                         prev-text="قبلی"
-                        :next-text="selectedStep === 5  ? 'ارسال' : 'بعدی'">
+                        :next-text="selectedStep === 6  ? 'ارسال' : 'بعدی'">
 
                     </v-stepper-actions>
                   </v-stepper>
@@ -166,7 +167,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 3,
+      selectedStep: 5,
       trackingCode: null,
       model: {
         personal: {},
@@ -253,6 +254,12 @@ export default {
           break;
         }
         case 5: {
+          this.httpPut(`/member-request/educationalAndHistorical`, this.model.educationalAndHistorical, () => {
+            this.selectedStep++;
+          })
+          break;
+        }
+        case 6: {
           this.httpPost(`/member-request/final-approval`, {}, result => {
             this.$swal.fire({
               icon: 'success',
