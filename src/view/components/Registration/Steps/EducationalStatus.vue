@@ -12,97 +12,108 @@
               v-model="model.educationGrade"
           />
         </div>
+
+
         <div
-            v-if="model.educationGrade === 1"
+            v-if="model.educationGrade"
             class="v-col-12">
-          <base-select
-              label="پایه"
-              :items="items.juniorSchoolItems"
-              v-model="model.schoolGrade"
-          />
-        </div>
-        <div
-            v-if="model.educationGrade === 2"
-            class="v-col-12">
-          <div class="v-row">
-            <div class="v-col-12">
+          <div
+              class="v-row">
+
+            <div
+                v-if="model.educationGrade === 1"
+                class="v-col-12">
               <base-select
                   label="پایه"
-                  :items="items.highSchoolItems"
+                  :items="items.juniorSchoolItems"
                   v-model="model.schoolGrade"
               />
             </div>
+            <div
+                v-if="model.educationGrade === 2"
+                class="v-col-12">
+              <div class="v-row">
+                <div class="v-col-12">
+                  <base-select
+                      label="پایه"
+                      :items="items.highSchoolItems"
+                      v-model="model.schoolGrade"
+                  />
+                </div>
+                <div class="v-col-12">
+                  <base-text-field
+                      label="رشته تحصیلی"
+                      v-model="model.educationField"
+                  />
+                </div>
+              </div>
+            </div>
             <div class="v-col-12">
-              <base-text-field
-                  label="رشته تحصیلی"
+              <v-radio-group
+                  hide-details
+                  v-model="model.educationLocation"
+                  label="محل تحصیل"
+                  inline>
+                <v-radio
+                    label="مشهد"
+                    :value="1"/>
+                <v-radio
+                    label="شهرستان"
+                    :value="2"/>
+              </v-radio-group>
+            </div>
+
+
+            <div v-if="model.educationLocation === 1"
+                 class="v-col-12">
+              <base-select
+                  label="ناحیه"
+                  :items="items.zoneItems"
                   v-model="model.educationField"
               />
             </div>
+
+
+            <div
+                v-if="model.educationLocation === 2"
+                class="v-col-12">
+              <base-select
+                  label="شهرستان"
+              />
+            </div>
+
+
+            <div class="v-col-12">
+              <div class="v-row">
+                <div class="v-col-12">
+                  <base-text-field
+                      label="معدل"
+                      v-model="model.average"
+                  />
+                </div>
+                <div class="v-col-12">
+                  <base-text-field
+                      label="نام مدرسه"
+                      v-model="model.schoolName"
+                  />
+                </div>
+                <div class="v-col-12">
+                  <base-text-field
+                      label="نام مدیر"
+                      v-model="model.managerName"
+                  />
+                </div>
+                <div class="v-col-12">
+                  <base-text-field
+                      label="نام معاون پرورشی"
+                      v-model="model.breedingAssistantName"
+                  />
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-
-        <div class="v-col-12">
-          <v-radio-group
-              hide-details
-              v-model="model.educationLocation"
-              label="محل تحصیل"
-              inline>
-            <v-radio
-                label="مشهد"
-                :value="1"/>
-            <v-radio
-                label="شهرستان"
-                :value="2"/>
-          </v-radio-group>
-        </div>
-
-
-        <div v-if="model.educationLocation === 1"
-             class="v-col-12">
-          <base-select
-              label="ناحیه"
-              :items="items.zoneItems"
-              v-model="model.educationField"
-          />
-        </div>
-
-
-        <div
-            v-if="model.educationLocation === 2"
-            class="v-col-12">
-          <base-select
-              label="شهرستان"
-          />
-        </div>
-
-
-        <div class="v-row">
-          <div class="v-col-12">
-            <base-text-field
-                label="معدل"
-                v-model="model.average"
-            />
-          </div>
-          <div class="v-col-12">
-            <base-text-field
-                label="نام مدرسه"
-                v-model="model.schoolName"
-            />
-          </div>
-          <div class="v-col-12">
-            <base-text-field
-                label="نام مدیر"
-                v-model="model.managerName"
-            />
-          </div>
-          <div class="v-col-12">
-            <base-text-field
-                label="نام معاون پرورشی"
-                v-model="model.breedingAssistantName"
-            />
-          </div>
-        </div>
-
       </div>
     </v-container>
   </v-form>

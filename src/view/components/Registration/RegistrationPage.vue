@@ -152,7 +152,7 @@ export default {
     RegistrationSuccessComponent
   },
   async created() {
-    /*this.httpGet(`/auth/initialize`, (data) => {
+    this.httpGet(`/auth/initialize/general-information`, (data) => {
       this.items.projectItems = data.projects.map(f => {
         return {
           value: f.id,
@@ -160,7 +160,7 @@ export default {
         }
       });
       this.items.housingTypes = data.housingTypes;
-    })*/
+    })
   },
   data() {
     return {
@@ -168,7 +168,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 5,
+      selectedStep: 2,
       trackingCode: null,
       model: {
         personal: {},
