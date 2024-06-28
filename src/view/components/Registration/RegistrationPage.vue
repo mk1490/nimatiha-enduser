@@ -91,6 +91,7 @@
                           :value="6">
                         <educational-courses
                             v-if="selectedStep === 6"
+                            @update:modelValue="model.educationalCourses = $event"
                         />
                       </v-stepper-window-item>
                     </v-stepper-window>
@@ -174,6 +175,7 @@ export default {
         parent: {},
         educational: {},
         educationalAndHistorical: {},
+        educationalCourses: {},
         executive: {},
         market: {
           marketId: null,
@@ -260,15 +262,15 @@ export default {
           break;
         }
         case 6: {
-          this.httpPost(`/member-request/final-approval`, {}, result => {
-            this.$swal.fire({
-              icon: 'success',
-              text: 'درخواست شما با موفقیت ثبت شد.'
-            }).then(() => {
-              localStorage.removeItem('accessToken');
-              this.selectedStep = 1;
-              this.isAuth = false;
-            })
+          this.httpPut(`/member-request/educational-courses`, this.model.educationalCourses, result => {
+            /*     this.$swal.fire({
+                   icon: 'success',
+                   text: 'درخواست شما با موفقیت ثبت شد.'
+                 }).then(() => {
+                   localStorage.removeItem('accessToken');
+                   this.selectedStep = 1;
+                   this.isAuth = false;
+                 })*/
           })
           break;
         }
