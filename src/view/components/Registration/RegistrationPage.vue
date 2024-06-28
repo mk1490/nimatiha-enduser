@@ -12,7 +12,6 @@
                 v-if="isAuth == false"
                 class="d-flex justify-center">
               <v-card width="500">
-
                 <v-card-title class="text-center">
                   احراز هویت
                 </v-card-title>
@@ -25,7 +24,7 @@
 
             </div>
 
-
+            {{ selectedStep }}
             <div
                 v-if="isAuth"
                 class="d-flex justify-center">
@@ -52,6 +51,7 @@
                     <v-stepper-window :model-value="selectedStep">
                       <v-stepper-window-item :value="1">
                         <step-one-general-information
+                            v-if="selectedStep === 1"
                             @update:modelValue="model.personal = $event"/>
                       </v-stepper-window-item>
 
@@ -81,7 +81,7 @@
                       <v-stepper-window-item
                           :value="5">
                         <educational-and-cultural-history
-                            v-if="selectedStep === 5"
+                            v-if="selectedStep === 4"
                             @update:modelValue="model.educationalAndHistorical = $event"
 
                         />
@@ -90,7 +90,7 @@
                       <v-stepper-window-item
                           :value="6">
                         <educational-courses
-                            v-if="selectedStep === 6"
+                            v-if="selectedStep === 5"
                             @update:modelValue="model.educationalCourses = $event"
                         />
                       </v-stepper-window-item>
@@ -147,7 +147,6 @@ export default {
     ExecutiveHistory,
     EducationalStatus,
     ParentInformation,
-    FinalApproval,
     Authentication,
     RegistrationSuccessComponent
   },
@@ -168,7 +167,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 2,
+      selectedStep: 3,
       trackingCode: null,
       model: {
         personal: {},
@@ -263,14 +262,14 @@ export default {
         }
         case 6: {
           this.httpPut(`/member-request/educational-courses`, this.model.educationalCourses, result => {
-                 this.$swal.fire({
-                   icon: 'success',
-                   text: 'درخواست شما با موفقیت ثبت شد.'
-                 }).then(() => {
-                   localStorage.removeItem('accessToken');
-                   this.selectedStep = 1;
-                   this.isAuth = false;
-                 })
+            this.$swal.fire({
+              icon: 'success',
+              text: 'درخواست شما با موفقیت ثبت شد.'
+            }).then(() => {
+              localStorage.removeItem('accessToken');
+              this.selectedStep = 1;
+              this.isAuth = false;
+            })
           })
           break;
         }

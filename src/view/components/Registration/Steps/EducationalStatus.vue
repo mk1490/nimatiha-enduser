@@ -83,7 +83,9 @@
             </div>
 
 
-            <div class="v-col-12">
+            <div
+                v-if="model.educationLocation"
+                class="v-col-12">
               <div class="v-row">
                 <div class="v-col-12">
                   <base-text-field
@@ -127,6 +129,14 @@ export default {
   name: 'EducationalStatus',
   components: {BaseTextArea, BaseTextField, BaseSelect},
   emits: ['update:modelValue'],
+  created() {
+    this.httpGet(`/member-request/initialize/educational-status`, result => {
+      Object.keys(result).map(f => {
+        this.model[f] = result[f];
+      })
+    })
+
+  },
   data() {
     return {
       isValid: false,

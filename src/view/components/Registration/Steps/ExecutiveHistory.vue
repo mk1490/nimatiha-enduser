@@ -10,6 +10,7 @@
             class="v-col-12">
           <v-checkbox
               hide-details
+              :model-value="item.selected"
               @update:model-value="itemSelection(index, $event)"
               :label="item.title"
           />
@@ -62,6 +63,17 @@ export default {
         isOther: i === 6
       });
     })
+
+    this.httpGet(`/member-request/initialize/executive`, result => {
+      result.map((item) => {
+        this.items[this.items.findIndex(x => x.title === item.title)] = {
+          ...item,
+          selected: true,
+        }
+      })
+    })
+
+
   },
   data() {
     return {
@@ -77,7 +89,7 @@ export default {
   watch: {
     'items': {
       handler() {
-        this.$emit('update:modelValue', this.items)
+        this.$emit('update:modelValue', this.items.filter(x => x.selected === true))
       },
       deep: true,
     }

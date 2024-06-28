@@ -94,6 +94,15 @@ export default {
         categoryTitle: 'رشته‌های ورزشی'
       })
     })
+
+
+    this.httpGet(`/member-request/initialize/educational-historical`, result => {
+      this.items.map((item) => {
+        const index = this.items.findIndex(x => x.category === item.category && x.categoryTitle === item.categoryTitle)
+        console.log(item.category, item.categoryTitle)
+        console.log(index);
+      })
+    })
   },
   data() {
     return {
