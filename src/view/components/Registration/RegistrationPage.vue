@@ -81,7 +81,7 @@
                       <v-stepper-window-item
                           :value="5">
                         <educational-and-cultural-history
-                            v-if="selectedStep === 4"
+                            v-if="selectedStep === 5"
                             @update:modelValue="model.educationalAndHistorical = $event"
 
                         />
@@ -167,7 +167,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 3,
+      selectedStep: 4,
       trackingCode: null,
       model: {
         personal: {},
