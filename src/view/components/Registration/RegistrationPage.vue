@@ -20,11 +20,8 @@
                       @authSuccess="authSuccess"/>
                 </v-card-text>
               </v-card>
-
-
             </div>
-
-            {{ selectedStep }}
+            
             <div
                 v-if="isAuth"
                 class="d-flex justify-center">
@@ -90,7 +87,7 @@
                       <v-stepper-window-item
                           :value="6">
                         <educational-courses
-                            v-if="selectedStep === 5"
+                            v-if="selectedStep === 6"
                             @update:modelValue="model.educationalCourses = $event"
                         />
                       </v-stepper-window-item>
@@ -167,7 +164,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 4,
+      selectedStep: 5,
       trackingCode: null,
       model: {
         personal: {},

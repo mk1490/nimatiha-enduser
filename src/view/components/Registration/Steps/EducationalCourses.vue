@@ -41,6 +41,11 @@ export default {
   name: "EducationalCourses",
   components: {BaseSelect},
   emits: ['update:modelValue'],
+  created() {
+    this.httpGet(`/member-request/initialize/educational-courses`, result => {
+      this.model = {...result}
+    })
+  },
   data() {
     return {
       isValid: false,
