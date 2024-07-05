@@ -10,30 +10,38 @@
             مشخصات پدر
           </v-label>
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-text-field
               label="نام"
               v-model="model.father.name"
+              :rules="rules.father.name"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-text-field
               label="نام خانوادگی"
               v-model="model.father.family"
+              :rules="rules.father.family"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-select
               label="تحصیلات"
               v-model="model.father.educationLevel"
+              :rules="rules.father.educationLevel"
               :items="educationLevels"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-select
               label="وضعیت حیات"
               :items="lifeSituationItems"
               v-model="model.father.lifeSituation"
+              :rules="rules.father.lifeSituation"
+              required-symbol
           />
         </div>
       </div>
@@ -43,30 +51,38 @@
             مشخصات مادر
           </v-label>
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-text-field
               label="نام"
               v-model="model.mother.name"
+              :rules="rules.mother.name"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-text-field
               label="نام خانوادگی"
               v-model="model.mother.family"
+              :rules="rules.mother.family"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-select
               label="تحصیلات"
               v-model="model.mother.educationLevel"
+              :rules="rules.mother.educationLevel"
               :items="educationLevels"
+              required-symbol
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-select
               label="وضعیت حیات"
               :items="lifeSituationItems"
               v-model="model.mother.lifeSituation"
+              :rules="rules.mother.lifeSituation"
+              required-symbol
           />
         </div>
       </div>
@@ -76,17 +92,20 @@
             وضعیت خانوادگی
           </v-label>
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-select
               label="وضعیت تک فرزندی"
               :items="items.singleChildItems"
               v-model="model.singleChild"
+              required-symbol
+
           />
         </div>
-        <div class="v-col-6">
+        <div class="v-col-md-6 v-col-sm-12">
           <base-text-field
               label="تعداد اعضای خانواده"
               v-model="model.familyMembers"
+              required-symbol
           />
         </div>
       </div>
@@ -122,6 +141,20 @@ export default {
       items: {
         singleChildItems: []
       },
+      rules: {
+        father: {
+          name: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+          family: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+          educationLevel: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+          lifeSituation: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        },
+        mother: {
+          name: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+          family: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+          educationLevel: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+          lifeSituation: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        },
+      },
       model: {
         singleChild: null,
         familyMembers: 0,
@@ -149,6 +182,11 @@ export default {
       deep: true,
     }
   },
+  methods: {
+    async validate() {
+      return await this.$refs.form.validate()
+    }
+  }
 }
 </script>
 

@@ -28,13 +28,13 @@
 
 
             </div>
-            <div class="v-col-6">
+            <div class="v-col-md-6 v-col-sm-12">
               <base-text-field
                   type="number"
                   v-model="items[index].postHistory"
                   label="سابقه مسئولیت"/>
             </div>
-            <div class="v-col-6">
+            <div class="v-col-md-6 v-col-sm-12">
               <base-text-field
                   v-model="items[index].post"
                   label="سمت"/>

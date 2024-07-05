@@ -10,7 +10,7 @@
       :variant="variant"
       density="compact"
       :on-update:search="updateSearch"
-      hide-details
+      :hide-details="hideDetails"
       outlined
       :small-chips="smallChips"
       dense>
@@ -28,6 +28,7 @@ export default {
     multiple: Boolean,
     smallChips: Boolean,
     deletableChips: Boolean,
+    hideDetails: String,
     variant: {
       type: String,
       default: () => 'outlined',

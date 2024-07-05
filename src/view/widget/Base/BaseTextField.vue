@@ -12,8 +12,13 @@
         density="compact"
         :dir="dir"
         :hide-details="rules.length > 0 ? 'auto': true"
-
         :variant="variant">
+      <template v-slot:label>
+        <div class="required--symbol">
+          {{ label }}
+          <small v-if="requiredSymbol">*</small>
+        </div>
+      </template>
     </v-text-field>
   </div>
 </template>
@@ -39,6 +44,10 @@ export default {
     variant: {
       type: String,
       default: () => 'outlined',
+    },
+    requiredSymbol: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

@@ -81,7 +81,7 @@
 
         <div class="v-col-12">
           <div class="v-row">
-            <div class="v-col">
+            <div class="v-col-sm-4 v-col-sm-12">
               <base-select
                   label="مذهب"
                   :items="religionItems"
@@ -90,12 +90,21 @@
               />
             </div>
 
-            <div class="v-col">
+            <div class="v-col-sm-4 v-col-sm-12">
               <base-select
                   label="سابقه بیماری"
                   :items="diseaseBackgroundItems"
                   v-model="model.diseaseBackground"
                   :rules="rules.diseaseBackground"
+              />
+            </div>
+            <div
+                v-if="model.diseaseBackground === 1"
+                class="v-col-12">
+              <base-text-area
+                  label="شرح سابقه بیماری"
+                  v-model="model.diseaseBackgroundDescription"
+                  :rules="rules.diseaseBackgroundDescription"
               />
             </div>
           </div>
@@ -109,6 +118,7 @@
               :items="cityItems"
               v-model="model.city"
               :rules="rules.city"
+              hide-details="auto"
           />
         </div>
         <div
@@ -117,6 +127,7 @@
               label="نشانی محل سکونت"
               v-model="model.address"
               :rules="rules.address"
+              hide-details="auto"
           />
         </div>
 
@@ -149,7 +160,6 @@ export default {
       this.$store.commit('SET_DISEASE_BACKGROUND_ITEMS', result.initialize.diseaseBackgroundItems)
       this.$store.commit('SET_CITY_ITEMS', result.initialize.cityItems)
     })
-    console.log(this.$vuetify.display.mobile)
   },
   emits: ['update:modelValue'],
   data() {
@@ -166,11 +176,14 @@ export default {
         address: null,
         mobileNumber: null,
         diseaseBackground: null,
+        diseaseBackgroundDescription: null,
         disabilityDescription: null,
         city: null,
       },
       rules: {
         projectId: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        diseaseBackground: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        diseaseBackgroundDescription: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         name: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         partnerJob: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         family: [v => !!v || 'تکمیل این فیلد اجباری است.'],
@@ -192,6 +205,7 @@ export default {
         birthDate: [],
         birthPlace: [v => !!v || 'تکمیل این فیلد اجباری است.'],
         job: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        address: [v => !!v || 'تکمیل این فیلد اجباری است.'],
 
       },
     }
@@ -213,6 +227,11 @@ export default {
       'diseaseBackgroundItems',
       'cityItems'
     ])
+  },
+  methods:{
+    async validate(){
+      return await this.$refs.form.validate();
+    }
   }
 }
 </script>

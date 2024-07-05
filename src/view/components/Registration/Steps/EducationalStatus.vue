@@ -10,6 +10,7 @@
               label="مقطع"
               :items="items.educationGrade"
               v-model="model.educationGrade"
+              required-symbol
           />
         </div>
 
@@ -27,6 +28,8 @@
                   label="پایه"
                   :items="items.juniorSchoolItems"
                   v-model="model.schoolGrade"
+                  :rules="rules.schoolGrade"
+                  required-symbol
               />
             </div>
             <div
@@ -38,12 +41,16 @@
                       label="پایه"
                       :items="items.highSchoolItems"
                       v-model="model.schoolGrade"
+                      :rules="rules.schoolGrade"
+                      required-symbol
                   />
                 </div>
                 <div class="v-col-12">
                   <base-text-field
                       label="رشته تحصیلی"
                       v-model="model.educationField"
+                      :rules="rules.educationField"
+                      required-symbol
                   />
                 </div>
               </div>
@@ -52,6 +59,7 @@
               <v-radio-group
                   hide-details
                   v-model="model.educationLocation"
+                  :rules="rules.educationLocation"
                   label="محل تحصیل"
                   inline>
                 <v-radio
@@ -70,6 +78,8 @@
                   label="ناحیه"
                   :items="items.zoneItems"
                   v-model="model.educationZone"
+                  :rules="rules.educationZone"
+                  required-symbol
               />
             </div>
 
@@ -79,6 +89,9 @@
                 class="v-col-12">
               <base-select
                   label="شهرستان"
+                  v-model="model.educationCity"
+                  :rules="rules.educationZone"
+                  required-symbol
               />
             </div>
 
@@ -91,24 +104,33 @@
                   <base-text-field
                       label="معدل"
                       v-model="model.average"
+                      required-symbol
+                      :rules="rules.average"
+                      type="number"
                   />
                 </div>
                 <div class="v-col-12">
                   <base-text-field
                       label="نام مدرسه"
                       v-model="model.schoolName"
+                      :rules="rules.schoolName"
+                      required-symbol
                   />
                 </div>
                 <div class="v-col-12">
                   <base-text-field
                       label="نام مدیر"
                       v-model="model.managerName"
+                      :rules="rules.managerName"
+                      required-symbol
                   />
                 </div>
                 <div class="v-col-12">
                   <base-text-field
                       label="نام معاون پرورشی"
                       v-model="model.breedingAssistantName"
+                      :rules="rules.breedingAssistantName"
+                      required-symbol
                   />
                 </div>
               </div>
@@ -168,13 +190,32 @@ export default {
         educationGrade: null,
         schoolGrade: null,
         educationField: null,
+        educationCity: null,
         educationZone: null,
         educationLocation: null,
         average: null,
         schoolName: null,
         managerName: null,
         breedingAssistantName: null,
+      },
+      rules: {
+        educationGrade: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        schoolGrade: [v => !!v || 'انتخاب این فیلد اجباری است.'],
+        educationField: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        educationZone: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        average: [
+          v => !!v || 'تکمیل این فیلد اجباری است.',
+          v => Number(v) <= 20 || 'مقدار این فیلد نمی‌تواند بیشتر از 20 باشد.'
+        ],
+        schoolName: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        managerName: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        breedingAssistantName: [v => !!v || 'تکمیل این فیلد اجباری است.'],
       }
+    }
+  },
+  methods:{
+    async validate(){
+      return await this.$refs.form.validate()
     }
   },
   watch: {

@@ -6,7 +6,7 @@
       :type="type"
       :disabled="disabled"
       :hint="hint"
-      hide-details
+      :hide-details="hideDetails"
       :variant="variant"
       outlined
       dense>
@@ -22,6 +22,7 @@ export default {
     value: undefined,
     label: String,
     hint: String,
+    hideDetails: String,
     disabled: Boolean,
     type: undefined,
     variant: {

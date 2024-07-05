@@ -26,7 +26,7 @@
                 v-if="isAuth"
                 class="d-flex justify-center">
               <v-card
-                  width="90%"
+                  :width="cardWidth"
                   title="فرم اطلاعات یاوران ولایت"
                   class="elevation-0">
                 <v-card-text>
@@ -50,6 +50,7 @@
                     <v-stepper-window :model-value="selectedStep">
                       <v-stepper-window-item :value="1">
                         <step-one-general-information
+                            ref="generalInformation"
                             v-if="selectedStep === 1"
                             @update:modelValue="model.personal = $event"/>
                       </v-stepper-window-item>
@@ -66,6 +67,7 @@
                           :value="3">
                         <educational-status
                             v-if="selectedStep === 3"
+                            ref="educationalStatus"
                             @update:modelValue="model.educational = $event"
                         />
                       </v-stepper-window-item>
@@ -216,15 +218,23 @@ export default {
     prev() {
       this.selectedStep--;
     },
-    next() {
+    async next() {
       switch (this.selectedStep) {
         case 1: {
+          const {valid} = await this.$refs.generalInformation.validate()
+          if (!valid)
+            return;
+
           this.httpPut(`/member-request/personal-information`, this.model.personal, () => {
             this.selectedStep++;
           })
           break;
         }
         case 2: {
+          const {valid} = await this.$refs.parentInformation.validate()
+          if (!valid) {
+            return;
+          }
           this.httpPut(`/member-request/parent-information`, {
             fatherName: this.model.parent.father.name,
             fatherFamily: this.model.parent.father.family,
@@ -242,6 +252,9 @@ export default {
           break;
         }
         case 3: {
+          const {valid} = await this.$refs.educationalStatus.validate();
+          if (!valid)
+            return;
           this.httpPut(`/member-request/educational`, this.model.educational, () => {
             this.selectedStep++;
           })

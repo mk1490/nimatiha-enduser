@@ -18,6 +18,12 @@
       base-color="black"
       :variant="variant"
       density="compact">
+    <template v-slot:label>
+      <div class="required--symbol">
+        {{ label }}
+        <small v-if="requiredSymbol">*</small>
+      </div>
+    </template>
   </v-select>
 </template>
 
@@ -63,6 +69,10 @@ export default {
     rules: {
       type: Array,
       default: () => [],
+    },
+    requiredSymbol: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
