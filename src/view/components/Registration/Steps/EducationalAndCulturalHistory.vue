@@ -131,6 +131,9 @@ export default {
     },
     categorizedItems() {
       return Object.groupBy(this.items, ({category}) => category)
+    },
+    async validate() {
+      return await this.$refs.form.validate();
     }
   },
   watch: {

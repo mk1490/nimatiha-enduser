@@ -84,6 +84,7 @@
                           :value="5">
                         <educational-and-cultural-history
                             v-if="selectedStep === 5"
+                            ref="educationalAndCulturalHistory"
                             @update:modelValue="model.educationalAndHistorical = $event"
 
                         />
@@ -271,6 +272,9 @@ export default {
           break;
         }
         case 5: {
+          const {valid} = await this.$refs.educationalAndCulturalHistory.validate()
+          if (!valid)
+            return;
           this.httpPut(`/member-request/educationalAndHistorical`, this.model.educationalAndHistorical, () => {
             this.selectedStep++;
           })
