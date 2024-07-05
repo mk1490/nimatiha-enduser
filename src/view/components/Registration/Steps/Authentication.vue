@@ -3,7 +3,7 @@
     <div class="v-row">
       <div class="v-col-12">
         <div class="d-flex justify-center">
-          <div class="v-col-8">
+          <div class="v-col-12">
             <base-text-field
                 label="تلفن همراه"
                 :disabled="isCodeSend"

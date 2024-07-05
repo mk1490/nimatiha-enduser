@@ -1,5 +1,5 @@
 <template>
-  <v-app full-height class="bg-light-blue-accent-2">
+  <v-app full-height class="bg-amber-darken-4">
     <v-container class="container--fluid pa-0" style="height: 100%;">
       <div class="content fill-height d-flex align-items-center">
         <v-layout
@@ -11,7 +11,7 @@
             <div
                 v-if="isAuth == false"
                 class="d-flex justify-center">
-              <v-card width="500">
+              <v-card width="300">
                 <v-card-title class="text-center">
                   احراز هویت
                 </v-card-title>
@@ -26,14 +26,16 @@
                 v-if="isAuth"
                 class="d-flex justify-center">
               <v-card
-                  :width="800"
+                  width="90%"
                   title="فرم اطلاعات یاوران ولایت"
                   class="elevation-0">
                 <v-card-text>
                   <v-stepper
                       hide-actions
                       :model-value="selectedStep"
+                      position="relative"
                       flat
+                      :mobile="$vuetify.display.mobile"
                       @update:modelValue="selectedStep = $event"
                       :items="[
                       'تکمیل اطلاعات فردی',

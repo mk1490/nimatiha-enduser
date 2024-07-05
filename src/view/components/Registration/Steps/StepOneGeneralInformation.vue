@@ -5,28 +5,28 @@
       lazy-validation>
     <v-container>
       <div class="v-row">
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام"
               :rules="rules.name"
               v-model="model.name"
           />
         </div>
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام خانوادگی"
               :rules="rules.family"
               v-model="model.family"
           />
         </div>
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام پدر"
               :rules="rules.fatherName"
               v-model="model.fatherName"
           />
         </div>
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="کد ملّی"
               dir="ltr"
@@ -35,7 +35,7 @@
               v-model="model.nationalCode"
           />
         </div>
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <v-text-field
               id="date-picker"
               :model-value="model.birthDate? getPersianTime(model.birthDate, 'jYYYY/jMM/jDD'):null"
@@ -59,7 +59,7 @@
 
           </datePicker>
         </div>
-        <div class="v-col-4">
+        <div class="v-col-md-4 v-col-sm-12">
           <base-select
               label="وضعیت معلولیت"
               :items="disabilityStatus"
@@ -149,6 +149,7 @@ export default {
       this.$store.commit('SET_DISEASE_BACKGROUND_ITEMS', result.initialize.diseaseBackgroundItems)
       this.$store.commit('SET_CITY_ITEMS', result.initialize.cityItems)
     })
+    console.log(this.$vuetify.display.mobile)
   },
   emits: ['update:modelValue'],
   data() {
