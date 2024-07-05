@@ -31,12 +31,16 @@
                       <div class="v-col-6">
                         <base-text-field
                             v-model="item.fieldTitle"
+                            :rules="rules.fieldTitle"
+                            required-symbol
                             label="عنوان رشته"
                         />
                       </div>
                       <div class="v-col-6">
                         <base-text-field
                             v-model="item.rank"
+                            :rules="rules.rank"
+                            required-symbol
                             label="رتبه استانی یا کشوری"
                         />
                       </div>
@@ -44,6 +48,8 @@
                         <base-select
                             v-model="item.level"
                             label="سطح"
+                            :rules="rules.level"
+                            required-symbol
                             :items="['مبتدی','نیمه حرفه‌ای', 'حرفه‌ای']"
                         />
                       </div>
@@ -111,6 +117,11 @@ export default {
     return {
       isValid: false,
       items: [],
+      rules: {
+        fieldTitle: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        rank: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        level: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+      }
     }
   },
   methods: {

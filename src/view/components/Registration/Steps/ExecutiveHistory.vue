@@ -4,46 +4,52 @@
       v-model="isValid"
       lazy-validation>
     <v-container>
-      <div class="v-row">
-        <div
-            v-for="(item, index) in items"
-            class="v-col-12">
-          <v-checkbox
-              hide-details
-              :model-value="item.selected"
-              @update:model-value="itemSelection(index, $event)"
-              :label="item.title"
-          />
+      <v-form ref="form">
+        <div class="v-row">
           <div
-              v-if="items[index].selected === true"
-              class="v-row">
+              v-for="(item, index) in items"
+              class="v-col-12">
+            <v-checkbox
+                hide-details
+                :model-value="item.selected"
+                @update:model-value="itemSelection(index, $event)"
+                :label="item.title"
+            />
             <div
-                v-if="items[index].isOther === true"
-                class="v-col-12">
+                v-if="items[index].selected === true"
+                class="v-row">
+              <div
+                  v-if="items[index].isOther === true"
+                  class="v-col-12">
 
-              <base-text-area
-                  label="توضیحات"
-                  v-model="items[index].description"
-              />
+                <base-text-area
+                    label="توضیحات"
+                    v-model="items[index].description"
+                />
 
 
+              </div>
+              <div class="v-col-md-6 v-col-sm-12">
+                <base-text-field
+                    v-model="items[index].post"
+                    :rules="rules.post"
+                    label="سمت"
+                    required-symbol
+                />
+              </div>
+              <div class="v-col-md-6 v-col-sm-12">
+                <base-text-field
+                    type="number"
+                    v-model="items[index].postHistory"
+                    :rules="rules.postHistory"
+                    required-symbol
+                    label="سابقه مسئولیت"/>
+              </div>
             </div>
-            <div class="v-col-md-6 v-col-sm-12">
-              <base-text-field
-                  type="number"
-                  v-model="items[index].postHistory"
-                  label="سابقه مسئولیت"/>
-            </div>
-            <div class="v-col-md-6 v-col-sm-12">
-              <base-text-field
-                  v-model="items[index].post"
-                  label="سمت"/>
 
-            </div>
           </div>
-
         </div>
-      </div>
+      </v-form>
     </v-container>
   </v-form>
 </template>
@@ -79,11 +85,18 @@ export default {
     return {
       isValid: false,
       items: [],
+      rules: {
+        post: [v => !!v || 'تکمیل این فیلد اجباری است.'],
+        postHistory: [v => !!v || 'تکمیل این فیلد اجباری است.']
+      }
     }
   },
   methods: {
     itemSelection(index, event) {
       this.items[index].selected = event;
+    },
+    async validate() {
+      return await this.$refs.form.validate()
     }
   },
   watch: {

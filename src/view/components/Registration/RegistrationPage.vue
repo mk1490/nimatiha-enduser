@@ -74,6 +74,7 @@
                       <v-stepper-window-item
                           :value="4">
                         <executive-history
+                            ref="executiveHistory"
                             v-if="selectedStep === 4"
                             @update:modelValue="model.executive = $event"
                         />
@@ -261,6 +262,9 @@ export default {
           break;
         }
         case 4: {
+          const {valid} = await this.$refs.executiveHistory.validate();
+          if (!valid)
+            return;
           this.httpPut(`/member-request/executive`, this.model.executive, () => {
             this.selectedStep++;
           })
