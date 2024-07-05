@@ -69,7 +69,7 @@
               <base-select
                   label="ناحیه"
                   :items="items.zoneItems"
-                  v-model="model.educationField"
+                  v-model="model.educationZone"
               />
             </div>
 
@@ -168,6 +168,7 @@ export default {
         educationGrade: null,
         schoolGrade: null,
         educationField: null,
+        educationZone: null,
         educationLocation: null,
         average: null,
         schoolName: null,

@@ -51,15 +51,17 @@ export default {
       isValid: false,
       items: {
         tarheVelayat: [
-          {title: 'شرکت نکرده‌ام', value: -1},
+          {title: 'شرکت نکرده‌ام', value: 0},
           {title: 'استانی', value: 1},
           {title: 'حوزه‌ای', value: 2},
         ],
         astaneQods: [
+          {title: 'شرکت نکرده‌ام', value: 0},
           {title: 'بی‌نهایت شو', value: 1},
           {title: 'برهان', value: 2},
         ],
         oqaf: [
+          {title: 'شرکت نکرده‌ام', value: 0},
           {title: 'ترتیل', value: 1},
           {title: 'قرائت', value: 2},
           {title: 'حفظ', value: 3}

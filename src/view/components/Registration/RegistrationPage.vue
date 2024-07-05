@@ -21,7 +21,7 @@
                 </v-card-text>
               </v-card>
             </div>
-            
+
             <div
                 v-if="isAuth"
                 class="d-flex justify-center">
@@ -164,7 +164,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 5,
+      selectedStep: 0,
       trackingCode: null,
       model: {
         personal: {},
