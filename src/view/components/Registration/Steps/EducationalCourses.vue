@@ -90,7 +90,23 @@ export default {
   emits: ['update:modelValue'],
   created() {
     this.httpGet(`/member-request/initialize/educational-courses`, result => {
-      this.model = {...result}
+      this.items = {...result.initialize}
+      const oqaf = result.model.oqaf;
+      const astaneQods = result.model.astaneQods;
+      const tarheVelayat = result.model.tarheVelayat;
+      this.model.oqafStatus = oqaf ? 2 : 1;
+      this.model.astaneQodsStatus = astaneQods ? 2 : 1;
+      this.model.tarheVelayatStatus = tarheVelayat ? 2 : 1;
+
+      if (oqaf){
+        this.model.oqaf = oqaf
+      }
+      if (astaneQods){
+        this.model.astaneQods = astaneQods;
+      }
+      if (tarheVelayat){
+        this.model.tarheVelayat = tarheVelayat
+      }
     })
   },
   data() {
@@ -124,7 +140,11 @@ export default {
   watch: {
     'model': {
       handler() {
-        this.$emit('update:modelValue', this.items)
+        this.$emit('update:modelValue', {
+          tarheVelayat: this.model.tarheVelayatStatus === 2 ? this.model.tarheVelayat : null,
+          astaneQods: this.model.astaneQodsStatus === 2 ? this.model.astaneQods : null,
+          oqaf: this.model.oqafStatus === 2 ? this.model.oqaf : null,
+        })
       },
       deep: true,
     }

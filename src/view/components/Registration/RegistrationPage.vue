@@ -140,7 +140,6 @@
 import RegistrationSuccessComponent from "@/view/components/Registration/Widgets/RegistrationSuccessComponent.vue";
 
 import Authentication from "./Steps/Authentication.vue";
-import FinalApproval from "@/view/components/Registration/Steps/FinalApproval.vue";
 import ParentInformation from "@/view/components/Registration/Steps/ParentInformation.vue";
 import EducationalStatus from "@/view/components/Registration/Steps/EducationalStatus.vue";
 import ExecutiveHistory from "@/view/components/Registration/Steps/ExecutiveHistory.vue";
@@ -294,9 +293,9 @@ export default {
               icon: 'success',
               text: 'درخواست شما با موفقیت ثبت شد.'
             }).then(() => {
-              localStorage.removeItem('accessToken');
-              this.selectedStep = 1;
-              this.isAuth = false;
+              // localStorage.removeItem('accessToken');
+              // this.selectedStep = 1;
+              // this.isAuth = false;
             })
           })
           break;
