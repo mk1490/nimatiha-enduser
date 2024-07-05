@@ -27,7 +27,7 @@
                 class="d-flex justify-center">
               <v-card
                   :width="cardWidth"
-                  title="فرم اطلاعات یاوران ولایت"
+                  title="ثبت نام یاوران ولایت"
                   class="elevation-0">
                 <v-card-text>
                   <v-stepper
@@ -106,7 +106,15 @@
                         :disabled="false"
                         prev-text="قبلی"
                         :next-text="selectedStep === 6  ? 'ارسال' : 'بعدی'">
+                      <template v-slot:prev>
 
+                        <v-btn v-if="selectedStep !== 1"
+                               @click="prev"
+                        >
+                          قبلی
+                        </v-btn>
+                        <v-spacer/>
+                      </template>
                     </v-stepper-actions>
                   </v-stepper>
 
