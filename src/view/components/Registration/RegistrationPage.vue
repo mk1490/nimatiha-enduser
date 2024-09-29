@@ -1,5 +1,5 @@
 <template>
-  <v-app full-height class="bg-amber-darken-4">
+  <v-app full-height class="bg-green-darken-4">
     <v-container class="container--fluid pa-0" style="height: 100%;">
       <div class="content fill-height d-flex align-items-center">
         <v-layout
@@ -293,9 +293,9 @@ export default {
               icon: 'success',
               text: 'درخواست شما با موفقیت ثبت شد.'
             }).then(() => {
-              // localStorage.removeItem('accessToken');
-              // this.selectedStep = 1;
-              // this.isAuth = false;
+              localStorage.removeItem('accessToken');
+              this.selectedStep = 1;
+              this.isAuth = false;
             })
           })
           break;
