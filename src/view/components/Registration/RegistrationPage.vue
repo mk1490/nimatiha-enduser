@@ -37,17 +37,10 @@
                       flat
                       :mobile="$vuetify.display.mobile"
                       @update:modelValue="selectedStep = $event"
-                      :items="[
-                      'تکمیل اطلاعات فردی',
-                      'مشخّصات والدین',
-                      'وضعیت تحصیلی - آموزشی',
-                      'سوابق اجرایی',
-                      'سوابق آموزشی - فرهنگی',
-                      'دوره‌های آموزشی',
-                      ]"
+                      :items="headers"
                       alt-labels>
-
-                    <v-stepper-window :model-value="selectedStep">
+                    <v-stepper-window
+                        :model-value="selectedStep">
                       <v-stepper-window-item :value="1">
                         <step-one-general-information
                             ref="generalInformation"
@@ -173,11 +166,19 @@ export default {
   },
   data() {
     return {
+      headers: [
+        'تکمیل اطلاعات فردی',
+        'مشخّصات والدین',
+        'وضعیت تحصیلی - آموزشی',
+        'سوابق اجرایی',
+        'سوابق آموزشی - فرهنگی',
+        'دوره‌های آموزشی',
+      ],
       isAuth: false,
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 0,
+      selectedStep: 2,
       trackingCode: null,
       model: {
         personal: {},
@@ -220,12 +221,18 @@ export default {
     onMethodConverted(event) {
       this.model.monthlyIncome = event;
     },
+    click() {
+      console.log("Salam")
+    },
     authSuccess() {
       this.isAuth = true;
       this.selectedStep++;
     },
     prev() {
       this.selectedStep--;
+    },
+    getTitle(v) {
+      console.log(v)
     },
     async next() {
       switch (this.selectedStep) {

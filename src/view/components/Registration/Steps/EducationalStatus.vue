@@ -89,6 +89,7 @@
                 class="v-col-12">
               <base-select
                   label="شهرستان"
+                  :items="items.cities"
                   v-model="model.educationCity"
                   :rules="rules.educationZone"
                   required-symbol
@@ -153,8 +154,10 @@ export default {
   emits: ['update:modelValue'],
   created() {
     this.httpGet(`/member-request/initialize/educational-status`, result => {
-      Object.keys(result).map(f => {
-        this.model[f] = result[f];
+      this.items.cities = result.items.cities;
+
+      Object.keys(result.model).map(f => {
+        this.model[f] = result.model[f];
       })
     })
 
@@ -163,13 +166,15 @@ export default {
     return {
       isValid: false,
       items: {
+        cities: [],
         educationGrade: [
           {title: 'متوسطه اوّل', value: 1},
           {title: 'متوسطه دوّم', value: 2},
         ],
         juniorSchoolItems: [
-          {title: 'دهم', value: 1},
-          {title: 'یازدهم', value: 2},
+          {title: 'هفتم', value: 1},
+          {title: 'هشتم', value: 2},
+          {title: 'نهم', value: 3},
         ],
         highSchoolItems: [
           {title: 'دهم', value: 1},
@@ -213,8 +218,8 @@ export default {
       }
     }
   },
-  methods:{
-    async validate(){
+  methods: {
+    async validate() {
       return await this.$refs.form.validate()
     }
   },

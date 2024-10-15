@@ -57,7 +57,7 @@
               v-model="model.oqafStatus"
               hide-details
               density="comfortable"
-              label="آستان قدس"
+              label="اوقاف"
               inline>
             <v-radio
                 :value="1"
@@ -98,13 +98,13 @@ export default {
       this.model.astaneQodsStatus = astaneQods ? 2 : 1;
       this.model.tarheVelayatStatus = tarheVelayat ? 2 : 1;
 
-      if (oqaf){
+      if (oqaf) {
         this.model.oqaf = oqaf
       }
-      if (astaneQods){
+      if (astaneQods) {
         this.model.astaneQods = astaneQods;
       }
-      if (tarheVelayat){
+      if (tarheVelayat) {
         this.model.tarheVelayat = tarheVelayat
       }
     })
