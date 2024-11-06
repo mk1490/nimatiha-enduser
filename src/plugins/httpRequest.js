@@ -48,7 +48,7 @@ export default {
                     break;
                 }
                 case 401: {
-                    localStorage.removeItem('accessToken');
+                    // localStorage.removeItem('accessToken');
                     if (Router.currentRoute.fullPath !== '/login') {
                         await Router.push('/login');
                     }

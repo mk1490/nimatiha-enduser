@@ -161,15 +161,7 @@ export default {
     RegistrationSuccessComponent
   },
   async created() {
-    this.httpGet(`/auth/initialize/general-information`, (data) => {
-      this.items.projectItems = data.projects.map(f => {
-        return {
-          value: f.id,
-          text: f.title,
-        }
-      });
-      this.items.housingTypes = data.housingTypes;
-    })
+
   },
   data() {
     return {
