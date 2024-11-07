@@ -9,7 +9,7 @@
           <div class="d-inline-block align-self-center">
 
             <div
-                v-if="isAuth == false"
+                v-if="isLogin == false"
                 class="d-flex justify-center">
               <v-card width="300">
                 <v-card-title class="text-center">
@@ -23,7 +23,7 @@
             </div>
 
             <div
-                v-if="isAuth"
+                v-if="isLogin"
                 class="d-flex justify-center">
               <v-card
                   :width="cardWidth"
@@ -139,7 +139,7 @@ import ExecutiveHistory from "@/view/components/Registration/Steps/ExecutiveHist
 import EducationalAndCulturalHistory from "@/view/components/Registration/Steps/EducationalAndCulturalHistory.vue";
 import EducationalCourses from "@/view/components/Registration/Steps/EducationalCourses.vue";
 import StepOneGeneralInformation from "@/view/components/Registration/Steps/StepOneGeneralInformation.vue";
-
+import {mapGetters} from 'vuex'
 
 export default {
   name: "RegistrationPage",
@@ -166,7 +166,6 @@ export default {
         'سوابق آموزشی - فرهنگی',
         'دوره‌های آموزشی',
       ],
-      isAuth: false,
       vm: this,
       status: -1,
       isValid: false,
@@ -214,10 +213,9 @@ export default {
       this.model.monthlyIncome = event;
     },
     click() {
-      console.log("Salam")
     },
     authSuccess() {
-      this.isAuth = true;
+      this.$store.commit('LOGIN_STATE', true)
       this.selectedStep++;
     },
     prev() {
@@ -233,7 +231,9 @@ export default {
           if (!valid)
             return;
 
-          this.httpPut(`/member-request/personal-information`, this.model.personal, () => {
+          let payload = {...this.model.personal};
+          payload.slug = this.$route.params.slug
+          this.httpPut(`/member-request/personal-information`,payload , () => {
             this.selectedStep++;
           })
           break;
@@ -254,6 +254,7 @@ export default {
             motherEducationLevelFifeSituation: this.model.parent.mother.lifeSituation,
             singleChild: this.model.parent.singleChild,
             familyMembers: Number(this.model.parent.familyMembers),
+
           }, () => {
             this.selectedStep++;
           })
@@ -294,7 +295,7 @@ export default {
             }).then(() => {
               localStorage.removeItem('accessToken');
               this.selectedStep = 1;
-              this.isAuth = false;
+              this.$store.commit('LOGIN_STATE', false);
             })
           })
           break;
@@ -304,6 +305,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isLogin']),
     cardWidth: function () {
       switch (this.$vuetify.display.name) {
         case 'xl':
