@@ -5,28 +5,36 @@
       lazy-validation>
     <v-container>
       <div class="v-row">
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('name')"
+            class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام"
               :rules="rules.name"
               v-model="model.name"
           />
         </div>
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('family')"
+            class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام خانوادگی"
               :rules="rules.family"
               v-model="model.family"
           />
         </div>
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('fatherName')"
+            class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="نام پدر"
               :rules="rules.fatherName"
               v-model="model.fatherName"
           />
         </div>
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('nationalCode')"
+            class="v-col-md-4 v-col-sm-12">
           <base-text-field
               label="کد ملّی"
               dir="ltr"
@@ -35,7 +43,9 @@
               v-model="model.nationalCode"
           />
         </div>
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('birthDate')"
+            class="v-col-md-4 v-col-sm-12">
           <v-text-field
               id="date-picker"
               :model-value="model.birthDate? getPersianTime(model.birthDate, 'jYYYY/jMM/jDD'):null"
@@ -59,7 +69,9 @@
 
           </datePicker>
         </div>
-        <div class="v-col-md-4 v-col-sm-12">
+        <div
+            v-if="formShowing('disabilityStatus')"
+            class="v-col-md-4 v-col-sm-12">
           <base-select
               label="وضعیت معلولیت"
               :items="disabilityStatus"
@@ -81,7 +93,9 @@
 
         <div class="v-col-12">
           <div class="v-row">
-            <div class="v-col-sm-4 v-col-sm-12">
+            <div
+                v-if="formShowing('religion')"
+                class="v-col-sm-4 v-col-sm-12">
               <base-select
                   label="مذهب"
                   :items="religionItems"
@@ -90,7 +104,9 @@
               />
             </div>
 
-            <div class="v-col-sm-4 v-col-sm-12">
+            <div
+                v-if="formShowing('illnessHistory')"
+                class="v-col-sm-4 v-col-sm-12">
               <base-select
                   label="سابقه بیماری"
                   :items="diseaseBackgroundItems"
@@ -112,6 +128,7 @@
 
 
         <div
+            v-if="formShowing('city')"
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
           <base-auto-complete
               label="شهرستان محل سکونت"
@@ -122,6 +139,7 @@
           />
         </div>
         <div
+            v-if="formShowing('address')"
             class="v-col-sm-12 v-col-md-12 v-col-lg-12">
           <base-text-area
               label="نشانی محل سکونت"
@@ -150,20 +168,18 @@ export default {
     modelValue: String,
   },
   created() {
-    this.httpGet(`/member-request/initialize/general-information`, result => {
+    const slug = this.$route.params.slug;
+    this.httpGet(`/member-request/initialize/general-information/${slug}`, result => {
+      this.disabledForms = result.disabledForms;
       Object.keys(result.model).map(f => {
         this.model[f] = result.model[f];
       })
-      this.$store.commit('SET_EDUCATION_LEVEL_ITEMS', result.initialize.educationLevels)
-      this.$store.commit('SET_RELIGION_ITEMS', result.initialize.religionItems)
-      this.$store.commit('SET_DISABILITY_ITEMS', result.initialize.disabilityStatus)
-      this.$store.commit('SET_DISEASE_BACKGROUND_ITEMS', result.initialize.diseaseBackgroundItems)
-      this.$store.commit('SET_CITY_ITEMS', result.initialize.cityItems)
     })
   },
   emits: ['update:modelValue'],
   data() {
     return {
+      disabledForms: [],
       model: {
         name: null,
         family: null,
@@ -228,9 +244,14 @@ export default {
       'cityItems'
     ])
   },
-  methods:{
-    async validate(){
+  methods: {
+    async validate() {
       return await this.$refs.form.validate();
+    },
+    formShowing(valueName) {
+      if (!this.disabledForms.includes(valueName))
+        return true;
+      return false;
     }
   }
 }

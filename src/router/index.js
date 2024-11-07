@@ -11,7 +11,7 @@ export const constantRoutes = [{
         path: '', redirect: '/registration', name: 'Home', component: () => import('@/view/components/Home/Home.vue'),
     }]
 }, {
-    path: '/registration',
+    path: '/:slug?',
     name: 'registration',
     component: () => import('@/view/components/Registration/RegistrationPage.vue'),
 }, {
