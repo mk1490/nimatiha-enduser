@@ -69,13 +69,6 @@ export default {
   components: {BaseTextField},
   emits: ['authSuccess'],
   created() {
-    const accessToken = localStorage.getItem('accessToken')
-    if (accessToken) {
-      this.httpGet(`/member-request/initialize/verifyPhoneNumbers`, result => {
-        this.$emit('authSuccess')
-      })
-    }
-
   },
   data() {
     return {
@@ -110,8 +103,6 @@ export default {
         if (result.is_new_user == true) {
           this.isCodeSend = true
         }
-
-
       }, () => {
         this.loading = false;
       })

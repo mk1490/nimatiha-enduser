@@ -13,7 +13,7 @@ const user = {
         },
         submitDelete: -1,
         loading: false,
-        isLogin: !!localStorage.getItem('Authorization'),
+        isLogin: !!localStorage.getItem('accessToken'),
         userPermissions: [],
     }, getters: {
         id: (state) => state.id,
@@ -100,7 +100,6 @@ const user = {
             state.sessionId = payload;
         },
         login: ({state}, payload) => {
-            localStorage.setItem('Authorization', payload.access_token);
             state.isLogin = true;
         },
     }

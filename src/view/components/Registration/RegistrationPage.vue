@@ -9,7 +9,7 @@
           <div class="d-inline-block align-self-center">
 
             <div
-                v-if="isLogin == false"
+                v-if="isLogin === false"
                 class="d-flex justify-center">
               <v-card width="300">
                 <v-card-title class="text-center">
@@ -154,7 +154,23 @@ export default {
     RegistrationSuccessComponent
   },
   async created() {
+    this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
+      if (result.success === true) {
+        localStorage.setItem('testId', result['questionnaireId']);
+        if (this.$store.getters.isLogin) {
+          this.$store.commit('LOGIN_STATE', true)
+        }
+      } else {
+        this.$swal.fire({
+          icon: 'error',
+          text: result.message,
+          showConfirmButton: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+        })
+      }
 
+    })
   },
   data() {
     return {
@@ -169,7 +185,7 @@ export default {
       vm: this,
       status: -1,
       isValid: false,
-      selectedStep: 2,
+      selectedStep: 1,
       trackingCode: null,
       model: {
         personal: {},
@@ -233,7 +249,7 @@ export default {
 
           let payload = {...this.model.personal};
           payload.slug = this.$route.params.slug
-          this.httpPut(`/member-request/personal-information`,payload , () => {
+          this.httpPut(`/member-request/personal-information`, payload, () => {
             this.selectedStep++;
           })
           break;

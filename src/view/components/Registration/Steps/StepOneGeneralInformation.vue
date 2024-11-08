@@ -168,8 +168,11 @@ export default {
     modelValue: String,
   },
   created() {
-    const slug = this.$route.params.slug;
-    this.httpGet(`/member-request/initialize/general-information/${slug}`, result => {
+    this.httpGet(`/member-request/initialize/general-information?questionnaireId=${localStorage.getItem('testId')}`, result => {
+      this.$store.commit('SET_DISABILITY_ITEMS', result.initialize.disabilityStatus);
+      this.$store.commit('SET_DISEASE_BACKGROUND_ITEMS', result.initialize.diseaseBackgroundItems);
+      this.$store.commit('SET_RELIGION_ITEMS', result.initialize.religionItems);
+      this.$store.commit('SET_CITY_ITEMS', result.initialize.cityItems);
       this.disabledForms = result.disabledForms;
       Object.keys(result.model).map(f => {
         this.model[f] = result.model[f];
