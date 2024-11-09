@@ -22,7 +22,6 @@ export const constantRoutes = [
         name: 'registration',
         path: '/:slug?',
         component: () => import('@/view/components/Registration/RegistrationPage.vue'),
-
     }
 ]
 export default createRouter({
