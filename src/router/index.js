@@ -8,30 +8,14 @@ export const constantRoutes = [{
     component: Layout, meta: {
         noCache: true, affix: true, title: 'route.Management',
     }, children: [{
-        path: '', redirect: '/registration', name: 'Home', component: () => import('@/view/components/Home/Home.vue'),
+        path: '',
+        redirect: '/registration',
+        name: 'Home',
     }]
 }, {
     path: '/:slug?',
     name: 'registration',
     component: () => import('@/view/components/Registration/RegistrationPage.vue'),
-}, {
-    path: '/login', name: 'login', component: () => import('@/view/components/Auth/Login.vue'),
-}, {
-    path: '/profile',
-    name: 'profile',
-    redirect: '/profile/dashboard',
-    component: () => import('@/view/components/Profile/TheLayoutProfile.vue'),
-    children: [{
-        path: 'dashboard',
-        name: 'dashboard',
-        component: () => import('@/view/components/Profile/Dashboard/Dashboard.vue'),
-    }, {
-        path: '/uploadDocuments',
-        name: 'uploadDocuments',
-        component: () => import('@/view/components/Profile/UploadDocuments/UploadDocuments.vue'),
-    }, {
-        path: '/statusPage', name: 'statusPage', component: () => import('@/view/components/Profile/StatusPage.vue'),
-    },]
 }]
 export default createRouter({
     scrollBehavior: () => ({y: 0}), routes: constantRoutes, history: createWebHashHistory(process.env.BASE_URL),
