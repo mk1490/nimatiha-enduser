@@ -57,7 +57,6 @@
 <script>
 import FullScreen from '../widget/AppFullScreen.vue';
 import AppDateTime from "@/view/widget/AppDateTime";
-import AppSoundAlarmPlay from "@/view/widget/AppSoundAlarmPlay.vue";
 import AppToggleNightMode from "@/view/widget/AppToggleNightMode.vue";
 import AppFullScreen from "@/view/widget/AppFullScreen.vue";
 import AppHelpButton from "@/view/widget/AppHelpButton.vue";
@@ -74,7 +73,6 @@ export default {
     AppHelpButton,
     AppFullScreen,
     AppToggleNightMode,
-    AppSoundAlarmPlay,
     AppDateTime,
     FullScreen,
   },

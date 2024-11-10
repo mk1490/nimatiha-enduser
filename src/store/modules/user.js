@@ -80,7 +80,7 @@ const user = {
             });
         },
         logout: async ({commit}) => {
-            localStorage.removeItem('Authorization');
+            localStorage.removeItem('accessToken');
             await commit('LOGOUT');
         },
         setUserInfo: async ({commit}, payload) => {
