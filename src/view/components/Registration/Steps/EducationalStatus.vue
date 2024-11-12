@@ -177,8 +177,8 @@ export default {
           {title: 'نهم', value: 3},
         ],
         highSchoolItems: [
-          {title: 'دهم', value: 1},
-          {title: 'یازدهم', value: 2},
+          {title: 'دهم', value: 4},
+          {title: 'یازدهم', value: 5},
         ],
         zoneItems: [
           {title: 'یک', value: 1},
