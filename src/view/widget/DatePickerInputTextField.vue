@@ -5,7 +5,7 @@
         :close-on-content-click="false"
         max-width="290">
       <template v-slot:activator="{ on, attrs }">
-        <v-text-field
+        <v-text-fieldw
             :value="computedDateFormattedMomentjs"
             clearable
             :label="$t('timeRangeItems.selectTime')"
@@ -16,7 +16,7 @@
             dense
             v-on="on"
             @click:clear="date = null"
-        ></v-text-field>
+        ></v-text-fieldw>
       </template>
       <v-date-picker
           v-model="date"

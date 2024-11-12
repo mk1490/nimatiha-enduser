@@ -115,7 +115,7 @@
               />
             </div>
             <div
-                v-if="model.diseaseBackground === 1"
+                v-if="model.diseaseBackground === 1 && formShowing('illnessHistory')"
                 class="v-col-12">
               <base-text-area
                   label="شرح سابقه بیماری"

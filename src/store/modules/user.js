@@ -67,6 +67,9 @@ const user = {
         },
         SET_USER_PERMISSIONS: (state, payload) => {
             state.userPermissions = payload;
+        },
+        SET_MOBILE_NUMBER: (state, payload) => {
+            state.phoneNumber = payload;
         }
     }, actions: {
         showLoading: ({commit}) => {

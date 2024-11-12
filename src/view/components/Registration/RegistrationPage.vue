@@ -27,8 +27,26 @@
                 class="d-flex justify-center">
               <v-card
                   :width="cardWidth"
-                  title="ثبت نام یاوران ولایت"
                   class="elevation-0">
+                <v-card-title class="text-center">
+                  {{ title }}
+                  <div
+                      v-if="isLogin"
+                      class="v-col-12 pt-0">
+                    <small>
+                      {{ phoneNumber }}
+                    </small>
+                    <div class="d-block">
+                      <v-btn
+                          @click="logout"
+                          density="compact"
+                          variant="text"
+                          color="error">
+                        خروج
+                      </v-btn>
+                    </div>
+                  </div>
+                </v-card-title>
                 <v-card-text>
                   <v-stepper
                       hide-actions
@@ -156,9 +174,12 @@ export default {
   async created() {
     this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       if (result.success === true) {
+        this.title = result['questionnaireTitle'];
         localStorage.setItem('testId', result['questionnaireId']);
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
+          this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
+
         }
       } else {
         this.$swal.fire({
@@ -174,6 +195,7 @@ export default {
   },
   data() {
     return {
+      title: '',
       headers: [
         'تکمیل اطلاعات فردی',
         'مشخّصات والدین',
@@ -228,11 +250,13 @@ export default {
     onMethodConverted(event) {
       this.model.monthlyIncome = event;
     },
-    click() {
+    logout() {
+      localStorage.removeItem('accessToken');
+      this.$store.commit('LOGIN_STATE', false)
+      this.isAuth = false;
     },
     authSuccess() {
-      this.$store.commit('LOGIN_STATE', true)
-      this.selectedStep++;
+      this.$store.commit('LOGIN_STATE', true);
     },
     prev() {
       this.selectedStep--;
@@ -321,7 +345,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLogin']),
+    ...mapGetters(['isLogin', 'phoneNumber']),
     cardWidth: function () {
       switch (this.$vuetify.display.name) {
         case 'xl':
