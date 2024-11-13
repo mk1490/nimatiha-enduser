@@ -113,8 +113,9 @@ export default {
         verify_code: this.model.verifyCode,
       }, (result) => {
         this.loading = false;
-        localStorage.setItem('accessToken', result.token)
-        this.$emit('authSuccess', result.token)
+        localStorage.setItem('accessToken', result.token);
+        this.$store.commit('SET_MOBILE_NUMBER', result.user.mobile);
+        this.$emit('authSuccess', result.token);
       }, () => {
         this.loading = false;
       })
