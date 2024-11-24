@@ -37,59 +37,20 @@
                       flat
                       :mobile="$vuetify.display.mobile"
                       @update:modelValue="selectedStep = $event"
-                      :items="headers"
+                      :items="steps"
                       alt-labels>
                     <v-stepper-window
                         :model-value="selectedStep">
-                      <v-stepper-window-item :value="1">
-                        <step-one-general-information
-                            ref="generalInformation"
-                            v-if="selectedStep === 1"
-                            @update:modelValue="model.personal = $event"/>
-                      </v-stepper-window-item>
-
-
-                      <v-stepper-window-item :value="2">
-                        <parent-information
-                            v-if="selectedStep === 2"
-                            ref="parentInformation"
-                            @update:modelValue="model.parent = $event"
-                        />
-                      </v-stepper-window-item>
                       <v-stepper-window-item
-                          :value="3">
-                        <educational-status
-                            v-if="selectedStep === 3"
-                            ref="educationalStatus"
-                            @update:modelValue="model.educational = $event"
-                        />
-                      </v-stepper-window-item>
-                      <v-stepper-window-item
-                          :value="4">
-                        <executive-history
-                            ref="executiveHistory"
-                            v-if="selectedStep === 4"
-                            @update:modelValue="model.executive = $event"
+                          v-for="(item, index) in steps"
+                          :value="index +1 ">
+
+                        <dynamic-step
+                            :form-items="item.formItems"
                         />
                       </v-stepper-window-item>
 
-                      <v-stepper-window-item
-                          :value="5">
-                        <educational-and-cultural-history
-                            v-if="selectedStep === 5"
-                            ref="educationalAndCulturalHistory"
-                            @update:modelValue="model.educationalAndHistorical = $event"
 
-                        />
-                      </v-stepper-window-item>
-
-                      <v-stepper-window-item
-                          :value="6">
-                        <educational-courses
-                            v-if="selectedStep === 6"
-                            @update:modelValue="model.educationalCourses = $event"
-                        />
-                      </v-stepper-window-item>
                     </v-stepper-window>
 
 
@@ -140,10 +101,12 @@ import EducationalAndCulturalHistory from "@/view/components/Registration/Steps/
 import EducationalCourses from "@/view/components/Registration/Steps/EducationalCourses.vue";
 import StepOneGeneralInformation from "@/view/components/Registration/Steps/StepOneGeneralInformation.vue";
 import {mapGetters} from 'vuex'
+import DynamicStep from "@/view/components/Registration/Steps/DynamicStep.vue";
 
 export default {
   name: "RegistrationPage",
   components: {
+    DynamicStep,
     StepOneGeneralInformation,
     EducationalCourses,
     EducationalAndCulturalHistory,
@@ -160,6 +123,8 @@ export default {
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
         }
+        this.steps = result.levels;
+
       } else {
         this.$swal.fire({
           icon: 'error',
@@ -174,6 +139,7 @@ export default {
   },
   data() {
     return {
+      steps: [],
       headers: [
         'تکمیل اطلاعات فردی',
         'مشخّصات والدین',
