@@ -196,51 +196,48 @@ export default {
     async next() {
       let payload = {}
       Object.keys(this.model).map(f => {
-
         Object.keys(this.model[f]).map(fieldItem => {
           payload[fieldItem] = this.model[f][fieldItem];
         })
-
-
       })
 
-      console.log(payload)
 
-      switch (this.selectedStep) {
-
-        case this.steps.length: {
-          this.httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, payload, result => {
-            this.$swal.fire({
-              icon: 'success',
-              text: 'درخواست شما با موفقیت ثبت شد.'
-            }).then(() => {
-              localStorage.removeItem('accessToken');
-              this.selectedStep = 1;
-              this.$store.commit('LOGIN_STATE', false);
-            })
+      this.httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, this.model[this.steps[this.selectedStep - 1].id], result => {
+        if (this.selectedStep === this.steps.length) {
+          this.$swal.fire({
+            icon: 'success',
+            text: 'درخواست شما با موفقیت ثبت شد.'
+          }).then(() => {
+            localStorage.removeItem('accessToken');
+            this.selectedStep = 1;
+            this.$store.commit('LOGIN_STATE', false);
           })
-          break;
+        } else {
+          this.selectedStep++;
         }
-      }
-
+      })
     }
   },
   computed: {
-    ...mapGetters(['isLogin', 'phoneNumber']),
-    cardWidth: function () {
-      switch (this.$vuetify.display.name) {
-        case 'xl':
-        case 'lg':
-          return 1000;
-        case 'md':
-          return 700;
-        case 'xs':
-          return 300
-        default:
-          return 500;
-      }
-    }
-  },
+    ...
+        mapGetters(['isLogin', 'phoneNumber']),
+    cardWidth:
+
+        function () {
+          switch (this.$vuetify.display.name) {
+            case 'xl':
+            case 'lg':
+              return 1000;
+            case 'md':
+              return 700;
+            case 'xs':
+              return 300
+            default:
+              return 500;
+          }
+        }
+  }
+  ,
 }
 </script>
 
