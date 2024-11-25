@@ -103,6 +103,35 @@ export default {
             />
           </template>
 
+
+          <template v-if="item.type === 8">
+
+            <div
+                :class="item.size">
+              <v-text-field
+                  :id="item.key"
+                  :model-value="model[item.key]? getPersianTime(model[item.key], 'jYYYY/jMM/jDD'):null"
+                  :label="item.label"
+                  prepend-inner-icon="mdi-calendar"
+                  variant="outlined"
+                  density="compact"
+                  readonly
+                  hide-details
+                  dense
+                  clearable
+                  @click:clear="model.birthDate = null">
+              </v-text-field>
+              <datePicker
+                  v-model="model[item.key]"
+                  simple
+                  :element="item.key"
+                  format="YYYY-MM-DD"
+                  :max="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substring(0, 10)">
+              </datePicker>
+            </div>
+          </template>
+
+
         </template>
       </div>
     </v-container>
