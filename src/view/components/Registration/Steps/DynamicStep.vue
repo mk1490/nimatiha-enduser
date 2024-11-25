@@ -89,7 +89,7 @@ export default {
           </template>
 
 
-          <template v-if="[6, 7].includes(item.type)">
+          <template v-if="[4, 6, 7].includes(item.type)">
             <base-select
                 :label="item.label"
                 :class="item.size"
