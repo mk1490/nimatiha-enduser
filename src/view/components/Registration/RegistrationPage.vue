@@ -62,7 +62,6 @@
                       <v-stepper-window-item
                           v-for="(item, index) in steps"
                           :value="index +1 ">
-                        {{ model }}
                         <dynamic-step
                             v-model="model[steps[selectedStep -1].id]"
                             :form-items="item.formItems"

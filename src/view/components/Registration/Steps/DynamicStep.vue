@@ -132,6 +132,25 @@ export default {
           </template>
 
 
+          <template v-if="item.type === 10">
+
+            <div :class="item.size">
+
+              <div class="d-inline-flex align-center">
+                <label>{{ item.label }}</label>
+                <v-checkbox
+                    hide-details
+                    v-for="childItem in item.children"
+                    class="mx-2"
+                    :label="childItem.text"
+                >
+
+                </v-checkbox>
+              </div>
+            </div>
+          </template>
+
+
         </template>
       </div>
     </v-container>
