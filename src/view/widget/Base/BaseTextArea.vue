@@ -10,6 +10,12 @@
       :variant="variant"
       outlined
       dense>
+    <template v-slot:label>
+      <div class="required--symbol">
+        {{ label }}
+        <small v-if="requiredSymbol">*</small>
+      </div>
+    </template>
   </v-textarea>
 </template>
 
@@ -28,6 +34,10 @@ export default {
     variant: {
       type: String,
       default: () => 'outlined',
+    },
+    requiredSymbol: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

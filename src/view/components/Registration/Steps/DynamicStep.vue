@@ -8,10 +8,24 @@ export default {
   components: {BaseSelect, BaseTextArea, BaseTextField},
   props: {
     formItems: Array,
+    modelValue: Object,
+  },
+  created() {
+    this.formItems.map(f => {
+      this.model[f.key] = null
+    })
   },
   data() {
     return {
       model: {},
+    }
+  },
+  watch: {
+    'model': {
+      handler() {
+        this.$emit('update:modelValue', this.model)
+      },
+      deep: true,
     }
   },
   methods: {

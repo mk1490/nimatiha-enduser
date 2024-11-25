@@ -62,8 +62,9 @@
                       <v-stepper-window-item
                           v-for="(item, index) in steps"
                           :value="index +1 ">
-
+                        {{ model }}
                         <dynamic-step
+                            v-model="model[steps[selectedStep -1].id]"
                             :form-items="item.formItems"
                         />
                       </v-stepper-window-item>
@@ -77,7 +78,7 @@
                         @click:prev="prev"
                         :disabled="false"
                         prev-text="قبلی"
-                        :next-text="selectedStep === 6  ? 'ارسال' : 'بعدی'">
+                        :next-text="selectedStep === steps.length  ? 'ارسال' : 'بعدی'">
                       <template v-slot:prev>
 
                         <v-btn v-if="selectedStep !== 1"
@@ -150,31 +151,11 @@ export default {
     return {
       title: '',
       steps: [],
-      headers: [
-        'تکمیل اطلاعات فردی',
-        'مشخّصات والدین',
-        'وضعیت تحصیلی - آموزشی',
-        'سوابق اجرایی',
-        'سوابق آموزشی - فرهنگی',
-        'دوره‌های آموزشی',
-      ],
       vm: this,
       status: -1,
       isValid: false,
       selectedStep: 1,
-      trackingCode: null,
-      model: {
-        personal: {},
-        parent: {},
-        educational: {},
-        educationalAndHistorical: {},
-        educationalCourses: {},
-        executive: {},
-        market: {
-          marketId: null,
-          deskIds: [],
-        }
-      }
+      model: {}
     }
   },
   methods: {
@@ -201,9 +182,6 @@ export default {
         this.trackingCode = data.trackingCode;
       });
     },
-    onMethodConverted(event) {
-      this.model.monthlyIncome = event;
-    },
     logout() {
       localStorage.removeItem('accessToken');
       this.$store.commit('LOGIN_STATE', false)
@@ -215,74 +193,23 @@ export default {
     prev() {
       this.selectedStep--;
     },
-    getTitle(v) {
-      console.log(v)
-    },
     async next() {
+      let payload = {}
+      Object.keys(this.model).map(f => {
+
+        Object.keys(this.model[f]).map(fieldItem => {
+          payload[fieldItem] = this.model[f][fieldItem];
+        })
+
+
+      })
+
+      console.log(payload)
+
       switch (this.selectedStep) {
-        case 1: {
-          const {valid} = await this.$refs.generalInformation.validate()
-          if (!valid)
-            return;
 
-          let payload = {...this.model.personal};
-          payload.slug = this.$route.params.slug
-          this.httpPut(`/member-request/personal-information`, payload, () => {
-            this.selectedStep++;
-          })
-          break;
-        }
-        case 2: {
-          const {valid} = await this.$refs.parentInformation.validate()
-          if (!valid) {
-            return;
-          }
-          this.httpPut(`/member-request/parent-information`, {
-            fatherName: this.model.parent.father.name,
-            fatherFamily: this.model.parent.father.family,
-            fatherEducationLevel: this.model.parent.father.educationLevel,
-            fatherEducationLevelFifeSituation: this.model.parent.father.lifeSituation,
-            motherName: this.model.parent.mother.name,
-            motherFamily: this.model.parent.mother.family,
-            motherEducationLevel: this.model.parent.mother.educationLevel,
-            motherEducationLevelFifeSituation: this.model.parent.mother.lifeSituation,
-            singleChild: this.model.parent.singleChild,
-            familyMembers: Number(this.model.parent.familyMembers),
-
-          }, () => {
-            this.selectedStep++;
-          })
-          break;
-        }
-        case 3: {
-          const {valid} = await this.$refs.educationalStatus.validate();
-          if (!valid)
-            return;
-          this.httpPut(`/member-request/educational`, this.model.educational, () => {
-            this.selectedStep++;
-          })
-          break;
-        }
-        case 4: {
-          const {valid} = await this.$refs.executiveHistory.validate();
-          if (!valid)
-            return;
-          this.httpPut(`/member-request/executive`, this.model.executive, () => {
-            this.selectedStep++;
-          })
-          break;
-        }
-        case 5: {
-          const {valid} = await this.$refs.educationalAndCulturalHistory.validate()
-          if (!valid)
-            return;
-          this.httpPut(`/member-request/educationalAndHistorical`, this.model.educationalAndHistorical, () => {
-            this.selectedStep++;
-          })
-          break;
-        }
-        case 6: {
-          this.httpPut(`/member-request/educational-courses`, this.model.educationalCourses, result => {
+        case this.steps.length: {
+          this.httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, payload, result => {
             this.$swal.fire({
               icon: 'success',
               text: 'درخواست شما با موفقیت ثبت شد.'
