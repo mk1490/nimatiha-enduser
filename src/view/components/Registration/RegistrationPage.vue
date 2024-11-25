@@ -63,6 +63,8 @@
                           v-for="(item, index) in steps"
                           :value="index +1 ">
                         <dynamic-step
+                            v-if="index === selectedStep -1"
+                            :ref="`form_${index}`"
                             v-model="model[steps[selectedStep -1].id]"
                             :form-items="item.formItems"
                         />
@@ -193,6 +195,10 @@ export default {
       this.selectedStep--;
     },
     async next() {
+      if (!await this.$refs[`form_${this.selectedStep - 1}`][0].validate()) {
+        this.$toast.error('لطفا خطاهایی که در فرم وجود دارد را برطرف نمایید.')
+        return
+      }
       let payload = {}
       Object.keys(this.model).map(f => {
         Object.keys(this.model[f]).map(fieldItem => {

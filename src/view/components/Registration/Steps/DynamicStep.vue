@@ -29,6 +29,11 @@ export default {
     }
   },
   methods: {
+    async validate() {
+      const isValid = await this.$refs.form.validate();
+      return Promise.resolve(isValid.valid == true)
+
+    },
     rulesGenerator(item) {
       const rules = [];
 
