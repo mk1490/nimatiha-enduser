@@ -73,14 +73,17 @@ export default {
           />
 
 
-          <template v-if="item.type === 5">
+          <div
+              :class="item.size"
+              v-if="item.type === 5">
             <div>
               <label>{{ item.label }}</label>
             </div>
             <div class="d-block">
               <v-radio-group
+                  inline
+                  hide-details="auto"
                   :class="item.size"
-                  direction="horizontal"
                   v-model="model[item.key]"
                   :rules="rulesGenerator(item)">
                 <v-radio
@@ -91,7 +94,7 @@ export default {
                 />
               </v-radio-group>
             </div>
-          </template>
+          </div>
 
 
           <template v-if="[4, 6, 7].includes(item.type)">
