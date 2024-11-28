@@ -52,10 +52,12 @@ export default {
       this.finalFormItems = []
       const hasKey = Object.keys(this.model).includes(item.key)
       this.formItems.map(formItem => {
-        if (!formItem.visibilityCondition){
+        if (!formItem.visibilityCondition) {
           final.push(formItem)
-        }else if (hasKey && formItem.visibilityCondition.value === event){
+        } else if (hasKey && formItem.visibilityCondition.value === event) {
           final.push(formItem)
+        } else {
+          this.model[formItem.key] = null;
         }
       })
       this.finalFormItems = final;
