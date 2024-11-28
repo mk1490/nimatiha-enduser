@@ -1,5 +1,5 @@
 <script>
-import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
+import BaseTextField from "../../../widget/Base/BaseTextField.vue";
 import BaseTextArea from "../../../widget/Base/BaseTextArea.vue";
 import BaseSelect from "../../../widget/Base/BaseSelect.vue";
 
@@ -11,13 +11,18 @@ export default {
     modelValue: Object,
   },
   created() {
+
     this.formItems.map(f => {
       this.model[f.key] = null
+      if (!f.visibilityCondition) {
+        this.finalFormItems.push(f)
+      }
     })
   },
   data() {
     return {
       model: {},
+      finalFormItems: [],
     }
   },
   watch: {
@@ -32,7 +37,6 @@ export default {
     async validate() {
       const isValid = await this.$refs.form.validate();
       return Promise.resolve(isValid.valid == true)
-
     },
     rulesGenerator(item) {
       const rules = [];
@@ -42,8 +46,21 @@ export default {
       }
 
       return rules;
+    },
+    changeItem(item, event) {
+      const final = [];
+      this.finalFormItems = []
+      const hasKey = Object.keys(this.model).includes(item.key)
+      this.formItems.map(formItem => {
+        if (!formItem.visibilityCondition){
+          final.push(formItem)
+        }else if (hasKey && formItem.visibilityCondition.value === event){
+          final.push(formItem)
+        }
+      })
+      this.finalFormItems = final;
     }
-  }
+  },
 }
 </script>
 
@@ -54,12 +71,14 @@ export default {
       lazy-validation>
     <v-container>
       <div class="v-row">
-        <template v-for="item in formItems">
+        {{ model }}
+        <template v-for="item in finalFormItems">
           <base-text-field
-              v-if="item.type === 1"
+              v-if="[1, 11].includes(item.type)"
               :label="item.label"
               :class="item.size"
               v-model="model[item.key]"
+              :type="item.type === 11 ? 'number': ''"
               :required-symbol="item.isRequired"
               :rules="rulesGenerator(item)"
           />
@@ -103,6 +122,7 @@ export default {
                 :class="item.size"
                 :items="item.children"
                 v-model="model[item.key]"
+                @update:modelValue="changeItem(item, $event)"
                 item-title="text"
                 item-value="value"
                 :multiple="item.type === 7"
