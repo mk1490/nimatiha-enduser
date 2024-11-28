@@ -73,7 +73,6 @@ export default {
       lazy-validation>
     <v-container>
       <div class="v-row">
-        {{ model }}
         <template v-for="item in finalFormItems">
           <base-text-field
               v-if="[1, 11].includes(item.type)"
