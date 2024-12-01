@@ -69,6 +69,11 @@ export default {
   components: {BaseTextField},
   emits: ['authSuccess'],
   created() {
+    if (this.$store.getters.isAuth) {
+      this.$router.push({
+        name: 'root'
+      })
+    }
   },
   data() {
     return {

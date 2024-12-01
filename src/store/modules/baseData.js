@@ -4,7 +4,7 @@ const baseData = {
         selectedProjectId: null,
         uploadedDocuments: [],
         educationLevels:  [],
-        maritalStatus: [],
+        menuItems: [],
         disabilityStatus: [],
         religionItems: [],
         diseaseBackgroundItems: [],
@@ -27,6 +27,7 @@ const baseData = {
         lifeSituationItems: (state) =>state.lifeSituationItems,
         cityItems: (state) =>state.cityItems,
         singleChildItems: (state) =>state.singleChildItems,
+        menuItems: (state) =>state.menuItems,
     },
 
     mutations: {

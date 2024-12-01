@@ -93,7 +93,7 @@ const user = {
         }, removePhoto: async ({commit}) => {
             await commit('REMOVE_PHOTO');
         }, isAuth: async () => {
-            return !!localStorage.getItem('Authorization');
+            return !!localStorage.getItem('accessToken');
         },
         initSessionId: ({state}) => {
             state.sessionId = localStorage.getItem('sessionId')

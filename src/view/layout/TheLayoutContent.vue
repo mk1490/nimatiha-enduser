@@ -1,11 +1,12 @@
 <template>
   <transition
       name="fade-transform"
-      mode="out-in"
-  >
+      mode="out-in">
     <keep-alive>
       <v-main>
-        <router-view/>
+        <v-container>
+          <router-view/>
+        </v-container>
       </v-main>
     </keep-alive>
   </transition>
