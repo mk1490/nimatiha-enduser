@@ -19,10 +19,16 @@ export const constantRoutes = [
         ]
     },
     {
+        name: 'test',
+        path: '/test/:slug',
+        component: () => import('@/view/components/Test/Test.vue'),
+    },
+    {
         name: 'registration',
-        path: '/:slug?',
+        path: '/questionnaire/:slug?',
         component: () => import('@/view/components/Registration/RegistrationPage.vue'),
-    }
+    },
+
 ]
 export default createRouter({
     scrollBehavior: () => ({y: 0}), routes: constantRoutes, history: createWebHashHistory(process.env.BASE_URL),
