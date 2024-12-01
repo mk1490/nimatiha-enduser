@@ -1,8 +1,6 @@
 <template>
     <footer>
-        <div class="container">
-            <p>&copy; کلیه حقوق متعلق به دست آفرینان می باشد.</p>
-        </div>
+
     </footer>
 </template>
 

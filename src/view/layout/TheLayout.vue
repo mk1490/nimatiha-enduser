@@ -1,10 +1,10 @@
 <template>
-    <v-app style="direction: rtl">
-        <the-layout-toolbar/>
-        <the-layout-drawer-menu-mobile/>
-        <the-layout-content/>
-        <the-layout-footer/>
-    </v-app>
+  <v-app style="direction: rtl">
+    <the-layout-toolbar/>
+    <the-layout-drawer-menu-mobile/>
+    <the-layout-content/>
+    <!--        <the-layout-footer/>-->
+  </v-app>
 </template>
 
 <script>
@@ -20,23 +20,30 @@ import TheLayoutDrawerMenuMobile from "@/view/layout/TheLayoutDrawerMenuMobile.v
 
 
 export default {
-    async created() {
-        await this.$store.dispatch('initSessionId')
+  async created() {
+    await this.$store.commit('SET_MENU_ITEMS', [
+      {
+        text: 'آزمون‌ها',
+        to: 'test'
+      }
+    ])
 
-        if (!(await this.$store.dispatch('isAuth'))) {
+    await this.$store.dispatch('initSessionId')
 
-        }
+    if (!(await this.$store.dispatch('isAuth'))) {
 
-    },
-    name: 'TheLayout',
-    components: {
-        TheLayoutDrawerMenuMobile,
-        TheLayoutToolbar,
-        TheLayoutContent,
-        TheLayoutFab,
-        TheLayoutToTopFab,
-        TheLayoutFooter,
-    },
+    }
+
+  },
+  name: 'TheLayout',
+  components: {
+    TheLayoutDrawerMenuMobile,
+    TheLayoutToolbar,
+    TheLayoutContent,
+    TheLayoutFab,
+    TheLayoutToTopFab,
+    TheLayoutFooter,
+  },
 
 };
 </script>

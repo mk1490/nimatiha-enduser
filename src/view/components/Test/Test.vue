@@ -8,7 +8,7 @@ export default {
     }
   },
   created() {
-    this.httpGet(`/test/initialize/${this.$route.params.slug}`, result => {
+    this.httpGet(`/test/initialize/${this.$route.params.id}`, result => {
       this.result = result;
       result.questions.map(f => {
         this.model[f.id] = null;
@@ -16,13 +16,14 @@ export default {
     })
   },
   methods: {
-    submit() {
+    send() {
       this.httpPost(`/test`, {
-        testId: this.$route.params.slug,
+        testId: this.$route.params.id,
+        items: this.model,
       }, result => {
-        this.result = result;
-        result.questions.map(f => {
-          this.model[f.id] = null;
+        this.$swal.fire({
+          icon: 'success',
+          text: 'شرکت در آزمون با موفقیت انجام شد.',
         })
       })
     }
@@ -60,6 +61,7 @@ export default {
       <v-card-actions>
         <v-spacer/>
         <v-btn
+            @click="send"
             flat
             size="large"
             variant="flat"

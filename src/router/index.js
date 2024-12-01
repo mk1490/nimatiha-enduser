@@ -10,19 +10,22 @@ export const constantRoutes = [
         name: 'Root', // redirect: '/registration',
         component: Layout,
         meta: {
-            noCache: true, affix: true, title: 'route.Management',
+            noCache: true, affix: true
         },
         children: [
             {
-                path: '', redirect: '/registration', name: 'Home'
-            }
+                name: 'test',
+                path: '/test',
+                component: () => import('@/view/components/TestList/TestList.vue'),
+            },
+            {
+                name: 'test-details',
+                path: '/test-details/:id',
+                component: () => import('@/view/components/Test/Test.vue'),
+            },
         ]
     },
-    {
-        name: 'test',
-        path: '/test/:slug',
-        component: () => import('@/view/components/Test/Test.vue'),
-    },
+
     {
         name: 'registration',
         path: '/questionnaire/:slug?',
