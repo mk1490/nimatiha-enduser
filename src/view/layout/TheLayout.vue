@@ -28,10 +28,10 @@ export default {
       }
     ])
 
-    await this.$store.dispatch('initSessionId')
-
     if (!(await this.$store.dispatch('isAuth'))) {
-
+      this.$router.push({
+        path: '/'
+      })
     }
 
   },

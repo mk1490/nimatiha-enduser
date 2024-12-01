@@ -7,7 +7,7 @@ export const constantRoutes = [
     },
     {
         path: '/',
-        name: 'Root', // redirect: '/registration',
+        name: 'root', // redirect: '/registration',
         component: Layout,
         meta: {
             noCache: true, affix: true
@@ -29,6 +29,11 @@ export const constantRoutes = [
     {
         name: 'registration',
         path: '/questionnaire/:slug?',
+        component: () => import('@/view/components/Registration/RegistrationPage.vue'),
+    },
+    {
+        name: 'auth',
+        path: '/auth',
         component: () => import('@/view/components/Registration/RegistrationPage.vue'),
     },
 

@@ -13,10 +13,12 @@ export default {
   },
   methods: {
     examTake(item) {
+      if (item.status === 1)
+        return;
       this.$router.push({
         name: 'test-details',
         params: {
-          slug: item.id
+          id: item.id
         }
       })
     }
@@ -41,9 +43,10 @@ export default {
           <v-btn
               @click="examTake(item)"
               block
+              class="cursor-not-allowed"
               color="primary"
               flat variant="flat">
-            شرکت در آزمون
+            {{ item.status === 1 ? 'قبلا در این آزمون شرکت کرده‌اید' : 'شرکت در آزمون' }}
           </v-btn>
         </v-card-actions>
       </v-card>
