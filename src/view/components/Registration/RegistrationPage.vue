@@ -86,8 +86,11 @@ export default {
       this.isAuth = false;
     },
     authSuccess(token) {
-      this.$store.commit('LOGIN_STATE', true);
       localStorage.setItem('accessToken', token);
+      this.$store.commit('LOGIN_STATE', true);
+      this.$router.push({
+        name: 'profile'
+      })
     },
     prev() {
       this.selectedStep--;

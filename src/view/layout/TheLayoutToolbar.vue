@@ -32,6 +32,7 @@
       <v-spacer/>
 
       <v-btn
+          @click="logout"
           class="hidden-sm-and-down bg-red"
           rounded>
         <span style="color: white !important;">خروج از حساب کاربری</span>
@@ -65,6 +66,12 @@ export default {
     toRoute(target) {
       this.$router.push({
         name: target,
+      })
+    },
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.push({
+        name: 'auth'
       })
     }
   },

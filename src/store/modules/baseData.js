@@ -3,7 +3,7 @@ const baseData = {
         initProjectTitle: null,
         selectedProjectId: null,
         uploadedDocuments: [],
-        educationLevels:  [],
+        educationLevels: [],
         menuItems: [],
         disabilityStatus: [],
         religionItems: [],
@@ -14,20 +14,22 @@ const baseData = {
         status: -1,
         name: '',
         family: '',
+        navbarMenu: false,
     }, getters: {
         initProjectTitle: (state) => state.initProjectTitle,
         status: (state) => state.status,
         name: (state) => state.name,
         family: (state) => state.family,
-        educationLevels: (state) =>state.educationLevels,
-        maritalStatus: (state) =>state.maritalStatus,
-        disabilityStatus: (state) =>state.disabilityStatus,
-        religionItems: (state) =>state.religionItems,
-        diseaseBackgroundItems: (state) =>state.diseaseBackgroundItems,
-        lifeSituationItems: (state) =>state.lifeSituationItems,
-        cityItems: (state) =>state.cityItems,
-        singleChildItems: (state) =>state.singleChildItems,
-        menuItems: (state) =>state.menuItems,
+        educationLevels: (state) => state.educationLevels,
+        maritalStatus: (state) => state.maritalStatus,
+        disabilityStatus: (state) => state.disabilityStatus,
+        religionItems: (state) => state.religionItems,
+        diseaseBackgroundItems: (state) => state.diseaseBackgroundItems,
+        lifeSituationItems: (state) => state.lifeSituationItems,
+        cityItems: (state) => state.cityItems,
+        singleChildItems: (state) => state.singleChildItems,
+        menuItems: (state) => state.menuItems,
+        navbarMenu: (state) => state.navbarMenu,
     },
 
     mutations: {
@@ -91,7 +93,6 @@ const baseData = {
             } else {
                 state.navbarMenu = payload;
             }
-
         },
         SET_PROJECT_NOTIFICATIONS: (state, payload) => {
             state.projectNotifications = payload;
@@ -143,18 +144,10 @@ const baseData = {
                 context.commit('SET_STATUS_TEXT', payload.statusText);
             }
         },
-        setProfileLoadingState: (context, payload) => {
-            context.commit('SET_PROFILE_LOADING_STATE', payload);
+        toggleNavbar: (context, payload) => {
+            context.commit('SET_TOGGLE_NAVBAR', payload);
         },
-        setSelectedStockId: (context, payload) => {
-            context.commit('SET_STOCK_ID', payload);
-        },
-        selectedStockTitle: (context, payload) => {
-            context.commit('SET_STOCK_TITLE', payload);
-        },
-        setProjectNotifications: (context, payload) => {
-            context.commit('SET_PROJECT_NOTIFICATIONS', payload);
-        },
+
     },
 };
 

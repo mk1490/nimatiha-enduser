@@ -7,7 +7,12 @@ export const constantRoutes = [
     },
     {
         path: '/',
-        name: 'root', // redirect: '/registration',
+        name: 'root',
+        redirect: '/profile',
+    },
+    {
+        path: '/profile',
+        name: 'profile', // redirect: '/registration',
         component: Layout,
         meta: {
             noCache: true, affix: true
@@ -15,7 +20,7 @@ export const constantRoutes = [
         children: [
             {
                 name: 'test',
-                path: '/test',
+                path: '/profile/test',
                 component: () => import('@/view/components/TestList/TestList.vue'),
             },
             {

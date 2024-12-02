@@ -22,6 +22,7 @@ const settings = {
         footerShow: (state) => state.footer,
         themeIndex: (state) => state.theme.index,
         themeDark: (state) => state.theme.dark,
+
     },
 
     mutations: {
@@ -55,9 +56,6 @@ const settings = {
         },
         NAVBAR_LOGO_TOGGLE: (state) => {
             state.navbar.logo = !state.navbar.logo;
-        },
-        NAVBAR_TOGGLE: (state) => {
-            state.navbar.show = !state.navbar.show;
         },
         FULLSCREEN_TOGGLE: (state, payload) => {
             state.fullscreen.show = payload.state;
@@ -99,9 +97,6 @@ const settings = {
         },
         NavbarLogoToggle: async (context, payload) => {
             context.commit('NAVBAR_LOGO_TOGGLE', payload);
-        },
-        NavbarToggle: async (context, payload) => {
-            context.commit('NAVBAR_TOGGLE', payload);
         },
         NavbarState: async (context, payload) => {
             context.commit('NAVBAR_STATE', payload);
