@@ -1,24 +1,24 @@
 <script>
 export default {
-  name: "TestList",
+  name: "QuestionnaireList",
+  created() {
+    this.httpGet(`/questionnaire/list`, result => {
+      this.items = result;
+    })
+  },
   data() {
     return {
       items: [],
     }
   },
-  created() {
-    this.httpGet(`/test/list`, result => {
-      this.items = result;
-    })
-  },
   methods: {
     examTake(item) {
-      if (item.status === 1)
+      if (item.status == true)
         return;
       this.$router.push({
-        name: 'test-details',
+        name: 'questionnaire-details',
         params: {
-          id: item.id
+          slug: item.slug,
         }
       })
     }
@@ -43,10 +43,10 @@ export default {
           <v-btn
               @click="examTake(item)"
               block
-              :class="{'cursor-not-allowed': item.status !== 1}"
+              :class="{'cursor-not-allowed': item.status == true}"
               color="primary"
               flat variant="flat">
-            {{ item.status === 1 ? 'قبلا در این آزمون شرکت کرده‌اید' : 'شرکت در آزمون' }}
+            {{ item.status == true ? 'قبلا در این پرسش‌نامه شرکت کرده‌اید' : 'شرکت در پرسش‌نامه' }}
           </v-btn>
         </v-card-actions>
       </v-card>
