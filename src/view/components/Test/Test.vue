@@ -44,12 +44,11 @@ export default {
               {{ (index + 1) + '. ' + item.title }}
             </v-list-item-title>
             <v-radio-group
-                class="align-self-center"
-                inline
+                class="align-self-right"
                 v-model="model[item.id]">
               <v-radio
                   v-for="(childItem, childIndex) in item.items"
-                  :value="childIndex"
+                  :value="childItem.value"
                   :label="childItem.label"
 
 
@@ -79,4 +78,5 @@ export default {
 ::v-deep .v-selection-control-group {
   align-self: center !important;
 }
+
 </style>
