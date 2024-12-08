@@ -13,6 +13,10 @@ export default {
       result.questions.map(f => {
         this.model[f.id] = null;
       })
+    }, error => {
+      this.$router.push({
+        name: 'test'
+      })
     })
   },
   methods: {
@@ -24,6 +28,9 @@ export default {
         this.$swal.fire({
           icon: 'success',
           text: 'شرکت در آزمون با موفقیت انجام شد.',
+        })
+        this.$router.push({
+          name: 'test'
         })
       })
     }
