@@ -39,13 +39,12 @@ export default {
         </v-card-title>
 
         <v-card-text style="height: 20px">
-          {{ item.description}}
+          {{ item.description }}
         </v-card-text>
         <v-card-actions>
           <v-btn
               @click="examTake(item)"
               block
-              :class="{'cursor-not-allowed': item.status !== 1}"
               color="primary"
               flat variant="flat">
             {{ item.status === 1 ? 'قبلا در این آزمون شرکت کرده‌اید' : 'شرکت در آزمون' }}
