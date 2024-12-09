@@ -21,7 +21,7 @@ export const constantRoutes = [
             {
                 name: 'test',
                 path: '/profile/test',
-                component: () => import('@/view/components/TestList/TestList.vue'),
+                component: () => import('@/view/components/Test/TestList.vue'),
             },
             {
                 name: 'test-details',

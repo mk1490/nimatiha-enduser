@@ -4,6 +4,8 @@
       @update:modelValue="$emit('update:modelValue', event)"
       :label="label"
       :type="type"
+      persistent-placeholder
+      :placeholder="placeholder"
       :disabled="disabled"
       :hint="hint"
       :hide-details="hideDetails"
@@ -34,6 +36,10 @@ export default {
     variant: {
       type: String,
       default: () => 'outlined',
+    },
+    placeholder: {
+      type: String,
+      default: () => null,
     },
     requiredSymbol: {
       type: Boolean,

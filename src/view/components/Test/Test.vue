@@ -1,6 +1,9 @@
 <script>
+import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+
 export default {
   name: "Test",
+  components: {BaseTextArea},
   data() {
     return {
       result: [],
@@ -27,7 +30,7 @@ export default {
       }, result => {
         this.$swal.fire({
           icon: 'success',
-          text: 'شرکت در آزمون با موفقیت انجام شد.',
+          text: this.result.endDescription,
         })
         this.$router.push({
           name: 'test'
@@ -45,24 +48,43 @@ export default {
 
       </v-card-title>
       <v-card-text>
-        <v-list>
-          <v-list-item v-for="(item, index) in result.questions">
-            <v-list-item-title>
-              {{ (index + 1) + '. ' + item.title }}
-            </v-list-item-title>
-            <v-radio-group
-                class="align-self-right"
-                v-model="model[item.id]">
-              <v-radio
-                  v-for="(childItem, childIndex) in item.items"
-                  :value="childItem.value"
-                  :label="childItem.label"
+        <v-card
+            class="mb-4"
+            v-for="(item, index) in result.questions">
+          <v-card-text>
+            <div class="block">
+              <p>
+                {{ (index + 1) + '. ' + item.title }}
+              </p>
+            </div>
 
+            <div class="d-block">
 
-              ></v-radio>
-            </v-radio-group>
-          </v-list-item>
-        </v-list>
+              <v-radio-group
+                  v-if="item.type === 1"
+                  class="align-self-right full-width"
+                  v-model="model[item.id]">
+                <div class="row">
+                  <div
+                      v-for="(childItem, childIndex) in item.items"
+                      class="col-6">
+                    <v-radio
+                        :value="childItem.value"
+                        :label="childItem.label">
+                    </v-radio>
+                  </div>
+                </div>
+              </v-radio-group>
+              <div v-if="item.type ===2 ">
+                <base-text-area
+                    placeholder="محل نوشتن پاسخ..."
+                />
+              </div>
+
+            </div>
+          </v-card-text>
+
+        </v-card>
       </v-card-text>
       <v-card-actions>
         <v-spacer/>
@@ -72,7 +94,7 @@ export default {
             size="large"
             variant="flat"
             block
-            color="indigo-darken-3">
+            color="green-darken-1">
           ارسال
         </v-btn>
       </v-card-actions>
@@ -84,6 +106,7 @@ export default {
 <style scoped>
 ::v-deep .v-selection-control-group {
   align-self: center !important;
+  width: 100%;
 }
 
 </style>
