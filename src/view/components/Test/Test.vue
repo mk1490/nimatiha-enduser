@@ -77,6 +77,7 @@ export default {
               </v-radio-group>
               <div v-if="item.type ===2 ">
                 <base-text-area
+                    v-model="model[item.id]"
                     placeholder="محل نوشتن پاسخ..."
                 />
               </div>

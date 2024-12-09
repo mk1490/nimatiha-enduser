@@ -38,7 +38,9 @@ export default {
           {{ item.title }}
         </v-card-title>
 
-        <v-card-text style="height: 20px"></v-card-text>
+        <v-card-text style="height: 20px">
+          {{ item.description}}
+        </v-card-text>
         <v-card-actions>
           <v-btn
               @click="examTake(item)"
