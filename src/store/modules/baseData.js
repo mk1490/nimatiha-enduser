@@ -126,6 +126,9 @@ const baseData = {
         SET_LIFE_SITUATION_ITEMS: (state, payload) => {
             state.lifeSituationItems = payload
         },
+        SET_PROFILE_STATUS: (state, payload) => {
+            state.profileData.status = payload
+        },
     }, actions: {
         setInitializeData: (context, payload) => {
             context.commit('SET_INIT_PROJECT_TITLE', payload.currentUserProjectTitle);

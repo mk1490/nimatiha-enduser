@@ -1,4 +1,4 @@
-import router from './index'
+import router from '@/router/index'
 import Vue from 'vue';
 import vuex from '../store/index'
 import NProgress from 'nprogress';
@@ -9,6 +9,10 @@ let whiteList = ['Home', 'login', 'registration'];
 async function isAuth() {
     await vuex.dispatch('checkIsAuth')
     return vuex.getters.isLogin;
+}
+
+async function isCompleteProfile() {
+    return vuex.getters.profileData && !!vuex.getters.profileData.status;
 }
 
 router.beforeResolve((to, from, next) => {
@@ -23,6 +27,5 @@ router.beforeEach(async (toRoute, from, next) => {
     next();
 });
 router.afterEach((to, from) => {
-    Vue.prototype.hideLoader()
     NProgress.done();
 })

@@ -9,7 +9,19 @@ export default {
   name: "ProfileComplete",
   components: {BaseAutoComplete, BaseSelect, BaseTextField},
   computed: {
-    ...mapGetters(['profileData'])
+    ...mapGetters(['profileData']),
+    zoneShow() {
+      if (this.model.city) {
+        const cityItem = this.items.cities.find(x => x.value === this.model.city);
+        if (cityItem) {
+          if (cityItem.title === 'مشهد') {
+            return true;
+          }
+          return false;
+        }
+        return false;
+      }
+    }
   },
   created() {
     this.httpGet(`/auth/initialize`, result => {
@@ -55,12 +67,14 @@ export default {
   methods: {
     async submit() {
       const isValid = await this.$refs.form.validate()
-
-
       if (!isValid.valid)
         return;
       this.httpPost(`/auth/update-profile`, this.model, result => {
         this.$toast.success('تکمیل پروفایل با موفقیت انجام شد.')
+        this.$store.commit('SET_PROFILE_STATUS', 1)
+        this.$router.push({
+          path: '/'
+        })
       }, error => {
 
       })
@@ -145,7 +159,9 @@ export default {
                   label="شهرستان"
               />
             </div>
-            <div class="v-col-12">
+            <div
+                v-if="zoneShow"
+                class="v-col-12">
               <base-select
                   v-model="model.zone"
                   :rules="rules.zone"
