@@ -2,6 +2,7 @@ const baseData = {
     state: {
         initProjectTitle: null,
         selectedProjectId: null,
+        profileData: null,
         uploadedDocuments: [],
         educationLevels: [],
         menuItems: [],
@@ -30,6 +31,7 @@ const baseData = {
         singleChildItems: (state) => state.singleChildItems,
         menuItems: (state) => state.menuItems,
         navbarMenu: (state) => state.navbarMenu,
+        profileData: (state) => state.profileData,
     },
 
     mutations: {
@@ -62,6 +64,9 @@ const baseData = {
         },
         SET_PROFILE_SLIDERS: (state, payload) => {
             state.profileSliders = payload;
+        },
+        SET_PROFILE_DATA: (state, payload) => {
+            state.profileData = payload;
         },
         SET_FAMILY: (state, payload) => {
             state.family = payload;

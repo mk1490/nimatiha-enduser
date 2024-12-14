@@ -28,7 +28,10 @@ export default {
     multiple: Boolean,
     smallChips: Boolean,
     deletableChips: Boolean,
-    hideDetails: String,
+    hideDetails: {
+      type: String,
+      default: 'auto'
+    },
     variant: {
       type: String,
       default: () => 'outlined',

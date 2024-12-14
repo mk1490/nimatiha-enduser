@@ -21,6 +21,15 @@ import TheLayoutDrawerMenuMobile from "@/view/layout/TheLayoutDrawerMenuMobile.v
 
 export default {
   async created() {
+    this.httpGet(`/auth/profile`, result => {
+      this.$store.commit('SET_PROFILE_DATA', {...result})
+      if (!result.status) {
+        this.$router.push({
+          name: 'complete-profile'
+        })
+      }
+    })
+
     await this.$store.commit('SET_MENU_ITEMS', [
       {
         text: 'آزمون‌ها',
