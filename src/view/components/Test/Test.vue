@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     send() {
-      this.httpPost(`/test`, {
+      this.httpPost(`/test/`, {
         testId: this.$route.params.id,
         items: this.model,
       }, result => {
