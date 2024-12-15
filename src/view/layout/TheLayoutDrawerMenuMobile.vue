@@ -1,5 +1,4 @@
 <template>
-  {{ drawerVisible }}
   <v-navigation-drawer
       v-if="this.$vuetify.display.smAndDown"
       location="start"
@@ -33,6 +32,19 @@
       </v-list-item>
 
     </v-list>
+
+
+    <template v-slot:append>
+      <div class="px-4">
+        <v-btn
+            block
+            @click="logout()"
+            class="bg-red mb-2"
+            rounded>
+          <span style="color: white !important;">خروج از حساب کاربری</span>
+        </v-btn>
+      </div>
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -55,11 +67,16 @@ export default {
   },
   methods: {
     itemClick(item) {
-      this.emitter.emit('onMenuSelection', item);
+      this.$router.push({
+        name: item.to,
+      })
       this.$store.commit('SET_TOGGLE_NAVBAR', false)
     },
     navigationStateChange(event) {
       this.$store.commit('SET_TOGGLE_NAVBAR', event)
+    },
+    logout() {
+
     }
   },
   watch: {}
