@@ -1,5 +1,4 @@
 <template>
-  {{ drawerVisible }}
   <v-navigation-drawer
       v-if="this.$vuetify.display.smAndDown"
       location="start"
@@ -16,14 +15,14 @@
           درخواست عضویت
         </v-list-item-title>
       </v-list-item>
-      <v-list-item
-          @click="$store.commit('SET_TOGGLE_NAVBAR', false)"
-          :to="isLogin? '/profile': 'login'">
-        <v-list-item-title>
-          {{ isLogin ? 'پروفایل' : 'ورود' }}
+      <!--      <v-list-item-->
+      <!--          @click="$store.commit('SET_TOGGLE_NAVBAR', false)"-->
+      <!--          :to="isLogin? '/profile': 'login'">-->
+      <!--        <v-list-item-title>-->
+      <!--          {{ isLogin ? 'پروفایل' : 'ورود' }}-->
 
-        </v-list-item-title>
-      </v-list-item>
+      <!--        </v-list-item-title>-->
+      <!--      </v-list-item>-->
       <v-list-item
           @click="itemClick(item)"
           v-for="item in menuItems">
@@ -33,11 +32,22 @@
       </v-list-item>
 
     </v-list>
+
+    <template v-slot:append>
+      <v-btn
+          @click="logout"
+          block
+          class="bg-red mb-3"
+          rounded>
+        <span style="color: white !important;">خروج از حساب کاربری</span>
+      </v-btn>
+
+    </template>
   </v-navigation-drawer>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: "TheLayoutDrawerMenuMobile",
@@ -60,6 +70,12 @@ export default {
     },
     navigationStateChange(event) {
       this.$store.commit('SET_TOGGLE_NAVBAR', event)
+    },
+    logout(){
+      this.$store.dispatch('logout')
+      this.$router.push({
+        name: 'auth'
+      })
     }
   },
   watch: {}
