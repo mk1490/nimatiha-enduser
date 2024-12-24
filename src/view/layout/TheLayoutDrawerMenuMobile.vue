@@ -65,13 +65,15 @@ export default {
   },
   methods: {
     itemClick(item) {
-      this.emitter.emit('onMenuSelection', item);
+      this.$router.push({
+        name: item.to
+      })
       this.$store.commit('SET_TOGGLE_NAVBAR', false)
     },
     navigationStateChange(event) {
       this.$store.commit('SET_TOGGLE_NAVBAR', event)
     },
-    logout(){
+    logout() {
       this.$store.dispatch('logout')
       this.$router.push({
         name: 'auth'
