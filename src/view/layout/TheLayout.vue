@@ -35,17 +35,17 @@ export default {
         text: 'آزمون‌ها',
         to: 'test'
       },
-      // {
-      //   text: 'پرسش‌نامه‌ها',
-      //   to: 'questionnaires'
-      // }
+        {
+            text: 'پرسش‌نامه‌ها',
+            to: 'questionnaires'
+        }
     ])
 
-    if (!(await this.$store.dispatch('isAuth'))) {
-      this.$router.push({
-        path: '/auth'
-      })
-    }
+    // if (!(await this.$store.dispatch('isAuth'))) {
+    //   this.$router.push({
+    //     path: '/auth'
+    //   })
+    // }
 
   },
   name: 'TheLayout',

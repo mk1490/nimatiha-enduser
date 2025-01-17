@@ -49,8 +49,14 @@ export default {
                 }
                 case 401: {
                     localStorage.removeItem('accessToken');
-                    if (Router.currentRoute.fullPath !== '/auth') {
-                        await Router.push('/auth');
+                    const currentRoute = Router.currentRoute;
+                    if (currentRoute.fullPath !== '/auth') {
+                        await Router.push({
+                            path: '/auth',
+                            query: {
+                                redirectTo: currentRoute.value.fullPath
+                            }
+                        });
                     }
                     message = errorObject.message;
                     if (['TOKEN_EXPIRED'].includes(errorObject.error)) {

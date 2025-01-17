@@ -80,9 +80,6 @@ export default {
     }
   },
   methods: {
-    log(s) {
-      console.log(s)
-    }
   }
 }
 </script>
