@@ -4,7 +4,6 @@ import {isNumber} from "persian-date/src/type-checking";
 
 export default {
     install(app) {
-
         app.config.globalProperties.getPersianTime = (time, format) => {
             if (!format) {
                 format = 'jYYYY/jMM/jDD - HH:mm';

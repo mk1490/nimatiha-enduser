@@ -63,6 +63,7 @@
 </template>
 <script>
 import BaseTextField from "../../../widget/Base/BaseTextField.vue";
+import {digitsFaToEn} from "@persian-tools/persian-tools";
 
 export default {
   name: "Authentication",
@@ -84,7 +85,6 @@ export default {
       rules: {
         mobileNumber: [
           v => !!v || 'تکمیل این فیلد اجباری است.',
-          v => new RegExp('^(([0-9]*)|(([1-9]*)\\.([0-9]*)))$').test(v) || 'این فیلد بایستی از نوع عدد باشد!',
           v => v && v.length <= 11 || 'شماره تلفن همراه نمی‌تواند بیشتر از 11 رقم باشد.',
           v => v && v.length >= 10 || 'شماره تلفن همراه نمی‌تواند کمتر از 11 رقم باشد.',
         ],
@@ -102,7 +102,7 @@ export default {
     sendActivationCode() {
       this.loading = true
       this.httpPost(`${this.serverAddress}/api/auth/checkMobileNumber`, {
-        mobileNumber: this.model.mobileNumber,
+        mobileNumber: digitsFaToEn(this.model.mobileNumber),
       }, (result) => {
         this.loading = false;
         if (result.is_new_user == true) {
