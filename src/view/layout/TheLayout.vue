@@ -41,9 +41,9 @@ export default {
     ])
 
     if (!(await this.$store.dispatch('isAuth'))) {
-      this.$router.push({
-        path: '/auth'
-      })
+      // this.$router.push({
+      //   path: '/auth'
+      // })
     }
 
   },

@@ -1,18 +1,38 @@
 <script>
 import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
+import ProfileCompleteForm from "@/view/components/Shared/ProfileCompleteForm.vue";
 
 export default {
   name: "Test",
-  components: {BaseTextArea},
+  components: {ProfileCompleteForm, BaseTextArea},
+  computed: {
+    isProfileCompleteLevel() {
+      return this.view == 'profile-complete';
+    }
+  },
   data() {
     return {
       result: [],
       model: {},
+      profileModel: null,
+      initialize: {},
+      view: null,
     }
   },
   created() {
-    this.httpGet(`/test/initialize/${this.$route.params.id}`, result => {
+    this.httpPost(`/test/initialize/${this.$route.params.slug}`, {}, result => {
+      this.initialize = result['initialize']
       this.result = result;
+
+
+      if (result['authenticationRequired']) {
+
+      } else {
+        if (!result.memberId) {
+          this.view = 'profile-complete';
+        }
+      }
+
       result.questions.map(f => {
         this.model[f.id] = null;
       })
@@ -36,6 +56,11 @@ export default {
           name: 'test'
         })
       })
+    },
+    profileCompleteSuccess(data) {
+      console.log("UPDATE SUCCESS")
+      localStorage.setItem('accessToken', data['access_token']);
+      location.reload();
     }
   }
 }
@@ -43,11 +68,21 @@ export default {
 
 <template>
   <v-container class="d-flex justify-center align-items-center align-center">
-    <v-card width="600">
-      <v-card-title>
 
-      </v-card-title>
+    <profile-complete-form
+        v-if="isProfileCompleteLevel"
+        v-model="profileModel"
+        :initialize="initialize"
+        mobile-number-visible
+        @update="profileCompleteSuccess"
+    />
+
+    <v-card
+        v-if="!isProfileCompleteLevel"
+        width="600">
       <v-card-text>
+
+
         <v-card
             class="mb-4"
             v-for="(item, index) in result.questions">
@@ -96,7 +131,7 @@ export default {
             variant="flat"
             block
             color="green-darken-1">
-          ارسال
+          {{ isProfileCompleteLevel ? 'ذخیره' : 'ارسال' }}
         </v-btn>
       </v-card-actions>
 

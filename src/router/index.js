@@ -24,6 +24,11 @@ export const constantRoutes = [
                 component: () => import('@/view/components/Test/TestList.vue'),
             },
             {
+                name: 'test',
+                path: '/test/:slug',
+                component: () => import('@/view/components/Test/Test.vue'),
+            },
+            {
                 name: 'test-details',
                 path: '/test-details/:id',
                 component: () => import('@/view/components/Test/Test.vue'),

@@ -10,6 +10,7 @@
                 v-model="model.mobileNumber"
                 :rules="rules.mobileNumber"
                 dir="ltr"
+                type="tel"
                 style="direction: ltr"/>
           </div>
 
