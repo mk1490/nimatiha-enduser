@@ -10,6 +10,19 @@ export const constantRoutes = [
         name: 'root',
         redirect: '/profile',
     },
+
+    {
+        name: 'survey',
+        path: '/survey',
+        component: Layout,
+
+        children: [
+            {
+                path: ':slug',
+                component: () => import('@/view/components/Questionnaire/Questionnaire.vue'),
+            }
+        ]
+    },
     {
         path: '/profile',
         name: 'profile', // redirect: '/registration',

@@ -23,7 +23,12 @@ router.beforeResolve((to, from, next) => {
 })
 router.beforeEach(async (toRoute, from, next) => {
     await vuex.dispatch('showLoading')
-    await isAuth()
+    const auth = await isAuth()
+    // {
+    //     query:{
+    //         redirectTo: toRoute.
+    //     }
+    // }
     next();
 });
 router.afterEach((to, from) => {

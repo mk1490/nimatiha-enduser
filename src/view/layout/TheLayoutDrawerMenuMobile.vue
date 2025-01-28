@@ -1,4 +1,5 @@
 <template>
+  {{ drawerVisible }}
   <v-navigation-drawer
       v-if="this.$vuetify.display.smAndDown"
       location="start"
@@ -15,14 +16,14 @@
           درخواست عضویت
         </v-list-item-title>
       </v-list-item>
-      <!--      <v-list-item-->
-      <!--          @click="$store.commit('SET_TOGGLE_NAVBAR', false)"-->
-      <!--          :to="isLogin? '/profile': 'login'">-->
-      <!--        <v-list-item-title>-->
-      <!--          {{ isLogin ? 'پروفایل' : 'ورود' }}-->
+      <v-list-item
+          @click="$store.commit('SET_TOGGLE_NAVBAR', false)"
+          :to="isLogin? '/profile': 'login'">
+        <v-list-item-title>
+          {{ isLogin ? 'پروفایل' : 'ورود' }}
 
-      <!--        </v-list-item-title>-->
-      <!--      </v-list-item>-->
+        </v-list-item-title>
+      </v-list-item>
       <v-list-item
           @click="itemClick(item)"
           v-for="item in menuItems">
@@ -33,15 +34,17 @@
 
     </v-list>
 
-    <template v-slot:append>
-      <v-btn
-          @click="logout"
-          block
-          class="bg-red mb-3"
-          rounded>
-        <span style="color: white !important;">خروج از حساب کاربری</span>
-      </v-btn>
 
+    <template v-slot:append>
+      <div class="px-4">
+        <v-btn
+            block
+            @click="logout()"
+            class="bg-red mb-2"
+            rounded>
+          <span style="color: white !important;">خروج از حساب کاربری</span>
+        </v-btn>
+      </div>
     </template>
   </v-navigation-drawer>
 </template>
