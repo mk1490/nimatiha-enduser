@@ -54,7 +54,7 @@ export default {
                     text: this.result.endDescription,
                 })
                 this.$router.push({
-                    name: 'test'
+                    name: 'profile-test'
                 })
             })
         },
