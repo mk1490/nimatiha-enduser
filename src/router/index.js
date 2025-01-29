@@ -32,7 +32,7 @@ export const constantRoutes = [
         },
         children: [
             {
-                name: 'test',
+                name: 'profile-test',
                 path: '/profile/test',
                 component: () => import('@/view/components/Test/TestList.vue'),
             },
