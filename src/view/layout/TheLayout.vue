@@ -41,11 +41,11 @@ export default {
         }
     ])
 
-    if (!(await this.$store.dispatch('isAuth'))) {
-      this.$router.push({
-        path: '/auth'
-      })
-    }
+    // if (!(await this.$store.dispatch('isAuth'))) {
+    //   this.$router.push({
+    //     path: '/auth'
+    //   })
+    // }
 
   },
   name: 'TheLayout',
