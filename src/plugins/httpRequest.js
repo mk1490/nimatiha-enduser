@@ -53,9 +53,10 @@ export default {
                     if (currentRoute.value.fullPath !== '/auth' && !['/profile/complete', '/profile/test', '/test'].includes(currentRoute.value.fullPath)) {
                         localStorage.removeItem('accessToken');
                         await Router.push({
-                            path: '/auth',
+                            path: '/profile/complete',
                             query: {
-                                redirectTo: currentRoute.value.fullPath
+                                // redirectTo: currentRoute.value.fullPath
+                                redirectTo: '/profile/test'
                             }
                         });
                     }
