@@ -50,7 +50,7 @@ export default {
                 }
                 case 401: {
                     const currentRoute = Router.currentRoute;
-                    if (currentRoute.value.fullPath !== '/auth' && !currentRoute.value.fullPath.includes('/test')) {
+                    if (currentRoute.value.fullPath !== '/auth' && !['/profile/complete', '/profile/test', '/test'].includes(currentRoute.value.fullPath)) {
                         localStorage.removeItem('accessToken');
                         await Router.push({
                             path: '/auth',
