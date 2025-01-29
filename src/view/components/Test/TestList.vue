@@ -27,12 +27,28 @@ export default {
         examTake(item) {
             if (item.status === 1)
                 return;
-            this.$router.push({
-                name: 'test-details',
-                params: {
-                    id: item.id
+
+            this.$swal.fire({
+                title: 'شرکت در آزمون',
+                text: `پس از تأیید این پیعام و ورود به صفحه جدید، آزمون شما شروع شده و به مدّت 16 دقیقه زمان خواهید داشت و پس از گذشت زمان فوق امکان شرکت مجدد در این آزمون برای شما وجود نخواهد داشت.`,
+                icon: 'warning',
+                showConfirmButton: true,
+                showCloseButton: true,
+                showDenyButton: true,
+                denyButtonText: 'لغو',
+                confirmButtonText: "بزن بریم!"
+            }).then(confirm => {
+                if (confirm.isConfirmed) {
+                    this.$router.push({
+                        name: 'test-details',
+                        params: {
+                            id: item.id
+                        }
+                    })
                 }
+
             })
+
         }
     }
 }
