@@ -12,7 +12,7 @@ export default {
     install(app) {
         let lastRequest;
         axios.interceptors.response.use(async (response) => {
-            store.dispatch('hideLoading')
+            store.dispatch('hideLoading').then()
             // Vue.prototype.hideLoader();
             if (lastRequest.method.toString() === 'delete') {
                 if (lastRequest.toast != false) {
@@ -21,10 +21,10 @@ export default {
             }
             return response.data;
         }, async error => {
-            // Vue.prototype.hideLoader();
+            store.dispatch('hideLoading').then()
             if (!error.response) {
                 Swal.fire({
-                    title: i18n.global.t('ui.error'),
+                    title: "خطا",
                     html: 'دسترسی به شبکه وجود ندارد!',
                     icon: 'error',
                     allowOutsideClick: false,
@@ -85,7 +85,7 @@ export default {
                     }
                     if (lastRequest.errorModal !== undefined && lastRequest.errorModal !== false) {
                         Swal.fire({
-                            title: i18n.global.t('ui.error'), html: message, icon: 'error'
+                            title: "خطا", html: message, icon: 'error'
                         });
                     }
                     break;
@@ -93,7 +93,7 @@ export default {
             }
             if (lastRequest.errorModal != false) {
                 Swal.fire({
-                    title: i18n.global.t('ui.error'), html: message, icon: 'error'
+                    title: "خطا", html: message, icon: 'error'
                 });
             }
 
@@ -101,7 +101,7 @@ export default {
         });
         axios.interceptors.request.use(async (req) => {
             if (req.loader !== false) {
-                // Vue.prototype.showLoader();
+                store.dispatch('showLoading').then()
             }
             lastRequest = req;
             preparseAuthorization(req);
@@ -111,10 +111,10 @@ export default {
         app.config.globalProperties.baseUrl = baseUrl;
         app.config.globalProperties.httpGet = (requestUrl, successCallback, errorCallback) => {
             axios.get(requestUrl).then(response => {
-                store.dispatch('hideLoading')
+                store.dispatch('hideLoading').then()
                 successCallback(response);
             }).catch(error => {
-                store.dispatch('hideLoading')
+                store.dispatch('hideLoading').then()
                 if (errorCallback) {
                     errorCallback(error)
                 }
@@ -122,10 +122,8 @@ export default {
         }
         app.config.globalProperties.httpPost = (requestUrl, body, successCallback, errorCallback) => {
             axios.post(requestUrl, body).then(response => {
-                store.dispatch('hideLoading')
                 successCallback(response);
             }).catch(error => {
-                store.dispatch('hideLoading')
                 if (errorCallback) {
                     errorCallback(error)
                 }
@@ -133,10 +131,8 @@ export default {
         }
         app.config.globalProperties.httpPut = (requestUrl, body, successCallback, errorCallback) => {
             axios.put(requestUrl, body).then(response => {
-                store.dispatch('hideLoading')
                 successCallback(response);
             }).catch(error => {
-                store.dispatch('hideLoading')
                 if (errorCallback) {
                     errorCallback(error)
                 }

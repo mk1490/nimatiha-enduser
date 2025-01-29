@@ -2,7 +2,6 @@
   <v-locale-provider rtl>
     <router-view/>
     <progress-dialog
-        :showing="loading"
     />
   </v-locale-provider>
 </template>

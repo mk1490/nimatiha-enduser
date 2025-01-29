@@ -12,7 +12,7 @@ const user = {
             visible: false, index: 0,
         },
         submitDelete: -1,
-        loading: false,
+        loading: true,
         isLogin: !!localStorage.getItem('accessToken'),
         userPermissions: [],
     }, getters: {
