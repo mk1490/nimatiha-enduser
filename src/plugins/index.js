@@ -28,7 +28,9 @@ export function registerPlugins(app) {
         .use(eventBus)
         .use(i18n)
         .use(commonComponents)
-        .use(VueSweetalert2)
+        .use(VueSweetalert2, {
+            confirmButtonText: 'تأیید',
+        })
         .use(ToastPlugin)
         .use(commonMethods);
 }

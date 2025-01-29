@@ -85,7 +85,7 @@ export default {
                     }
                     if (lastRequest.errorModal !== undefined && lastRequest.errorModal !== false) {
                         Swal.fire({
-                            title: "خطا", html: message, icon: 'error'
+                            title: "خطا", html: message, icon: 'error',
                         });
                     }
                     break;
@@ -93,7 +93,10 @@ export default {
             }
             if (lastRequest.errorModal != false) {
                 Swal.fire({
-                    title: "خطا", html: message, icon: 'error'
+                    title: "خطا",
+                    html: message,
+                    confirmButtonText: 'تأیید',
+                    icon: 'error'
                 });
             }
 
