@@ -49,7 +49,7 @@ export default {
                     path: queryParameter.redirectTo
                 })
             }
-            location.reload()
+            // location.reload()
         }
     }
 }
