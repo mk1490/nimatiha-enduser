@@ -40,6 +40,14 @@ export default {
                 key, value
             }
         }
+
+        app.config.globalProperties.likeMatch= (text, pattern)=> {
+            const regexPattern = pattern
+                .replace(/%/g, ".*")
+                .replace(/_/g, ".");
+            const regex = new RegExp("^" + regexPattern + "$", "i"); // i برای حساس نبودن به حروف بزرگ و کوچک
+            return regex.test(text);
+        }
     }
 }
 
