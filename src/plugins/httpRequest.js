@@ -4,8 +4,8 @@ import Router from "@/router";
 import i18n from "@/locale";
 import Swal from "sweetalert2";
 
-const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
-// const serverAddress = "https://api.nimkatiha.com";
+// const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
+const serverAddress = "https://api.nimkatiha.com";
 const baseUrl = serverAddress + '/api/enduser/';
 axios.defaults.baseURL = baseUrl;
 export default {
@@ -115,11 +115,9 @@ export default {
         app.config.globalProperties.httpGet = (requestUrl, successCallback, errorCallback) => {
             axios.get(requestUrl).then(response => {
                 store.dispatch('hideLoading').then()
-                console.log("SHOW LOADING")
                 successCallback(response);
             }).catch(error => {
                 store.dispatch('hideLoading').then()
-                console.log("HIDE LOADING")
                 if (errorCallback) {
                     errorCallback(error)
                 }

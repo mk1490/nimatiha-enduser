@@ -58,8 +58,7 @@ export default {
                 })
             })
         },
-        profileCompleteSuccess(data) {
-            console.log("UPDATE SUCCESS")
+        profileCompleteSuccess(data)
             localStorage.setItem('accessToken', data['access_token']);
             location.reload();
         }

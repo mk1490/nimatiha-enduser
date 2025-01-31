@@ -13,7 +13,13 @@ export default {
     ...mapGetters(['profileData']),
   },
   created() {
-    this.httpGet(`/auth/initialize`, result => {
+    let url = 'auth/initialize';
+
+    if (this.likeMatch(this.$route.fullPath, '%survey%')) {
+      url += `?grades=all`
+    }
+
+    this.httpGet(url, result => {
       this.initialize.educationLevels = result.educationLevels;
       this.initialize.zones = result.zones;
       this.initialize.cities = result.cities;

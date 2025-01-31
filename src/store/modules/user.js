@@ -50,7 +50,6 @@ const user = {
         SET_TOKEN: (state, token) => {
             state.token = token;
         }, SHOW_LOADING: (state, showLoading) => {
-            console.log("SHOW LOADING", showLoading)
             state.loading = showLoading;
         }, ALL_PREFERENCES: (state, payload) => {
             state.allPreferences = payload;
