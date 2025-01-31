@@ -58,7 +58,7 @@ export default {
                 })
             })
         },
-        profileCompleteSuccess(data)
+        profileCompleteSuccess(data) {
             localStorage.setItem('accessToken', data['access_token']);
             location.reload();
         }
