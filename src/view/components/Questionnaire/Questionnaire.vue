@@ -9,7 +9,6 @@ export default {
   components: {ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
     if (!this.isLogin) {
-      console.log(this.$route.fullPath)
       this.$router.push({
         name: 'complete-profile',
         query: {
