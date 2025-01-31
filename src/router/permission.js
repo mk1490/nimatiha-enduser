@@ -22,7 +22,6 @@ router.beforeResolve((to, from, next) => {
     next();
 })
 router.beforeEach(async (toRoute, from, next) => {
-    await vuex.dispatch('showLoading')
     const auth = await isAuth()
     // {
     //     query:{

@@ -2,11 +2,22 @@
 import RegistrationSuccessComponent from "../Registration/Widgets/RegistrationSuccessComponent.vue";
 import {mapGetters} from "vuex";
 import DynamicStep from "../Registration/Steps/DynamicStep.vue";
+import ProfileCompleteForm from "@/view/components/Shared/ProfileCompleteForm.vue";
 
 export default {
   name: "Questionnaire",
-  components: {DynamicStep, RegistrationSuccessComponent},
+  components: {ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
+    if (!this.isLogin) {
+      console.log(this.$route.fullPath)
+      this.$router.push({
+        name: 'complete-profile',
+        query: {
+          redirectTo: this.$route.fullPath,
+        }
+      })
+    }
+
     this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       if (result.success === true) {
         this.title = result['questionnaireTitle'];
@@ -14,7 +25,6 @@ export default {
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
           this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
-
         }
         this.steps = result.levels;
 
@@ -27,7 +37,6 @@ export default {
           allowOutsideClick: false,
         })
       }
-
     })
   },
   methods: {
@@ -103,7 +112,7 @@ export default {
     <v-card
         :width="cardWidth"
         class="elevation-0">
-<!--      <v-card-title class="text-center">-->
+      <!--      <v-card-title class="text-center">-->
       <!--        {{ title }}-->
       <!--        <div-->
       <!--            v-if="isLogin"-->

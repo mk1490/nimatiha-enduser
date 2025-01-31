@@ -12,7 +12,7 @@ const user = {
             visible: false, index: 0,
         },
         submitDelete: -1,
-        loading: true,
+        loading: false,
         isLogin: !!localStorage.getItem('accessToken'),
         userPermissions: [],
     }, getters: {
@@ -50,6 +50,7 @@ const user = {
         SET_TOKEN: (state, token) => {
             state.token = token;
         }, SHOW_LOADING: (state, showLoading) => {
+            console.log("SHOW LOADING", showLoading)
             state.loading = showLoading;
         }, ALL_PREFERENCES: (state, payload) => {
             state.allPreferences = payload;
