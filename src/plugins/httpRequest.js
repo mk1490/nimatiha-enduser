@@ -4,8 +4,8 @@ import Router from "@/router";
 import i18n from "@/locale";
 import Swal from "sweetalert2";
 
-// const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
-const serverAddress = "https://api.nimkatiha.com";
+const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
+// const serverAddress = "https://api.nimkatiha.com";
 const baseUrl = serverAddress + '/api/enduser/';
 axios.defaults.baseURL = baseUrl;
 export default {
@@ -50,15 +50,15 @@ export default {
                 }
                 case 401: {
                     const currentRoute = Router.currentRoute;
-                    if (currentRoute.value.fullPath !== '/auth' && !['/profile/complete', '/profile/test', '/test', '/survey/Multi-Vitamin'].includes(currentRoute.value.fullPath)) {
+                    if (currentRoute.value.fullPath !== '/auth' && !['/profile/complete', '/profile/test', '/test', '/survey/'].includes(currentRoute.value.fullPath)) {
                         localStorage.removeItem('accessToken');
-                       /* await Router.push({
-                            path: '/profile/complete',
-                            query: {
-                                // redirectTo: currentRoute.value.fullPath
-                                redirectTo: '/profile/test'
-                            }
-                        });*/
+                        /* await Router.push({
+                             path: '/profile/complete',
+                             query: {
+                                 // redirectTo: currentRoute.value.fullPath
+                                 redirectTo: '/profile/test'
+                             }
+                         });*/
                     }
                     message = errorObject.message;
                     if (['TOKEN_EXPIRED'].includes(errorObject.error)) {

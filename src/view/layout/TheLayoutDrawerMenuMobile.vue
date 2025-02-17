@@ -1,5 +1,4 @@
 <template>
-  {{ drawerVisible }}
     <v-navigation-drawer
             v-if="this.$vuetify.display.smAndDown"
             location="start"

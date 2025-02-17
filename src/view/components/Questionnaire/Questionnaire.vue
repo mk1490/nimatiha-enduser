@@ -8,17 +8,17 @@ export default {
   name: "Questionnaire",
   components: {ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
-    if (!this.isLogin) {
-      this.$router.push({
-        name: 'complete-profile',
-        query: {
-          redirectTo: this.$route.fullPath,
-        }
-      })
-    }
-
     this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       if (result.success === true) {
+        if (result.authRequired && !this.isLogin) {
+          this.$router.push({
+            name: 'complete-profile',
+            query: {
+              redirectTo: this.$route.fullPath,
+            }
+          })
+          return;
+        }
         this.title = result['questionnaireTitle'];
         localStorage.setItem('testId', result['questionnaireId']);
         if (this.$store.getters.isLogin) {
@@ -26,7 +26,6 @@ export default {
           this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
         }
         this.steps = result.levels;
-
       } else {
         this.$swal.fire({
           icon: 'error',
@@ -70,6 +69,7 @@ export default {
             localStorage.removeItem('accessToken');
             this.selectedStep = 1;
             this.$store.commit('LOGIN_STATE', false);
+            window.reload();
           })
         } else {
           this.selectedStep++;
@@ -86,7 +86,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLogin', 'phoneNumber']),
+    ...mapGetters(['phoneNumber']),
     cardWidth: function () {
       switch (this.$vuetify.display.name) {
         case 'xl':
@@ -106,30 +106,10 @@ export default {
 
 <template>
   <div
-      v-if="isLogin"
       class="d-flex justify-center">
     <v-card
         :width="cardWidth"
         class="elevation-0">
-      <!--      <v-card-title class="text-center">-->
-      <!--        {{ title }}-->
-      <!--        <div-->
-      <!--            v-if="isLogin"-->
-      <!--            class="v-col-12 pt-0">-->
-      <!--          <small>-->
-      <!--            {{ phoneNumber }}-->
-      <!--          </small>-->
-      <!--          <div class="d-block">-->
-      <!--            <v-btn-->
-      <!--                @click="logout"-->
-      <!--                density="compact"-->
-      <!--                variant="text"-->
-      <!--                color="error">-->
-      <!--              خروج-->
-      <!--            </v-btn>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </v-card-title>-->
       <v-card-text>
         <v-stepper
             hide-actions

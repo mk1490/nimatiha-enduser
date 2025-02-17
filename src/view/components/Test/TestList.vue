@@ -10,10 +10,10 @@ export default {
         this.httpGet(`/test/list`, result => {
             if (result.isAuth == false) {
                 this.$router.push({
-                    name: 'complete-profile',
-                    query: {
-                        redirectTo: '/profile/test'
-                    }
+                    // name: 'complete-profile',
+                    // query: {
+                    //     redirectTo: '/profile/test'
+                    // }
                 })
             } else {
                 this.items = result;

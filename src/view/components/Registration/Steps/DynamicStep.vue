@@ -46,7 +46,7 @@ export default {
       }
 
       if ([1, 2, 11].includes(item.type)) {
-        if (item.minimum != null) {
+        if (item.minimum != null || item.minimum != -1) {
           rules.push(v => v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
         }
         if (item.maximum != null) {
