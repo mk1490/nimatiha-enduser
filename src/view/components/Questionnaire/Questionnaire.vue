@@ -20,6 +20,7 @@ export default {
           return;
         }
         this.title = result['questionnaireTitle'];
+        this.preTextMessage = result['preText']
         localStorage.setItem('testId', result['questionnaireId']);
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
@@ -83,6 +84,7 @@ export default {
       steps: [],
       model: {},
       title: '',
+      preTextMessage: '',
     }
   },
   computed: {
@@ -111,49 +113,67 @@ export default {
         :width="cardWidth"
         class="elevation-0">
       <v-card-text>
-        <v-stepper
-            hide-actions
-            :model-value="selectedStep"
-            position="relative"
-            flat
-            :mobile="$vuetify.display.mobile"
-            @update:modelValue="selectedStep = $event"
-            :items="steps"
-            alt-labels>
-          <v-stepper-window
-              :model-value="selectedStep">
-            <v-stepper-window-item
-                v-for="(item, index) in steps"
-                :value="index +1 ">
-              <dynamic-step
-                  v-if="index === selectedStep -1"
-                  :ref="`form_${index}`"
-                  v-model="model[steps[selectedStep -1].id]"
-                  :form-items="item.formItems"
-              />
-            </v-stepper-window-item>
+        <template v-if="preTextMessage">
+          <div v-html="preTextMessage"></div>
+        </template>
+
+        <template v-if="preTextMessage == null">
+          <v-stepper
+              hide-actions
+              :model-value="selectedStep"
+              position="relative"
+              flat
+              :mobile="$vuetify.display.mobile"
+              @update:modelValue="selectedStep = $event"
+              :items="steps"
+              alt-labels>
+            <v-stepper-window
+                :model-value="selectedStep">
+              <v-stepper-window-item
+                  v-for="(item, index) in steps"
+                  :value="index +1 ">
+                <dynamic-step
+                    v-if="index === selectedStep -1"
+                    :ref="`form_${index}`"
+                    v-model="model[steps[selectedStep -1].id]"
+                    :form-items="item.formItems"
+                />
+              </v-stepper-window-item>
 
 
-          </v-stepper-window>
+            </v-stepper-window>
 
 
-          <v-stepper-actions
-              @click:next="nextOrSubmit"
-              @click:prev="prev"
-              :disabled="false"
-              prev-text="قبلی"
-              :next-text="selectedStep === steps.length  ? 'ارسال' : 'بعدی'">
-            <template v-slot:prev>
-              <v-btn v-if="selectedStep !== 1"
-                     @click="prev"
-              >
-                قبلی
-              </v-btn>
-              <v-spacer/>
-            </template>
-          </v-stepper-actions>
-        </v-stepper>
+            <v-stepper-actions
+                @click:next="nextOrSubmit"
+                @click:prev="prev"
+                :disabled="false"
+                prev-text="قبلی"
+                :next-text="selectedStep === steps.length  ? 'ارسال' : 'بعدی'">
+              <template v-slot:prev>
+                <v-btn v-if="selectedStep !== 1"
+                       @click="prev"
+                >
+                  قبلی
+                </v-btn>
+                <v-spacer/>
+              </template>
+            </v-stepper-actions>
+          </v-stepper>
+        </template>
+
       </v-card-text>
+      <v-card-actions v-if="preTextMessage">
+        <v-btn
+            @click="preTextMessage = null"
+            block
+            variant="flat"
+            color="red"
+        >
+          تکمیل پرسش‌نامه
+        </v-btn>
+      </v-card-actions>
+
     </v-card>
   </div>
 </template>
