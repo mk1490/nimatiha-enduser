@@ -21,6 +21,7 @@ export default {
         }
         this.title = result['questionnaireTitle'];
         this.preTextMessage = result['preText']
+        this.afterTextMessage = result['afterText']
         localStorage.setItem('testId', result['questionnaireId']);
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
@@ -65,13 +66,17 @@ export default {
         if (this.selectedStep === this.steps.length) {
           this.$swal.fire({
             icon: 'success',
-            text: 'درخواست شما با موفقیت ثبت شد.'
-          }).then(() => {
-            localStorage.removeItem('accessToken');
-            this.selectedStep = 1;
-            this.$store.commit('LOGIN_STATE', false);
-            window.reload();
-          })
+            html: this.afterTextMessage,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              localStorage.removeItem('accessToken');
+              this.selectedStep = 1;
+              this.$store.commit('LOGIN_STATE', false);
+              location.reload();
+            }
+          });
         } else {
           this.selectedStep++;
         }
@@ -85,6 +90,7 @@ export default {
       model: {},
       title: '',
       preTextMessage: '',
+      afterTextMessage: '',
     }
   },
   computed: {
