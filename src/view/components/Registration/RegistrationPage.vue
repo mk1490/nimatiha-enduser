@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     authSuccess(token) {
+      console.log("AUTH SUCC", token)
       localStorage.setItem('accessToken', token);
       this.$store.commit('LOGIN_STATE', true);
       this.$router.push({

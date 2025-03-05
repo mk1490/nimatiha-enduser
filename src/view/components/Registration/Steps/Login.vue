@@ -14,7 +14,7 @@ const emits = defineEmits(['authSuccess'])
 
 function login() {
   httpPost(`/auth/login`, {...model.value}, result => {
-    emits('authSuccess', result)
+    emits('authSuccess', result.access_token)
   })
 }
 </script>

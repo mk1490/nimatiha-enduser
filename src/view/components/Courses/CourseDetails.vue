@@ -75,5 +75,7 @@ function showVideoModal(item) {
 </template>
 
 <style scoped>
-
+::v-deep .v-data-table-footer {
+  display: none !important;
+}
 </style>
