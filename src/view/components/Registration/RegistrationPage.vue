@@ -15,8 +15,14 @@
                   احراز هویت
                 </v-card-title>
                 <v-card-text>
-                  <authentication
-                      @authSuccess="authSuccess"/>
+                  <!--                  <authentication-->
+                  <!--                      @authSuccess="authSuccess"/>-->
+
+
+                  <login
+                      @authSuccess="authSuccess"
+                  />
+
                 </v-card-text>
               </v-card>
             </div>
@@ -32,10 +38,12 @@
 
 import Authentication from "./Steps/Authentication.vue";
 import {mapGetters} from 'vuex'
+import Login from "@/view/components/Registration/Steps/Login.vue";
 
 export default {
   name: "RegistrationPage",
   components: {
+    Login,
     Authentication,
   },
   async created() {
