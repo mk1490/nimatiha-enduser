@@ -14,11 +14,11 @@ import fa from './fa_IR';
 const messages = {
     en: {
         ...en,
-        $vuetify: vuetify.en,
+        // $vuetify: vuetify.en,
     },
     fa: {
         ...fa,
-        $vuetify: vuetify.fa,
+        // $vuetify: vuetify.fa,
     },
 };
 
@@ -38,19 +38,16 @@ export const locales = [
     },
 ];
 
-/**
- * VueI18n instance
- */
 const i18n = createI18n({
+    locale: 'fa',
     messages,
 });
 
 export async function setLocale(locale) {
     if (i18n.locale !== locale) {
-        console.log(`[Locale] Set to "${locale}"`);
         i18n.locale = locale;
     } else {
-        console.warn(`[Locale] "${locale}" is current`);
+
     }
 }
 

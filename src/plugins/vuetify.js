@@ -15,11 +15,9 @@ const vuetify = createVuetify({
             en: enUS,
         }
     },
-    locale: {
-        rtl: true,
-        locale: 'fa',
-        fallback: 'fa-IR'
-    },
+    locale: 'faIR',
+    fallback: 'fa',
+    messages: {faIR},
     theme: {
         themes: {
             myCustomTheme
@@ -31,14 +29,7 @@ const vuetify = createVuetify({
     },
 })
 
-
-/**
- * Set the mode to dark/light for the Vuetify class object.
- *
- * @param {Boolean} dark new value
- */
 export async function setVuetifyThemeDark(dark) {
-    console.log(`[Vuetify] Change theme to "${dark ? 'dark' : 'light'}"`);
     vuetify.theme.dark = dark;
 }
 

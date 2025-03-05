@@ -6,7 +6,7 @@
       elevation="1"
       floating
 
-      style="z-index: 999999;direction: rtl;right: 0!important;; left: 0!important;">
+      style="z-index: 1;direction: rtl;right: 0!important;; left: 0!important;">
     <v-toolbar
         color="#ffffff00"
         flat>

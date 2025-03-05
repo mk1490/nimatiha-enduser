@@ -61,6 +61,11 @@ export const constantRoutes = [
                 path: '/courses/list',
                 component: () => import('@/view/components/Courses/Courses.vue'),
             },
+            {
+                name: 'courseDetails',
+                path: '/course/:id',
+                component: () => import('@/view/components/Courses/CourseDetails.vue'),
+            },
 
             {
                 name: 'complete-profile',

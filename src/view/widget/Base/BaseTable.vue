@@ -23,8 +23,7 @@
       </template>
       <template
           v-slot:[slotKey]="{item, index}"
-          v-for="(slotItem, slotKey) in $scopedSlots">
-
+          v-for="(slotItem, slotKey) in $slots">
         <slot :name="slotKey" :item="(item)" :index="index"></slot>
       </template>
     </v-data-table>
@@ -79,8 +78,7 @@ export default {
       });
     }
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
