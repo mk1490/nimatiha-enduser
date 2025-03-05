@@ -59,7 +59,7 @@ export const constantRoutes = [
             {
                 name: 'coursesList',
                 path: '/courses/list',
-                component: () => import('@/view/components/Questionnaire/Questionnaire'),
+                component: () => import('@/view/components/Courses/Courses.vue'),
             },
 
             {

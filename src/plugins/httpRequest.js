@@ -147,6 +147,16 @@ export default {
 }
 
 
+export function httpGet(requestUrl, successCallback, errorCallback) {
+    axios.get(requestUrl).then(response => {
+        successCallback(response);
+    }).catch(error => {
+        if (errorCallback) {
+            errorCallback(error)
+        }
+    })
+}
+
 export function httpPost(requestUrl, body, successCallback, errorCallback) {
     axios.post(requestUrl, body).then(response => {
         successCallback(response);

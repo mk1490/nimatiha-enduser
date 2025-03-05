@@ -9,12 +9,12 @@ export default {
   components: {ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
     if (!this.isLogin) {
-      this.$router.push({
-        name: 'complete-profile',
-        query: {
-          redirectTo: this.$route.fullPath,
-        }
-      })
+      // this.$router.push({
+      //   name: 'complete-profile',
+      //   query: {
+          // redirectTo: this.$route.fullPath,
+        // }
+      // })
     }
 
     this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
