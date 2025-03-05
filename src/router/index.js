@@ -56,6 +56,11 @@ export const constantRoutes = [
                 path: 'questionnaire-details/:slug?',
                 component: () => import('@/view/components/Questionnaire/Questionnaire'),
             },
+            {
+                name: 'coursesList',
+                path: '/courses/list',
+                component: () => import('@/view/components/Questionnaire/Questionnaire'),
+            },
 
             {
                 name: 'complete-profile',
