@@ -24,10 +24,10 @@ export default {
     this.httpGet(`/auth/profile`, result => {
       this.$store.commit('SET_PROFILE_DATA', {...result})
       if (!result.status) {
-        // this.$router.push({
-        //     name: 'complete-profile'
-        // })
+        this.$router.push('/courses/list');
       }
+    }, error => {
+      this.toLogin()
     })
 
     await this.$store.commit('SET_MENU_ITEMS', [
@@ -61,6 +61,13 @@ export default {
     TheLayoutToTopFab,
     TheLayoutFooter,
   },
+  methods: {
+    toLogin() {
+      this.$router.push({
+        name: 'auth'
+      })
+    }
+  }
 
 };
 </script>
