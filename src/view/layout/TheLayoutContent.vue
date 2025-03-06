@@ -4,7 +4,7 @@
       mode="out-in">
     <keep-alive>
       <v-main>
-        <v-container>
+        <v-container fluid class="h-100">
           <router-view/>
         </v-container>
       </v-main>

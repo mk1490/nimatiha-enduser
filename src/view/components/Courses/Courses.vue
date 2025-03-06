@@ -4,7 +4,7 @@ import {useRouter} from "vue-router";
 
 const router = useRouter()
 
-const items = ref([])
+const items = ref(null)
 
 onMounted(() => {
   httpGet(`/course/list`, result => {
@@ -23,20 +23,22 @@ function toRoute(item) {
 </script>
 
 <template>
-  <v-container fluid>
+  <v-container
+      class="h-100"
+      fluid>
     <div
-        v-if="items.length > 0"
+        v-if="items && items.length > 0"
         class="v-row">
       <div
           v-for="item in items"
           class="v-col-md-4 v-col-sm-12">
         <v-card>
-          <v-card-title>
+          <v-card-title class="text-center">
             {{ item.title }}
           </v-card-title>
           <v-card-text>
             <div class="v-row">
-              <div class="v-col-12">
+              <div class="v-col-12 mt-10">
                 <v-btn
                     @click="toRoute(item)"
                     color="primary"
@@ -51,11 +53,11 @@ function toRoute(item) {
     </div>
 
     <div
-        v-else
-        class="d-flex">
-      <h2>
+        v-if="items && items.length == 0"
+        class="d-flex text-white justify-center align-self-center">
+      <h4>
         موردی جهت نمایش وجود ندارد.
-      </h2>
+      </h4>
     </div>
   </v-container>
 </template>

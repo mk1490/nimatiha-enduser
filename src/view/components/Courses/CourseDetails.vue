@@ -3,6 +3,7 @@ import {httpGet} from "@/plugins/httpRequest";
 import BaseTable from "@/view/widget/Base/BaseTable.vue";
 import {useRoute} from "vue-router";
 import VideoModal from "@/view/components/Courses/Widgets/VideoModal.vue";
+import AppBackButton from "@/view/widget/AppBackButton.vue";
 
 
 const route = useRoute()
@@ -43,8 +44,9 @@ function showVideoModal(item) {
 
 <template>
   <v-container fluid>
-    <v-card>
+    <v-card v-if="table.contents.length > 0">
       <v-card-title>
+        <app-back-button back-route="/courses/list"/>
         {{ model.title }}
       </v-card-title>
       <v-card-text>

@@ -31,14 +31,14 @@ export default {
     })
 
     await this.$store.commit('SET_MENU_ITEMS', [
-      {
-        text: 'آزمون‌ها',
-        to: 'profile-test'
-      },
-      {
-        text: 'پرسش‌نامه‌ها',
-        to: 'questionnaires'
-      },
+      // {
+      //   text: 'آزمون‌ها',
+      //   to: 'profile-test'
+      // },
+      // {
+      //   text: 'پرسش‌نامه‌ها',
+      //   to: 'questionnaires'
+      // },
       {
         text: 'دوره‌ها',
         to: 'coursesList'

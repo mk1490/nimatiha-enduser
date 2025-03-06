@@ -28,13 +28,13 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.name !== 'complete-profile') {
-        if (vuex.getters.profileData && !vuex.getters.profileData.status) {
-          this.$router.push({
-            name: 'complete-profile'
-          })
-        }
-      }
+      // if (to.name !== 'complete-profile') {
+      //   if (vuex.getters.profileData && !vuex.getters.profileData.status) {
+      //     this.$router.push({
+      //       name: 'complete-profile'
+      //     })
+      //   }
+      // }
 
     }
   }
