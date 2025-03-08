@@ -11,6 +11,7 @@
     "@mdi/font": "7.3.67",
     "@persian-tools/persian-tools": "^3.2.1",
     "@vitejs/plugin-vue": "^4.5.0",
+    "@vueuse/core": "^12.8.2",
     "await-to-js": "^3.0.0",
     "axios": "^0.26.1",
     "date-fns": "^3.3.1",
@@ -33,6 +34,7 @@
     "vue-persian-datetime-picker": "^2.10.4",
     "vue-sweetalert2": "5.0.2",
     "vue-toast-notification": "^3.1.2",
+    "vue3-perfect-scrollbar": "^2.0.0",
     "vue3-persian-datetime-picker": "^1.2.2",
     "vuetify": "3.5.5",
     "vuex": "^4.0.2"

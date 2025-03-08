@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import avatar from '@images/avatars/avatar.png'
-import { baseData } from '@/plugins/pinia'
 
-const baseDataStore = baseData()
+import {useRouter} from "vue-router";
+import {useStore} from "vuex";
+
+const baseDataStore = useStore()
 const router = useRouter()
 
 async function logout() {
@@ -14,26 +15,26 @@ async function logout() {
 
 <template>
   <VBadge
-    dot
-    location="bottom right"
-    offset-x="3"
-    offset-y="3"
-    color="success"
-    bordered
+      dot
+      location="bottom right"
+      offset-x="3"
+      offset-y="3"
+      color="success"
+      bordered
   >
     <VAvatar
-      class="cursor-pointer"
-      color="primary"
-      variant="tonal"
+        class="cursor-pointer"
+        color="primary"
+        variant="tonal"
     >
-      <VImg :src="avatar" />
+      <VImg/>
 
       <!-- SECTION Menu -->
       <VMenu
-        activator="parent"
-        width="230"
-        location="bottom end"
-        offset="14px"
+          activator="parent"
+          width="230"
+          location="bottom end"
+          offset="14px"
       >
         <VList>
           <!-- 👉 User Avatar & Name -->
@@ -41,16 +42,16 @@ async function logout() {
             <template #prepend>
               <VListItemAction start>
                 <VBadge
-                  dot
-                  location="bottom right"
-                  offset-x="3"
-                  offset-y="3"
-                  color="success"
+                    dot
+                    location="bottom right"
+                    offset-x="3"
+                    offset-y="3"
+                    color="success"
                 >
                   <VAvatar
-                    color="primary"
-                    variant="tonal">
-                    <VImg :src="avatar" />
+                      color="primary"
+                      variant="tonal">
+                    <VImg :src="avatar"/>
                   </VAvatar>
                 </VBadge>
               </VListItemAction>
@@ -91,15 +92,15 @@ async function logout() {
 
 
           <!-- Divider -->
-          <VDivider class="my-2" />
+          <VDivider class="my-2"/>
 
           <!-- 👉 Logout -->
           <VListItem @click="">
             <template #prepend>
               <VIcon
-                class="me-2"
-                icon="ri-logout-box-r-line"
-                size="22"
+                  class="me-2"
+                  icon="ri-logout-box-r-line"
+                  size="22"
               />
             </template>
 

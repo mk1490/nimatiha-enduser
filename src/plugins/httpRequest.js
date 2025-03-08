@@ -4,8 +4,8 @@ import Router from "@/router";
 import i18n from "@/locale";
 import Swal from "sweetalert2";
 
-const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
-// const serverAddress = "https://api.nimkatiha.com";
+// const serverAddress = import.meta.env.VITE_SERVER_ADDRESS;
+const serverAddress = "https://api.nimkatiha.com";
 const baseUrl = serverAddress + '/api/enduser/';
 axios.defaults.baseURL = baseUrl;
 export default {

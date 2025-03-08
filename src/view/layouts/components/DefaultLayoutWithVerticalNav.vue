@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-import NavItems from '@/layouts/components/NavItems.vue'
+import NavItems from './NavItems.vue'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
 
 // Components
-import Footer from '@/layouts/components/Footer.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
+import NavbarThemeSwitcher from './NavbarThemeSwitcher.vue'
+import UserProfile from './UserProfile.vue'
 </script>
 
 <template>
@@ -32,49 +31,50 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
         <!--          </span>-->
         <!--        </div>-->
 
-        <VSpacer />
-        <IconBtn
-          class="ms-n3 d-lg-none"
-          @click="toggleVerticalOverlayNavActive(true)"
+        <VSpacer/>
+        <v-btn
+            variant="text"
+            class="ms-n3 d-lg-none"
+            @click="toggleVerticalOverlayNavActive(true)"
         >
-          <VIcon icon="ri-menu-line" />
-        </IconBtn>
+          <VIcon icon="ri-menu-line"/>
+        </v-btn>
 
-<!--        <IconBtn>-->
+        <!--        <IconBtn>-->
         <!--          <VIcon icon="ri-notification-line" />-->
         <!--        </IconBtn>-->
 
-        <NavbarThemeSwitcher class="me-2" />
+        <NavbarThemeSwitcher class="me-2"/>
 
-        <UserProfile />
+        <UserProfile/>
       </div>
     </template>
 
     <template #vertical-nav-header="{ toggleIsOverlayNavActive }">
       <RouterLink
-        to="/"
-        class="app-logo app-title-wrapper"
+          to="/"
+          class="app-logo app-title-wrapper"
       >
       </RouterLink>
 
-<!--      <IconBtn-->
-<!--        class="d-block d-lg-none"-->
-<!--        @click="toggleIsOverlayNavActive(false)"-->
-<!--      >-->
-<!--        <VIcon icon="ri-close-line" />-->
-<!--      </IconBtn>-->
+      <!--      <IconBtn-->
+      <!--        class="d-block d-lg-none"-->
+      <!--        @click="toggleIsOverlayNavActive(false)"-->
+      <!--      >-->
+      <!--        <VIcon icon="ri-close-line" />-->
+      <!--      </IconBtn>-->
     </template>
 
     <template #vertical-nav-content>
-      <NavItems />
+      <NavItems/>
     </template>
 
     <!-- 👉 Pages -->
-    <slot />
+    <slot/>
 
     <!-- 👉 Footer -->
     <template #footer>
-      <Footer />
+      <Footer/>
     </template>
   </VerticalNavLayout>
 </template>

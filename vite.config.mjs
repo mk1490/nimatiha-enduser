@@ -23,9 +23,9 @@ export default defineConfig({
         // https://github.com/vuetifyjs/vuetify-loader/tree/master/packages/vite-plugin#readme
         Vuetify({
             autoImport: true,
-            // styles: {
-            //     configFile: 'src/assets/styles/settings.scss',
-            // },
+            styles: {
+                configFile: 'src/assets/styles/variables/_vuetify.scss',
+            },
         }),
         Components(),
         Fonts({
@@ -37,14 +37,11 @@ export default defineConfig({
             },
         }),
         AutoImport({
-            imports: [
-                'vue',
-                'vue-router',
-            ],
-            eslintrc: {
-                enabled: true,
-            },
+            imports: ['vue', 'vue-router', '@vueuse/core', '@vueuse/math', 'pinia'],
             vueTemplate: true,
+
+            // ℹ️ Disabled to avoid confusion & accidental usage
+            ignore: ['useCookies', 'useStorage'],
         }),
     ],
     define: {
@@ -63,6 +60,11 @@ export default defineConfig({
         alias: {
             '@/public': fileURLToPath(new URL('../public', import.meta.url)),
             '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@core': fileURLToPath(new URL('./src/@core', import.meta.url)),
+            '@layouts': fileURLToPath(new URL('./src/@layouts', import.meta.url)),
+            '@images': fileURLToPath(new URL('./src/assets/images/', import.meta.url)),
+            '@styles': fileURLToPath(new URL('./src/assets/styles/', import.meta.url)),
+            '@configured-variables': fileURLToPath(new URL('./src/assets/styles/variables/_template.scss', import.meta.url)),
         },
         extensions: [
             '.js',

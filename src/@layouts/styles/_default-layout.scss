@@ -2,7 +2,7 @@
 @use "@layouts/styles/rtl";
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
-@use "@configured-variables" as variables;
+@use "@/assets/styles/variables/_template.scss" as variables;
 
 html,
 body {

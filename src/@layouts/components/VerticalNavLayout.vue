@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import {useToggle} from '@vueuse/core'
 import { useDisplay } from 'vuetify'
-import VerticalNav from '@layouts/components/VerticalNav.vue'
+import VerticalNav from './VerticalNav.vue'
 import { VBtn } from 'vuetify/components/VBtn'
 import { useRouter, Router } from 'vue-router'
 
