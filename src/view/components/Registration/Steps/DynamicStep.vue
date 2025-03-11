@@ -46,11 +46,11 @@ export default {
       }
 
       if ([1, 2, 11].includes(item.type)) {
-        if (item.minimum != null) {
-          rules.push(v => v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
+        if (item.minimum != null || item.minimum != -1) {
+          rules.push(v => v && v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
         }
         if (item.maximum != null) {
-          rules.push(v => v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
+          rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
         }
       }
 

@@ -113,7 +113,7 @@ export default {
 </script>
 
 <template>
-  <div
+  <v-container
       class="d-flex justify-center">
     <v-card
         :width="cardWidth"
@@ -181,7 +181,7 @@ export default {
       </v-card-actions>
 
     </v-card>
-  </div>
+  </v-container>
 </template>
 
 <style scoped>

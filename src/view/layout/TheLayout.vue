@@ -24,10 +24,10 @@ export default {
     this.httpGet(`/auth/profile`, result => {
       this.$store.commit('SET_PROFILE_DATA', {...result})
       if (!result.status) {
-        this.$router.push('/courses/list');
+        // this.$router.push('/courses/list');
       }
     }, error => {
-      this.toLogin()
+      // this.toLogin()
     })
 
     await this.$store.commit('SET_MENU_ITEMS', [
