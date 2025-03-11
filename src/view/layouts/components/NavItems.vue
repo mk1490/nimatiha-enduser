@@ -9,59 +9,48 @@ import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
 <template>
 
   <VerticalNavLink
-    :item="{
-        title: 'واریزی اعضا',
-        to: 'memberDeposits',
+      :item="{
+        title: 'آزمون‌های من',
+        to: 'tests',
       }"
   />
+
   <VerticalNavLink
-    :item="{
-        title: 'حسابداری و مالی',
-        to: 'accounting',
-      }"
-  />
-  <VerticalNavLink
-    :item="{
+      :item="{
         title: 'انبارداری',
         to: '/warehousing',
-      }"
-  />
-  <VerticalNavLink
-    :item="{
-        title: 'برآورد پروژه',
-        to: '/project-estimate',
       }"
   />
 
 
   <VerticalNavGroup
-    :item="{
+      :item="{
       title: 'داده‌های پایه‌ای',
       icon: 'ri-home-smile-line',
     }"
   >
     <VerticalNavLink
-      :item="{
+        :item="{
         title: 'اعضا',
         to: '/members',
       }"
     />
     <VerticalNavLink
-      :item="{
+        :item="{
         title: 'کاربران',
         to: '/users',
       }"
     />
 
     <VerticalNavLink
-      :item="{
+        :item="{
         title: 'پروژه‌ها',
         to: '/projects',
       }"
     />
 
     <VerticalNavLink
-      :item="{
+        :item="{
         title: 'تنظیمات',
         to: '/settings',
       }"

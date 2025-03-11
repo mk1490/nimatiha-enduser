@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {useToggle} from '@vueuse/core'
-import { useDisplay } from 'vuetify'
+import {useDisplay} from 'vuetify'
 import VerticalNav from './VerticalNav.vue'
-import { VBtn } from 'vuetify/components/VBtn'
-import { useRouter, Router } from 'vue-router'
+import {VBtn} from 'vuetify/components/VBtn'
+import {useRouter, Router} from 'vue-router'
 
 const isOverlayNavActive = ref(true)
 const isLayoutOverlayVisible = ref(false)
@@ -21,8 +21,8 @@ async function logout() {
 
 <template>
   <div
-    class="layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid"
-    :class="{ 'layout-overlay-nav': 'mdAndDown'}">
+      class="layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid"
+      :class="{ 'layout-overlay-nav': 'mdAndDown'}">
     <vertical-nav :is-overlay-nav-active="isOverlayNavActive"
                   :toggle-is-overlay-nav-active="toggleIsOverlayNavActive">
       <slot name="vertical-nav-header"></slot>
@@ -32,8 +32,8 @@ async function logout() {
 
       <template v-slot:after-nav-items>
         <v-btn
-          @click="logout"
-          class="mb-2">
+            @click="logout"
+            class="mb-2">
           خروج از حساب کاربری
         </v-btn>
       </template>
@@ -49,11 +49,6 @@ async function logout() {
           <slot></slot>
         </div>
       </main>
-      <footer class="layout-footer">
-        <div class="footer-content-container">
-          <slot name="footer"></slot>
-        </div>
-      </footer>
     </div>
     <div class="layout-overlay" :class="{ visible: isLayoutOverlayVisible }" @click="toggleLayoutOverlayVisibility">
     </div>
