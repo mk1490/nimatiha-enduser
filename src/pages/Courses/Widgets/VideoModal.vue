@@ -1,8 +1,8 @@
 <script setup>
 
-import BaseModal from "@/view/widget/Base/BaseModal.vue";
 import videojs from "video.js";
-import {httpPost} from "@/plugins/httpRequest";
+import {httpPost} from "../../../plugins/http/httpRequest";
+import BaseModal from "../../../views/Base/BaseModal.vue";
 
 
 const props = defineProps({
