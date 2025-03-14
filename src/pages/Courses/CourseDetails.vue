@@ -12,6 +12,7 @@ onMounted(() => {
   httpGet(`/course/${route.params.id}`, result => {
     model.value.title = result.title
     model.value.content = result.content
+    model.value.items = result.items
     table.value.contents = result.items;
   })
 })
@@ -19,6 +20,7 @@ onMounted(() => {
 const model = ref({
   title: null,
   content: null,
+  items: [],
 })
 
 const table = ref({
@@ -61,18 +63,31 @@ function showVideoModal(item) {
               <v-card-text>
                 <div class="d-inline-block">
                   <div v-html="model.content"></div>
-                  <v-card>
+                  <v-card
+                      class="mb-3"
+                      v-for="item in model.items">
                     <v-card-title>
-
+                      {{ item.title }}
                     </v-card-title>
                     <v-card-text>
-                      <v-expansion-panels>
-                        <v-expansion-panel
-                            title="Title"
-                            text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
-                        >
-                        </v-expansion-panel>
-                      </v-expansion-panels>
+                      <v-card v-for="childItem in item.children">
+                        <v-card-title>
+                          <div class="v-row">
+                            <div class="v-col">
+                              {{ childItem.title }}
+                              <v-chip color="primary">
+                                {{ childItem.type }}
+                              </v-chip>
+                            </div>
+                            <div class="v-col-auto">
+                              <base-button
+                                  label="دانلود"
+                              />
+                            </div>
+                          </div>
+
+                        </v-card-title>
+                      </v-card>
                     </v-card-text>
                   </v-card>
 
