@@ -42,7 +42,19 @@ function showVideoModal(item) {
     modal.value.data = result;
     modal.value.visible = true;
   })
+}
 
+function getTypeTitle(type) {
+  switch (type) {
+    case 1:
+      return 'ویدئو';
+    case 2:
+      return 'آزمون';
+    case 3:
+      return 'فایل پیوست';
+    case 4:
+      return 'تکلیف';
+  }
 }
 </script>
 
@@ -76,12 +88,18 @@ function showVideoModal(item) {
                             <div class="v-col">
                               {{ childItem.title }}
                               <v-chip color="primary">
-                                {{ childItem.type }}
+                                {{ getTypeTitle(childItem.type) }}
                               </v-chip>
                             </div>
-                            <div class="v-col-auto">
+                            <div class="v-col-auto d-inline-flex">
                               <base-button
                                   label="دانلود"
+                              />
+                              <div
+                                  class="mx-1"
+                              />
+                              <base-button
+                                  label="مشاهده"
                               />
                             </div>
                           </div>

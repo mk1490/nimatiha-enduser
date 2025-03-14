@@ -24,8 +24,7 @@ function toRoute(item) {
 
 <template>
   <v-container
-      class="h-100"
-      fluid>
+      class="h-100">
     <div
         v-if="items && items.length > 0"
         class="v-row">

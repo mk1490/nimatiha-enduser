@@ -26,7 +26,7 @@ function toggleLayoutOverlayVisibility() {
 
 <template>
   <v-app>
-    <v-toolbar>
+    <v-toolbar >
       <div class="d-inline-flex">
         <v-img
             src="https://cdn.tarbiatbonyadi.com/wp-content/uploads/2025/01/desktop-logo-3.webp"
@@ -51,7 +51,7 @@ function toggleLayoutOverlayVisibility() {
     </v-main>
 
     <v-footer>
-      
+
     </v-footer>
 
   </v-app>
