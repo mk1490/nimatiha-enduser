@@ -1,5 +1,4 @@
-import type {App} from 'vue'
-import http, {httpRequest} from "../../plugins/http";
+import type { App } from 'vue'
 
 /**
  * This is helper function to register plugins like a nuxt
@@ -43,16 +42,13 @@ import http, {httpRequest} from "../../plugins/http";
  */
 
 export const registerPlugins = (app: App) => {
+  const imports = import.meta.glob<{ default: (app: App) => void }>(['../../plugins/*.{ts,js}', '../../plugins/*/index.{ts,js}'], { eager: true })
 
-    const imports = import.meta.glob<{
-        default: (app: App) => void
-    }>(['../../plugins/*.{ts,js}', '../../plugins/*/index.{ts,js}'], {eager: true})
+  const importPaths = Object.keys(imports).sort()
 
-    const importPaths = Object.keys(imports).sort()
+  importPaths.forEach(path => {
+    const pluginImportModule = imports[path]
 
-    importPaths.forEach(path => {
-        const pluginImportModule = imports[path]
-        pluginImportModule.default?.(app)
-    })
-    app.use(httpRequest)
+    pluginImportModule.default?.(app)
+  })
 }

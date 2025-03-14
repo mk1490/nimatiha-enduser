@@ -1,58 +1,55 @@
 <script setup lang="ts">
-import {useToggle} from '@vueuse/core'
 import {useDisplay} from 'vuetify'
-import VerticalNav from './VerticalNav.vue'
+import VerticalNav from '@layouts/components/VerticalNav.vue'
 import {VBtn} from 'vuetify/components/VBtn'
 import {useRouter, Router} from 'vue-router'
+import {useStore} from "vuex";
+import BaseButton from "../../views/Base/BaseButton.vue";
 
 const isOverlayNavActive = ref(true)
 const isLayoutOverlayVisible = ref(false)
 const toggleIsOverlayNavActive = useToggle(isOverlayNavActive)
 
 const router = useRouter()
+const store = useStore()
 
 async function logout() {
   localStorage.removeItem('Authorization')
   await router.push('/login')
 }
 
+function toggleLayoutOverlayVisibility() {
+  store.dispatch('')
+}
 
 </script>
 
 <template>
-  <div
-      class="layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid"
-      :class="{ 'layout-overlay-nav': 'mdAndDown'}">
-    <vertical-nav :is-overlay-nav-active="isOverlayNavActive"
-                  :toggle-is-overlay-nav-active="toggleIsOverlayNavActive">
-      <slot name="vertical-nav-header"></slot>
-      <slot name="before-vertical-nav-items"></slot>
-      <slot name="vertical-nav-content"></slot>
-      <slot name="after-vertical-nav-items"></slot>
+  <v-app>
+    <v-toolbar>
+      <div class="d-inline-flex">
+        <v-img
+            src="https://cdn.tarbiatbonyadi.com/wp-content/uploads/2025/01/desktop-logo-3.webp"
+            width="150"
+        />
 
-      <template v-slot:after-nav-items>
-        <v-btn
-            @click="logout"
-            class="mb-2">
-          خروج از حساب کاربری
-        </v-btn>
-      </template>
-    </vertical-nav>
-    <div class="layout-content-wrapper">
-      <header class="layout-navbar navbar-blur">
-        <div class="navbar-content-container">
-          <slot name="navbar"></slot>
+        <div class="d-inline-flex">
+          <base-button
+              label="دوره ها"
+              to="/courses/list"
+          />
+          <base-button
+              label="آزمون ها"
+          />
         </div>
-      </header>
-      <main class="layout-page-content">
-        <div class="page-content-container">
-          <slot></slot>
-        </div>
-      </main>
-    </div>
-    <div class="layout-overlay" :class="{ visible: isLayoutOverlayVisible }" @click="toggleLayoutOverlayVisibility">
-    </div>
-  </div>
+
+
+      </div>
+    </v-toolbar>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
 <style lang="scss">
