@@ -42,7 +42,7 @@ function toRoute(item) {
                     @click="toRoute(item)"
                     color="primary"
                     block>
-                  شرکت در دوره
+                  مشاهده جزئیات
                 </v-btn>
               </div>
             </div>

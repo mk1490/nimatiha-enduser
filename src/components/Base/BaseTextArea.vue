@@ -1,22 +1,15 @@
 <template>
   <v-textarea
-      :value="value"
-      @input="$emit('input', $event)"
+      :model-value="model"
+      @update:modelValue="$emit('update:modelValue', event)"
       :label="label"
       :type="type"
       :disabled="disabled"
-      :rules="rules"
-      :hide-details="hideDetails"
-      :height="height"
+      :readonly="readOnly"
       hide-details
+      :variant="variant"
       outlined
       dense>
-    <template v-slot:label>
-      <div class="required--symbol">
-        {{ label }}
-        <small v-if="requiredSymbol">*</small>
-      </div>
-    </template>
   </v-textarea>
 </template>
 
@@ -30,16 +23,12 @@ export default {
     height: Number,
     label: String,
     disabled: Boolean,
+    readOnly: Boolean,
     type: undefined,
-    hideDetails: {
-      type: undefined,
-      default: true,
+    variant: {
+      type: String,
+      default: () => 'outlined',
     },
-    requiredSymbol: {
-      type: Boolean,
-      default: false,
-    },
-    rules: Array,
   },
   data() {
     return {

@@ -1,9 +1,10 @@
 <script setup>
 import {useRoute} from "vue-router";
 import VideoModal from "./Widgets/VideoModal.vue";
-import {httpGet} from "../../plugins/http/httpRequest";
+import {httpGet, serverAddress} from "../../plugins/http/httpRequest";
 import BaseTable from "../../components/Base/BaseTable.vue";
 import BaseButton from "../../views/Base/BaseButton.vue";
+import TestModal from "@/pages/Courses/Widgets/TestModal.vue";
 
 
 const route = useRoute()
@@ -35,6 +36,10 @@ const table = ref({
 const modal = ref({
   visible: false,
   data: null,
+  test: {
+    visible: false,
+    data: null,
+  }
 })
 
 function showVideoModal(item) {
@@ -56,12 +61,65 @@ function getTypeTitle(type) {
       return 'تکلیف';
   }
 }
+
+
+function buttonItems(item) {
+
+  const buttonItems = [];
+
+  if ([1, 3].includes(item.type)) {
+    buttonItems.push({
+      title: 'دانلود',
+      click: item => {
+        window.open(serverAddress + item.url, '_blank');
+      }
+    },)
+  }
+
+  if (item.type === 1) {
+    buttonItems.push(
+        {
+          title: 'مشاهده',
+          click: item => {
+            console.log("DOWNLOAD CLICK", item)
+          }
+        },
+    )
+  }
+  if (item.type === 2) {
+    buttonItems.push(
+        {
+          title: 'شرکت در آزمون',
+          loading: false,
+          click: (item, index) => {
+            httpGet(`/course/prepare-test/${item.questionId}`, result => {
+              modal.value.test.data = result;
+              modal.value.test.visible = true;
+            })
+          }
+        },
+    )
+  }
+  if (item.type === 4) {
+    buttonItems.push(
+        {
+          title: 'ارسال تکلیف',
+          click: item => {
+            console.log("DOWNLOAD CLICK", item)
+          }
+        },
+    )
+  }
+
+
+  return buttonItems;
+}
 </script>
 
 <template>
   <v-container>
     <div class="v-row">
-      <div class="v-col-8">
+      <div class="v-col-md-8 v-col-sm-12">
         <div class="v-row">
           <div class="v-col-12">
             <v-img
@@ -82,7 +140,9 @@ function getTypeTitle(type) {
                       {{ item.title }}
                     </v-card-title>
                     <v-card-text>
-                      <v-card v-for="childItem in item.children">
+                      <v-card
+                          class="mb-2"
+                          v-for="childItem in item.children">
                         <v-card-title>
                           <div class="v-row">
                             <div class="v-col">
@@ -92,15 +152,15 @@ function getTypeTitle(type) {
                               </v-chip>
                             </div>
                             <div class="v-col-auto d-inline-flex">
-                              <base-button
-                                  label="دانلود"
-                              />
-                              <div
-                                  class="mx-1"
-                              />
-                              <base-button
-                                  label="مشاهده"
-                              />
+                              <template v-for="item in buttonItems(childItem)">
+                                <div class="mr-1">
+                                  <base-button
+                                      :label="item.title"
+                                      @click="item.click(childItem)"
+                                  />
+                                </div>
+
+                              </template>
                             </div>
                           </div>
 
@@ -117,7 +177,7 @@ function getTypeTitle(type) {
         </div>
 
       </div>
-      <div class="v-col-4">
+      <div class="v-col-md-4 v-col-sm-12">
         <v-card>
           <v-card-text>
             <base-button
@@ -129,6 +189,13 @@ function getTypeTitle(type) {
           </v-card-text>
         </v-card>
       </div>
+
+      <test-modal
+          v-if="modal.test.visible"
+          :visible="modal.test.visible"
+          @close="modal.test.visible = false"
+          :data="modal.test.data"
+      />
     </div>
   </v-container>
 </template>

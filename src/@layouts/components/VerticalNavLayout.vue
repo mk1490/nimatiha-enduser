@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useDisplay} from 'vuetify'
-import VerticalNav from '@layouts/components/VerticalNav.vue'
 import {VBtn} from 'vuetify/components/VBtn'
 import {useRouter, Router} from 'vue-router'
 import {useStore} from "vuex";
@@ -25,36 +24,33 @@ function toggleLayoutOverlayVisibility() {
 </script>
 
 <template>
-  <v-app>
-    <v-toolbar >
+  <v-app-bar scroll-behavior="elevate">
+    <div class="d-inline-flex">
+      <v-img
+          src="https://cdn.tarbiatbonyadi.com/wp-content/uploads/2025/01/desktop-logo-3.webp"
+          width="150"
+      />
+
       <div class="d-inline-flex">
-        <v-img
-            src="https://cdn.tarbiatbonyadi.com/wp-content/uploads/2025/01/desktop-logo-3.webp"
-            width="150"
+        <base-button
+            label="دوره ها"
+            to="/courses/list"
         />
-
-        <div class="d-inline-flex">
-          <base-button
-              label="دوره ها"
-              to="/courses/list"
-          />
-          <base-button
-              label="آزمون ها"
-          />
-        </div>
-
-
+        <base-button
+            label="آزمون ها"
+        />
       </div>
-    </v-toolbar>
-    <v-main>
-      <router-view/>
-    </v-main>
 
-    <v-footer>
 
-    </v-footer>
+    </div>
+  </v-app-bar>
+  <v-main>
+    <router-view/>
+  </v-main>
 
-  </v-app>
+<!--  <v-footer>-->
+
+  <!--  </v-footer>-->
 </template>
 
 <style lang="scss">

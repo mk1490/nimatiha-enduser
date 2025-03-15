@@ -14,6 +14,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  hideCloseButton: {
+    type: Boolean,
+    default: false,
+  },
   blockCloseButton: {
     type: Boolean,
     default: false,
@@ -45,13 +49,13 @@ function closeOrBack() {
 
 <template>
   <v-dialog
-    persistent
-    transition="dialog-bottom-transition"
-    :model-value="visible"
-    :fullscreen="fullScreen"
-    scrollable
-    @update:modelValue="$emit('update:visible', false)"
-    :width="!fullScreen ? width: undefined">
+      persistent
+      transition="dialog-bottom-transition"
+      :model-value="visible"
+      :fullscreen="fullScreen"
+      scrollable
+      @update:modelValue="$emit('update:visible', false)"
+      :width="!fullScreen ? width: undefined">
     <v-card>
 
 
@@ -71,13 +75,12 @@ function closeOrBack() {
           <div class="col">
 
             <v-btn
-              :icon="true"
-              large
-              color="transparent"
-              elevation="0"
-              class="ml-2"
-              @click="closeOrBack()"
-              v-if="fullScreen">
+                :icon="true"
+                large
+                color="transparent"
+                elevation="0"
+                class="ml-2"
+                @click="closeOrBack()">
               <v-icon>
                 ri-close-fill
               </v-icon>
@@ -85,8 +88,8 @@ function closeOrBack() {
             <div class="d-inline-block">
               {{ title }}
               <div
-                v-if="subTitle"
-                class="d-block">
+                  v-if="subTitle"
+                  class="d-block">
                 <h6 class="v-card__subtitle pa-0">
                   {{ subTitle }}
                 </h6>
@@ -122,18 +125,19 @@ function closeOrBack() {
 
           </slot>
           <v-btn
-            :block="blockCloseButton"
-            color="red"
-            @click="closeOrBack()">
+              v-if="hideSubmitButton === false"
+              :block="blockCloseButton"
+              color="red"
+              @click="closeOrBack()">
             {{ actionsText.backButtonText }}
           </v-btn>
           <v-btn
-            v-if="hideSubmitButton === false"
-            @click="submitOrNext()"
-            :disabled="submitDisabled"
-            :width="submitWidth"
-            variant="flat"
-            color="primary">
+              v-if="hideSubmitButton === false"
+              @click="submitOrNext()"
+              :disabled="submitDisabled"
+              :width="submitWidth"
+              variant="flat"
+              color="primary">
             {{ actionsText.nextButtonText }}
           </v-btn>
           <slot name="footer-submit-area">
