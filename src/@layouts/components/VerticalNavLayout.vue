@@ -4,6 +4,12 @@ import {VBtn} from 'vuetify/components/VBtn'
 import {useRouter, Router} from 'vue-router'
 import {useStore} from "vuex";
 import BaseButton from "../../views/Base/BaseButton.vue";
+import ClickableIcon from "@/@layouts/components/Widgets/ClickableIcon.vue";
+
+import instagram from '@/assets/images/logos/insta-logo.png'
+import eitaa from '@/assets/images/logos/eitaa-logo.png'
+import rubika from '@/assets/images/logos/rubika-logo.png'
+import telegram from '@/assets/images/logos/telegram-logo.png'
 
 const isOverlayNavActive = ref(true)
 const isLayoutOverlayVisible = ref(false)
@@ -71,20 +77,20 @@ function toggleLayoutOverlayVisibility() {
           <div class="d-inline-flex justify-center">
 
             <clickable-icon
-                target="https://eitaa.com/s/bazarche_dastafarinan"
-                src="../../../../public/images/eitaa-logo.png"
+                target="#"
+                :src="eitaa"
                 title="ایتا"/>
             <clickable-icon
-                target="https://rubika.ir/bazarche_dastafarinan"
-                src="../../../../public/images/rubika-logo.png"
+                target="#"
+                :src="rubika"
                 title="روبیکا"/>
             <clickable-icon
-                target="https://t.me/bazarche_dastafarinan"
-                src="../../../../public/images/telegram-logo.png"
+                target="#"
+                :src="telegram"
                 title="تلگرام"/>
             <clickable-icon
-                target="https://instagram.com/bazarche_dastafarinan"
-                src="../../../../public/images/insta-logo.png"
+                target="#"
+                :src="instagram"
                 title="اینستاگرام"/>
           </div>
         </div>
@@ -100,6 +106,7 @@ function toggleLayoutOverlayVisibility() {
 </template>
 
 <style lang="scss">
+
 @use "@configured-variables" as variables;
 @use "@layouts/styles/placeholders";
 @use "@layouts/styles/mixins";
