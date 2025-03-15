@@ -51,6 +51,7 @@
     "@mdi/font": "7.4.47",
     "@persian-tools/persian-tools": "^3.6.0",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "vite": "^6.2.0",
     "apexcharts": "^4.5.0",
     "await-to-js": "^3.0.0",
     "axios": "^1.8.3",
