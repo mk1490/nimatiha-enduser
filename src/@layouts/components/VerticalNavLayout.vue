@@ -48,7 +48,53 @@ function toggleLayoutOverlayVisibility() {
     <router-view/>
   </v-main>
 
-<!--  <v-footer>-->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 mt-2">
+          <v-tooltip
+              location="bottom"
+              v-slot:activator="{props}"
+              text="پست الکترونیک">
+            <v-btn
+                color="transparent"
+                class="text-white"
+                href="mailto:info@nimkatiha.com"
+                v-bind="props"
+                icon="mdi-mail"
+                variant="text">
+              Info@nimkatiha.com
+            </v-btn>
+          </v-tooltip>
+        </div>
+        <div class="col-12 mt-2">
+          <div class="d-inline-flex justify-center">
+
+            <clickable-icon
+                target="https://eitaa.com/s/bazarche_dastafarinan"
+                src="../../../../public/images/eitaa-logo.png"
+                title="ایتا"/>
+            <clickable-icon
+                target="https://rubika.ir/bazarche_dastafarinan"
+                src="../../../../public/images/rubika-logo.png"
+                title="روبیکا"/>
+            <clickable-icon
+                target="https://t.me/bazarche_dastafarinan"
+                src="../../../../public/images/telegram-logo.png"
+                title="تلگرام"/>
+            <clickable-icon
+                target="https://instagram.com/bazarche_dastafarinan"
+                src="../../../../public/images/insta-logo.png"
+                title="اینستاگرام"/>
+          </div>
+        </div>
+        <div class="col-12">
+          <p>&copy;کلیه حقوق متعلق به نیمکتی‌ها می‌باشد.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--  <v-footer>-->
 
   <!--  </v-footer>-->
 </template>

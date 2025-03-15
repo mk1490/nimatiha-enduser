@@ -15,6 +15,7 @@ onMounted(() => {
     model.value.content = result.content
     model.value.items = result.items
     table.value.contents = result.items;
+    specifications.value = result.specifications;
   })
 })
 
@@ -45,6 +46,8 @@ const modal = ref({
     data: null,
   }
 })
+
+const specifications = ref([])
 
 function showVideoModal(item) {
   httpGet(`/course/episode-details/${item.id}`, result => {
@@ -189,8 +192,25 @@ function buttonItems(item) {
                 label="شرکت در دوره"
                 block
             />
-
-
+          </v-card-text>
+        </v-card>
+        <v-card class="mt-5">
+          <v-card-title>
+            ویژگی‌های دوره
+          </v-card-title>
+          <v-card-text>
+            <div class="v-row">
+              <div
+                  v-for="item in specifications"
+                  class="v-col-12">
+                <label>
+                  {{ item.key }}
+                </label>
+                <span>
+                  {{ item.value }}
+                </span>
+              </div>
+            </div>
           </v-card-text>
         </v-card>
       </div>
