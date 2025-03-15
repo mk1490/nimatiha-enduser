@@ -5,16 +5,6 @@ import {useDisplay} from 'vuetify'
 import {httpGet} from '@/plugins/http/httpRequest'
 import {useStore} from 'vuex'
 
-interface Props {
-  tag?: string | Component
-  isOverlayNavActive: boolean
-  toggleIsOverlayNavActive: (value: boolean) => void
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  tag: 'aside',
-})
-
 const {mdAndDown} = useDisplay()
 
 const refNav = ref()
@@ -25,11 +15,6 @@ const refNav = ref()
 */
 const route = useRoute()
 
-watch(
-    () => route.path,
-    () => {
-      props.toggleIsOverlayNavActive(false)
-    })
 
 const isVerticalNavScrolled = ref(false)
 const updateIsVerticalNavScrolled = (val: boolean) => isVerticalNavScrolled.value = val
@@ -45,8 +30,8 @@ const store = useStore()
 <template>
   <!-- eslint-disable vue/no-v-html -->
   <v-navigation-drawer
-      :is="props.tag"
-      ref="refNav"
+      :model-value="store.getters.navbarMenu && $vuetify.display.smAndDown"
+
       class="layout-vertical-nav"
   >
     <slot

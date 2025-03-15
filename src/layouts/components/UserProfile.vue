@@ -59,7 +59,7 @@ async function logout() {
             </template>
 
             <VListItemTitle class="font-weight-semibold">
-              {{ 'baseDataStore.userInfo.name' }}
+              {{ store.getters.name }} {{ store.getters.family }}
             </VListItemTitle>
             <!--            <VListItemSubtitle>Admin</VListItemSubtitle>-->
           </VListItem>

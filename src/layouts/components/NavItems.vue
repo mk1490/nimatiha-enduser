@@ -15,16 +15,16 @@ const store = useStore()
   <VerticalNavLink
       :item="{
         title: 'دوره‌ها',
-        to: '/courses/list',
+        to: '/course',
       }"
   />
 
-  <VerticalNavLink
-      :item="{
-        title: 'آزمون‌ها',
-        to: '/users',
-      }"
-  />
+  <!--  <VerticalNavLink-->
+  <!--      :item="{-->
+  <!--        title: 'آزمون‌ها',-->
+  <!--        to: '/users',-->
+  <!--      }"-->
+  <!--  />-->
   <!--  <VerticalNavGroup-->
   <!--      :item="{-->
   <!--      title: 'داده‌های پایه‌ای',-->

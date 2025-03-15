@@ -70,6 +70,7 @@ function sendTest() {
       <base-button
           @click="sendTest"
           block
+          variant="flat"
           label="ارسال آزمون"
       />
     </template>

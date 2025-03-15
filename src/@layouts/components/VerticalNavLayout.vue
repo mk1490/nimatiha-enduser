@@ -47,14 +47,16 @@ function toggleLayoutOverlayVisibility() {
                 width="120"
             />
 
-            <div class="d-none d-sm-flex align-self-center mr-10">
+            <div
+                v-if="$vuetify.display.smAndUp"
+                class="align-self-center mr-10">
               <base-button
                   label="دوره ها"
-                  to="/courses/list"
+                  to="/course"
               />
-              <base-button
-                  label="آزمون ها"
-              />
+              <!--              <base-button-->
+              <!--                  label="آزمون ها"-->
+              <!--              />-->
             </div>
 
 
@@ -63,12 +65,10 @@ function toggleLayoutOverlayVisibility() {
         <div class="v-col-auto align-content-center d-inline-flex">
           <user-profile/>
           <v-btn
-              class="hidden-sm-and-up"
-              variant="flat"
-              icon="mdi-menu">
-            <v-icon icon="mdi-menu"
-
-            />
+              @click="store.dispatch('toggleNavbar')"
+              v-if="$vuetify.display.smAndDown"
+              icon="ri-menu-line"
+              class="hidden-sm-and-up mr-3">
           </v-btn>
         </div>
 

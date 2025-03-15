@@ -6,6 +6,8 @@ export default {
         username: '',
         avatar: '',
         phoneNumber: '',
+        name: '',
+        family: '',
         personnelCode: '',
         roles: [],
         deleteDialog: {
@@ -27,6 +29,8 @@ export default {
         isLogin: (state) => state.isLogin,
         userPermissions: (state) => state.userPermissions,
         sessionId: (state) => state.sessionId,
+        name: (state) => state.name,
+        family: (state) => state.family,
         errors: (state) => state.errors,
     }, mutations: {
         SET_USER_INFO: (state, payload) => {

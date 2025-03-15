@@ -5,6 +5,7 @@ import {httpGet, serverAddress} from "../../plugins/http/httpRequest";
 import BaseTable from "../../components/Base/BaseTable.vue";
 import BaseButton from "../../views/Base/BaseButton.vue";
 import TestModal from "@/pages/Courses/Widgets/TestModal.vue";
+import {toastHandler} from "@/plugins/commonMethods/commonMethods";
 
 
 const route = useRoute()
@@ -113,7 +114,7 @@ function buttonItems(item) {
         {
           title: 'ارسال تکلیف',
           click: item => {
-            console.log("DOWNLOAD CLICK", item)
+            toastHandler.isDeveloping();
           }
         },
     )
@@ -127,6 +128,35 @@ function buttonItems(item) {
 <template>
   <v-container>
     <div class="v-row">
+      <div class="v-col-md-4 v-col-sm-12">
+        <v-card>
+          <v-card-text>
+            <base-button
+                label="شرکت در دوره"
+                block
+            />
+          </v-card-text>
+        </v-card>
+        <v-card class="mt-5">
+          <v-card-title>
+            ویژگی‌های دوره
+          </v-card-title>
+          <v-card-text>
+            <div class="v-row">
+              <div
+                  v-for="item in specifications"
+                  class="v-col-12">
+                <label>
+                  {{ item.key }}
+                </label>
+                <span>
+                  {{ item.value }}
+                </span>
+              </div>
+            </div>
+          </v-card-text>
+        </v-card>
+      </div>
       <div class="v-col-md-8 v-col-sm-12">
         <div class="v-row">
           <div class="v-col-12">
@@ -185,35 +215,7 @@ function buttonItems(item) {
         </div>
 
       </div>
-      <div class="v-col-md-4 v-col-sm-12">
-        <v-card>
-          <v-card-text>
-            <base-button
-                label="شرکت در دوره"
-                block
-            />
-          </v-card-text>
-        </v-card>
-        <v-card class="mt-5">
-          <v-card-title>
-            ویژگی‌های دوره
-          </v-card-title>
-          <v-card-text>
-            <div class="v-row">
-              <div
-                  v-for="item in specifications"
-                  class="v-col-12">
-                <label>
-                  {{ item.key }}
-                </label>
-                <span>
-                  {{ item.value }}
-                </span>
-              </div>
-            </div>
-          </v-card-text>
-        </v-card>
-      </div>
+
 
       <test-modal
           v-if="modal.test.visible"

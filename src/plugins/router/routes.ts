@@ -57,14 +57,22 @@ export const routes = [
             // },
             {
                 name: 'courses',
-                path: '/courses/list',
-                component: () => import('@/pages/Courses/Courses.vue'),
+                path: '/course',
+                redirect: '/course/list',
+                children: [
+                    {
+                        name: 'courseList',
+                        path: 'list',
+                        component: () => import('@/pages/Courses/Courses.vue'),
+                    },
+                    {
+                        name: 'courseDetails',
+                        path: ':id',
+                        component: () => import('@/pages/Courses/CourseDetails.vue'),
+                    },
+                ]
             },
-            {
-                name: 'courseDetails',
-                path: '/course/:id',
-                component: () => import('@/pages/Courses/CourseDetails.vue'),
-            },
+
             //
             // {
             //     name: 'complete-profile',
