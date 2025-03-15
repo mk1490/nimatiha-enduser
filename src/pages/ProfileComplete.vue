@@ -1,10 +1,10 @@
 <script>
-import BaseTextField from "@/view/widget/Base/BaseTextField.vue";
-import BaseSelect from "@/view/widget/Base/BaseSelect.vue";
-import BaseAutoComplete from "@/view/widget/Base/BaseAutoComplete.vue";
 import {verifyIranianNationalId} from '@persian-tools/persian-tools'
 import {mapGetters} from 'vuex'
-import ProfileCompleteForm from "@/view/components/Shared/ProfileCompleteForm.vue";
+import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
+import BaseAutoComplete from "@/components/Base/BaseAutoComplete.vue";
+import BaseSelect from "@/views/Base/BaseSelect.vue";
+import BaseTextField from "@/views/Base/BaseTextField.vue";
 
 export default {
   name: "ProfileComplete",
