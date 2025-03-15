@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { Component } from 'vue'
-import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { useDisplay } from 'vuetify'
-import { httpGet } from '@/plugins/http/httpRequest'
-import { useStore } from 'vuex'
+import type {Component} from 'vue'
+import {PerfectScrollbar} from 'vue3-perfect-scrollbar'
+import {useDisplay} from 'vuetify'
+import {httpGet} from '@/plugins/http/httpRequest'
+import {useStore} from 'vuex'
 
 interface Props {
   tag?: string | Component
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   tag: 'aside',
 })
 
-const { mdAndDown } = useDisplay()
+const {mdAndDown} = useDisplay()
 
 const refNav = ref()
 
@@ -26,10 +26,10 @@ const refNav = ref()
 const route = useRoute()
 
 watch(
-  () => route.path,
-  () => {
-    props.toggleIsOverlayNavActive(false)
-  })
+    () => route.path,
+    () => {
+      props.toggleIsOverlayNavActive(false)
+    })
 
 const isVerticalNavScrolled = ref(false)
 const updateIsVerticalNavScrolled = (val: boolean) => isVerticalNavScrolled.value = val
@@ -39,62 +39,31 @@ const handleNavScroll = (evt: Event) => {
 }
 
 const store = useStore()
-onMounted(() => {
-  httpGet(`/auth/initialize`, result => {
-    store.setRoles(result.roles)
-    store.setUserFullName(result.name + ' ' + result.family)
-  })
-})
+
 </script>
 
 <template>
   <!-- eslint-disable vue/no-v-html -->
-  <Component
-    :is="props.tag"
-    ref="refNav"
-    class="layout-vertical-nav"
-    :class="[
-      {
-        'visible': isOverlayNavActive,
-        'scrolled': isVerticalNavScrolled,
-        'overlay-nav': mdAndDown,
-      },
-    ]"
+  <v-navigation-drawer
+      :is="props.tag"
+      ref="refNav"
+      class="layout-vertical-nav"
   >
-
-    <!-- 👉 Header -->
-    <!--    <div class="nav-header">-->
-    <!--      <slot name="nav-header">-->
-    <!--        <RouterLink-->
-    <!--          to="/"-->
-    <!--          class="app-logo app-title-wrapper"-->
-    <!--        >-->
-    <!--&lt;!&ndash;          <v-img src="@images/elecstar-logo.png" />&ndash;&gt;-->
-
-    <!--          &lt;!&ndash;&lt;!&ndash;          <h1 class="font-weight-medium leading-normal text-xl text-uppercase">&ndash;&gt;&ndash;&gt;-->
-    <!--          &lt;!&ndash;&lt;!&ndash;            اروند&ndash;&gt;&ndash;&gt;-->
-    <!--          &lt;!&ndash;&lt;!&ndash;          </h1>&ndash;&gt;&ndash;&gt;-->
-    <!--        </RouterLink>-->
-    <!--      </slot>-->
-    <!--    </div>-->
-    <slot name="before-nav-items">
-      <div class="vertical-nav-items-shadow" />
-    </slot>
     <slot
-      name="nav-items"
-      :update-is-vertical-nav-scrolled="updateIsVerticalNavScrolled"
+        name="nav-items"
+        :update-is-vertical-nav-scrolled="updateIsVerticalNavScrolled"
     >
       <PerfectScrollbar
-        tag="ul"
-        class="nav-items"
-        :options="{ wheelPropagation: false }"
-        @ps-scroll-y="handleNavScroll"
+          tag="ul"
+          class="nav-items"
+          :options="{ wheelPropagation: false }"
+          @ps-scroll-y="handleNavScroll"
       >
-        <slot />
+        <slot/>
       </PerfectScrollbar>
     </slot>
-    <slot name="after-nav-items" />
-  </Component>
+    <slot name="after-nav-items"/>
+  </v-navigation-drawer>
 </template>
 
 <style lang="scss" scoped>

@@ -10,6 +10,10 @@ import instagram from '@/assets/images/logos/insta-logo.png'
 import eitaa from '@/assets/images/logos/eitaa-logo.png'
 import rubika from '@/assets/images/logos/rubika-logo.png'
 import telegram from '@/assets/images/logos/telegram-logo.png'
+import nimkat from '@/assets/images/logos/nimkat-logo.png'
+import UserProfile from "@/layouts/components/UserProfile.vue";
+import VerticalNav from "@/@layouts/components/VerticalNav.vue";
+import NavItems from "@/layouts/components/NavItems.vue";
 
 const isOverlayNavActive = ref(true)
 const isLayoutOverlayVisible = ref(false)
@@ -30,29 +34,63 @@ function toggleLayoutOverlayVisibility() {
 </script>
 
 <template>
-  <v-app-bar scroll-behavior="elevate">
-    <div class="d-inline-flex">
-      <v-img
-          src="https://cdn.tarbiatbonyadi.com/wp-content/uploads/2025/01/desktop-logo-3.webp"
-          width="150"
-      />
+  <v-app-bar
+      height="70"
+      scroll-behavior="elevate">
+    <v-container>
 
-      <div class="d-inline-flex">
-        <base-button
-            label="دوره ها"
-            to="/courses/list"
-        />
-        <base-button
-            label="آزمون ها"
-        />
+      <div class="v-row">
+        <div class="v-col">
+          <div class="d-inline-flex">
+            <v-img
+                :src="nimkat"
+                width="120"
+            />
+
+            <div class="d-none d-sm-flex align-self-center mr-10">
+              <base-button
+                  label="دوره ها"
+                  to="/courses/list"
+              />
+              <base-button
+                  label="آزمون ها"
+              />
+            </div>
+
+
+          </div>
+        </div>
+        <div class="v-col-auto align-content-center d-inline-flex">
+          <user-profile/>
+          <v-btn
+              class="hidden-sm-and-up"
+              variant="flat"
+              icon="mdi-menu">
+            <v-icon icon="mdi-menu"
+
+            />
+          </v-btn>
+        </div>
+
       </div>
 
 
-    </div>
+    </v-container>
+
   </v-app-bar>
-  <v-main>
-    <router-view/>
-  </v-main>
+  <div
+      class="layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid"
+      :class="{ 'layout-overlay-nav': 'mdAndDown'}">
+    <vertical-nav>
+
+      <nav-items/>
+    </vertical-nav>
+    <v-main>
+      <router-view/>
+    </v-main>
+
+  </div>
+
 
   <footer>
     <div class="container">

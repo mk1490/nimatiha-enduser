@@ -6,6 +6,16 @@ import VerticalNavLayout from '@/@layouts/components/VerticalNavLayout.vue'
 import Footer from '@/layouts/components/Footer.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
+import {httpGet} from "@/plugins/http/httpRequest";
+import VerticalNav from "@/@layouts/components/VerticalNav.vue";
+
+
+onMounted(() => {
+  httpGet(`/auth/initialize`, result => {
+    store.setRoles(result.roles)
+    store.setUserFullName(result.name + ' ' + result.family)
+  })
+})
 </script>
 
 <template>
@@ -13,7 +23,6 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
 
 
   </VerticalNavLayout>
-
 </template>
 
 <style lang="scss" scoped>
