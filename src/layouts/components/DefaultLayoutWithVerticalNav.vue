@@ -15,6 +15,8 @@ onMounted(() => {
       family: result.family,
       username: result.username,
     })
+  }, error => {
+    localStorage.removeItem('Authorization')
   })
 })
 </script>
