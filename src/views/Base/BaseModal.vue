@@ -4,7 +4,7 @@
       :model-value="props.visible"
       persistent
       :fullscreen="props.fullScreen"
-      :width="props.width">
+      :width="props.fullScreen ? -1 : props.width">
     <v-card>
       <v-card-title v-if="!!props.title">
         <div class="v-row">
@@ -107,8 +107,7 @@ const props = defineProps({
   fullScreen: Boolean,
   loading: Boolean,
   width: {
-    type: undefined,
-    default: 500,
+    type: Number,
   },
   submitText: String,
   backText: String,

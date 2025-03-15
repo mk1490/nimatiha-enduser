@@ -1,8 +1,10 @@
 <script setup>
 
-import videojs from "video.js";
+import videoJs from "video.js";
+import 'video.js/dist/video-js.css';
 import {httpPost} from "../../../plugins/http/httpRequest";
 import BaseModal from "../../../views/Base/BaseModal.vue";
+import {ref} from "vue";
 
 
 const props = defineProps({
@@ -10,7 +12,7 @@ const props = defineProps({
   data: Object,
 })
 
-defineEmits(['close'])
+const emits = defineEmits(['close'])
 
 const videoPlayer = ref(null)
 const model = ref({
@@ -18,8 +20,8 @@ const model = ref({
 })
 
 onMounted(() => {
-  model.value.status = props.data.status;
-  videoPlayer.value = videojs(videoPlayer.value, {
+  let player = null
+  player = videoJs(videoPlayer.value, {
     autoplay: false,
     controls: true,
     sources: [
@@ -30,6 +32,16 @@ onMounted(() => {
     ]
   }, () => {
   });
+
+  /*  player.on('timeupdate', () => {
+      const currentTime = player.currentTime(); // Current playback time in seconds
+      const duration = player.duration(); // Total duration of the video in seconds
+      const progress = (currentTime / duration) * 100; // Calculate progress percentage
+
+      if (progress >= 80) {
+        // player.off('timeupdate', handleTimeUpdate);
+      }
+    })*/
 })
 
 
@@ -43,7 +55,7 @@ function requestObserve() {
 <template>
   <base-modal
       title="مشاهده ویدئو"
-      @close="$emit('close')"
+      @close="emits('close')"
       dark
       full-screen
       :visible="visible">
@@ -59,7 +71,7 @@ function requestObserve() {
       <div class="v-row">
         <div class="v-col">
           <v-btn
-              @click="$emit('close')"
+              @click="emits('close')"
               block
               color="red">
             بستن

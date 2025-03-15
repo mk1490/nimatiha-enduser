@@ -39,6 +39,10 @@ const modal = ref({
   test: {
     visible: false,
     data: null,
+  },
+  video: {
+    visible: false,
+    data: null,
   }
 })
 
@@ -81,7 +85,8 @@ function buttonItems(item) {
         {
           title: 'مشاهده',
           click: item => {
-            console.log("DOWNLOAD CLICK", item)
+            modal.value.video.data = item;
+            modal.value.video.visible = true;
           }
         },
     )
@@ -196,6 +201,14 @@ function buttonItems(item) {
           @close="modal.test.visible = false"
           :data="modal.test.data"
       />
+
+      <video-modal
+          v-if="modal.video.visible"
+          :visible="modal.video.visible"
+          :data="modal.video.data"
+          @close="modal.video.visible = false"
+      />
+
     </div>
   </v-container>
 </template>
