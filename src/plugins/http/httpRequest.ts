@@ -54,6 +54,7 @@ axiosInstance.interceptors.response.use(async (response) => {
         case 401: {
 
             if (router.currentRoute.value.fullPath !== '/login') {
+                localStorage.removeItem('Authorization')
                 await router.push({
                     path: '/login',
                 })

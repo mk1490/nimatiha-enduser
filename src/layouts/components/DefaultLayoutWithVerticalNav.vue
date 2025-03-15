@@ -2,18 +2,19 @@
 import NavItems from '@/layouts/components/NavItems.vue'
 import VerticalNavLayout from '@/@layouts/components/VerticalNavLayout.vue'
 
-// Components
-import Footer from '@/layouts/components/Footer.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
-import {httpGet} from "@/plugins/http/httpRequest";
-import VerticalNav from "@/@layouts/components/VerticalNav.vue";
+import {httpGet, serverAddress} from "@/plugins/http/httpRequest";
+import {useStore} from "vuex";
 
+const store = useStore()
 
 onMounted(() => {
-  httpGet(`/auth/initialize`, result => {
-    store.setRoles(result.roles)
-    store.setUserFullName(result.name + ' ' + result.family)
+  httpGet(`/auth/profile`, result => {
+    // store.setRoles(result.roles)
+    store.dispatch('setUserInfo', {
+      name: result.name,
+      family: result.family,
+      username: result.username,
+    })
   })
 })
 </script>

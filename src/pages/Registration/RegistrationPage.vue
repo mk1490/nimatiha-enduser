@@ -1,29 +1,28 @@
 <template>
-  <v-app full-height class="bg-green-darken-4">
-    <v-container class="container--fluid pa-0">
-      <div class="content fill-height d-flex align-items-center">
+  <v-app class="bg-green-darken-4 h-100">
+    <v-container class="container--fluid pa-0 align-content-center align-center">
+      <div class="content h-100 d-flex align-items-center">
         <v-layout
-            class="justify-center"
-            fill-height
+            class="justify-center h-100"
             align-center justify-center>
-          <div class="d-inline-block align-self-center">
-            <div
-                v-if="isLogin === false"
-                class="d-flex justify-center">
-              <v-card width="300">
-                <v-card-title class="text-center">
-                  احراز هویت
-                </v-card-title>
-                <v-card-text>
+          <!--          <div class="d-inline-block align-self-center">-->
+          <!--            <div-->
+          <!--                v-if="isLogin === false"-->
+          <!--                class="d-flex justify-center">-->
+          <!--              <v-card>-->
+          <!--                <v-card-title class="text-center">-->
+          <!--                  احراز هویت-->
+          <!--                </v-card-title>-->
+          <!--   -->
+          <!--                </v-card-text>-->
+          <!--              </v-card>-->
+          <!--            </div>-->
+          <!--          </div>-->
 
-                  <login
-                      @authSuccess="authSuccess"
-                  />
+          <login
+              @authSuccess="authSuccess"
+          />
 
-                </v-card-text>
-              </v-card>
-            </div>
-          </div>
         </v-layout>
       </div>
     </v-container>
@@ -66,7 +65,7 @@ onMounted(() => {
 
 function authSuccess(token) {
   localStorage.setItem('Authorization', token);
-  this.$store.commit('LOGIN_STATE', true);
+  store.commit('LOGIN_STATE', true);
   router.push({
     name: 'profile'
   })

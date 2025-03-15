@@ -11,7 +11,7 @@ const model = ref({
 </script>
 
 <template>
-  <v-locale-provider rtl>
+  <v-locale-provider rtl class="h-100">
     <VApp style="direction: rtl;">
       <RouterView/>
     </VApp>

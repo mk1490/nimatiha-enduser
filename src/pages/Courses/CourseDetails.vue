@@ -6,9 +6,11 @@ import BaseTable from "../../components/Base/BaseTable.vue";
 import BaseButton from "../../views/Base/BaseButton.vue";
 import TestModal from "@/pages/Courses/Widgets/TestModal.vue";
 import {toastHandler} from "@/plugins/commonMethods/commonMethods";
+import {useToast} from "vue-toast-notification";
 
 
 const route = useRoute()
+const $toast = useToast()
 
 onMounted(() => {
   httpGet(`/course/${route.params.id}`, result => {
@@ -79,7 +81,12 @@ function buttonItems(item) {
     buttonItems.push({
       title: 'دانلود',
       click: item => {
-        window.open(serverAddress + item.url, '_blank');
+        if (item.url) {
+          window.open(serverAddress + item.url, '_blank');
+        } else {
+          $toast.info('لینک دانلود وجود ندارد')
+        }
+
       }
     },)
   }
