@@ -1,6 +1,7 @@
 <script>
-import BaseTextArea from "@/view/widget/Base/BaseTextArea.vue";
-import ProfileCompleteForm from "@/view/components/Shared/ProfileCompleteForm.vue";
+
+import BaseTextArea from "@/views/Base/BaseTextArea.vue";
+import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
 
 export default {
     name: "Test",

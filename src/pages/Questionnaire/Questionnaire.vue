@@ -2,7 +2,7 @@
 import RegistrationSuccessComponent from "../Registration/Widgets/RegistrationSuccessComponent.vue";
 import {mapGetters} from "vuex";
 import DynamicStep from "../Registration/Steps/DynamicStep.vue";
-import ProfileCompleteForm from "@/view/components/Shared/ProfileCompleteForm.vue";
+import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
 
 export default {
   name: "Questionnaire",

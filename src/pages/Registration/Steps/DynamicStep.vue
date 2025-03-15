@@ -1,7 +1,8 @@
 <script>
-import BaseTextField from "../../../widget/Base/BaseTextField.vue";
-import BaseTextArea from "../../../widget/Base/BaseTextArea.vue";
-import BaseSelect from "../../../widget/Base/BaseSelect.vue";
+
+import BaseSelect from "@/views/Base/BaseSelect.vue";
+import BaseTextArea from "@/views/Base/BaseTextArea.vue";
+import BaseTextField from "@/views/Base/BaseTextField.vue";
 
 export default {
   name: "DynamicStep",
