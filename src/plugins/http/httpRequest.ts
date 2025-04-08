@@ -55,9 +55,9 @@ axiosInstance.interceptors.response.use(async (response) => {
 
             if (router.currentRoute.value.fullPath !== '/login') {
                 localStorage.removeItem('Authorization')
-                await router.push({
-                    path: '/login',
-                })
+                // await router.push({
+                //     path: '/login',
+                // })
             }
             message = errorObject.message
             if (['TOKEN_EXPIRED'].includes(errorObject.error)) {
@@ -185,5 +185,4 @@ export const httpDelete = (requestUrl, successCallback, errorCallback) => {
             })
         }
     })
-
 }

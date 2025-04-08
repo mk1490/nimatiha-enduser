@@ -3,30 +3,34 @@ import RegistrationSuccessComponent from "../Registration/Widgets/RegistrationSu
 import {mapGetters} from "vuex";
 import DynamicStep from "../Registration/Steps/DynamicStep.vue";
 import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
+import {httpGet, httpPost} from "@/plugins/http/httpRequest";
+import MultipleFullScreenImageSlider from "@/views/user-interface/MultipleFullScreenImageSlider.vue";
 
 export default {
   name: "Questionnaire",
-  components: {ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
+  components: {MultipleFullScreenImageSlider, ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
-    if (!this.isLogin) {
-      // this.$router.push({
-      //   name: 'complete-profile',
-      //   query: {
-          // redirectTo: this.$route.fullPath,
-        // }
-      // })
-    }
-
-    this.httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
+    httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       if (result.success === true) {
+        if (result.authRequired && !this.isLogin) {
+          this.$router.push({
+            name: 'complete-profile',
+            query: {
+              redirectTo: this.$route.fullPath,
+            }
+          })
+          return;
+        }
+        this.$store.commit('SET_TOOLBAR_AND_FOOTER_VISIBLE', false).then().catch()
         this.title = result['questionnaireTitle'];
+        this.preTextMessage = result['preText']
+        this.afterTextMessage = result['afterText']
         localStorage.setItem('testId', result['questionnaireId']);
         if (this.$store.getters.isLogin) {
           this.$store.commit('LOGIN_STATE', true)
           this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
         }
         this.steps = result.levels;
-
       } else {
         this.$swal.fire({
           icon: 'error',
@@ -61,16 +65,21 @@ export default {
       })
 
 
-      this.httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, this.model[this.steps[this.selectedStep - 1].id], result => {
+      httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, this.model[this.steps[this.selectedStep - 1].id], result => {
         if (this.selectedStep === this.steps.length) {
           this.$swal.fire({
             icon: 'success',
-            text: 'درخواست شما با موفقیت ثبت شد.'
-          }).then(() => {
-            localStorage.removeItem('accessToken');
-            this.selectedStep = 1;
-            this.$store.commit('LOGIN_STATE', false);
-          })
+            html: this.afterTextMessage,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+          }).then((res) => {
+            if (res.isConfirmed) {
+              localStorage.removeItem('accessToken');
+              this.selectedStep = 1;
+              this.$store.commit('LOGIN_STATE', false);
+              location.reload();
+            }
+          });
         } else {
           this.selectedStep++;
         }
@@ -83,10 +92,12 @@ export default {
       steps: [],
       model: {},
       title: '',
+      preTextMessage: '',
+      afterTextMessage: '',
     }
   },
   computed: {
-    ...mapGetters(['isLogin', 'phoneNumber']),
+    ...mapGetters(['phoneNumber']),
     cardWidth: function () {
       switch (this.$vuetify.display.name) {
         case 'xl':
@@ -105,77 +116,76 @@ export default {
 </script>
 
 <template>
-  <div
-      v-if="isLogin"
+  <v-container
       class="d-flex justify-center">
     <v-card
         :width="cardWidth"
         class="elevation-0">
-      <!--      <v-card-title class="text-center">-->
-      <!--        {{ title }}-->
-      <!--        <div-->
-      <!--            v-if="isLogin"-->
-      <!--            class="v-col-12 pt-0">-->
-      <!--          <small>-->
-      <!--            {{ phoneNumber }}-->
-      <!--          </small>-->
-      <!--          <div class="d-block">-->
-      <!--            <v-btn-->
-      <!--                @click="logout"-->
-      <!--                density="compact"-->
-      <!--                variant="text"-->
-      <!--                color="error">-->
-      <!--              خروج-->
-      <!--            </v-btn>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </v-card-title>-->
       <v-card-text>
-        <v-stepper
-            hide-actions
-            :model-value="selectedStep"
-            position="relative"
-            flat
-            :mobile="$vuetify.display.mobile"
-            @update:modelValue="selectedStep = $event"
-            :items="steps"
-            alt-labels>
-          <v-stepper-window
-              :model-value="selectedStep">
-            <v-stepper-window-item
-                v-for="(item, index) in steps"
-                :value="index +1 ">
-              <dynamic-step
-                  v-if="index === selectedStep -1"
-                  :ref="`form_${index}`"
-                  v-model="model[steps[selectedStep -1].id]"
-                  :form-items="item.formItems"
-              />
-            </v-stepper-window-item>
+        <template v-if="preTextMessage">
+          <div v-html="preTextMessage"></div>
+        </template>
+
+        <template v-if="preTextMessage == null">
+          <v-stepper
+              hide-actions
+              :model-value="selectedStep"
+              position="relative"
+              flat
+              :mobile="$vuetify.display.mobile"
+              @update:modelValue="selectedStep = $event"
+              :items="steps"
+              alt-labels>
+            <v-stepper-window
+                :model-value="selectedStep">
+              <v-stepper-window-item
+                  v-for="(item, index) in steps"
+                  :value="index +1 ">
+                <dynamic-step
+                    v-if="index === selectedStep -1"
+                    :ref="`form_${index}`"
+                    v-model="model[steps[selectedStep -1].id]"
+                    :form-items="item.formItems"
+                />
+              </v-stepper-window-item>
 
 
-          </v-stepper-window>
+            </v-stepper-window>
 
 
-          <v-stepper-actions
-              @click:next="nextOrSubmit"
-              @click:prev="prev"
-              :disabled="false"
-              prev-text="قبلی"
-              :next-text="selectedStep === steps.length  ? 'ارسال' : 'بعدی'">
-            <template v-slot:prev>
-              <v-btn v-if="selectedStep !== 1"
-                     @click="prev"
-              >
-                قبلی
-              </v-btn>
-              <v-spacer/>
-            </template>
-          </v-stepper-actions>
-        </v-stepper>
+            <v-stepper-actions
+                @click:next="nextOrSubmit"
+                @click:prev="prev"
+                :disabled="false"
+                prev-text="قبلی"
+                :next-text="selectedStep === steps.length  ? 'ارسال' : 'بعدی'">
+              <template v-slot:prev>
+                <v-btn v-if="selectedStep !== 1"
+                       @click="prev"
+                >
+                  قبلی
+                </v-btn>
+                <v-spacer/>
+              </template>
+            </v-stepper-actions>
+          </v-stepper>
+        </template>
+
       </v-card-text>
+      <v-card-actions v-if="preTextMessage">
+        <v-btn
+            @click="preTextMessage = null"
+            block
+            variant="flat"
+            color="red"
+        >
+          تکمیل پرسش‌نامه
+        </v-btn>
+      </v-card-actions>
+
     </v-card>
-  </div>
+  </v-container>
+  <multiple-full-screen-image-slider/>
 </template>
 
 <style scoped>

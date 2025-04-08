@@ -8,11 +8,11 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!!localStorage.getItem('Authorization')) {
-    next()
-  } else if (to.name != 'login') {
-    next({name: 'login'})
-  }
+  // if (!!localStorage.getItem('Authorization')) {
+  //   next()
+  // } else if (to.name != 'login') {
+  //   next({name: 'login'})
+  // }
   next()
 
 

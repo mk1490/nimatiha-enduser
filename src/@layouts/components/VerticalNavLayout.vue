@@ -22,10 +22,17 @@ const toggleIsOverlayNavActive = useToggle(isOverlayNavActive)
 const router = useRouter()
 const store = useStore()
 
+
+const toolbarAndFooterVisible = computed(()=>{
+  return store.getters.toolbarAndFooterVisible
+})
+
+
 async function logout() {
   localStorage.removeItem('Authorization')
   await router.push('/login')
 }
+
 
 function toggleLayoutOverlayVisibility() {
   store.dispatch('')
@@ -35,11 +42,13 @@ function toggleLayoutOverlayVisibility() {
 
 <template>
   <v-app-bar
+      v-if="toolbarAndFooterVisible"
       height="70"
       scroll-behavior="elevate">
     <v-container>
 
-      <div class="v-row">
+      <div
+          class="v-row">
         <div class="v-col">
           <div class="d-inline-flex">
             <v-img
@@ -78,6 +87,7 @@ function toggleLayoutOverlayVisibility() {
     </v-container>
 
   </v-app-bar>
+
   <div
       class="layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid"
       :class="{ 'layout-overlay-nav': 'mdAndDown'}">

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useStore} from 'vuex'
-import MultipleFullScreenImageSlider from "@/MultipleFullScreenImageSlider.vue";
+import MultipleFullScreenImageSlider from "@/views/user-interface/MultipleFullScreenImageSlider.vue";
 
 const store = useStore()
 
@@ -13,10 +13,8 @@ const model = ref({
 
 <template>
   <v-locale-provider rtl class="h-100">
-<!--    <VApp style="direction: rtl;">-->
-<!--      <RouterView/>-->
-<!--    </VApp>-->
-
-    <multiple-full-screen-image-slider  />
+    <VApp style="direction: rtl;">
+      <RouterView/>
+    </VApp>
   </v-locale-provider>
 </template>
