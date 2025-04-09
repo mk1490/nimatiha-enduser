@@ -91,7 +91,7 @@ export default {
           v-if="selectedSlide === slides.length -1 "
           @click="nextOrFinish()"
           block>
-        مشاهده و شرکت در آزمون
+        ثبت نام
       </v-btn>
     </div>
   </div>
