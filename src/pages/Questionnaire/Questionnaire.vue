@@ -5,44 +5,56 @@ import DynamicStep from "../Registration/Steps/DynamicStep.vue";
 import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
 import {httpGet, httpPost} from "@/plugins/http/httpRequest";
 import MultipleFullScreenImageSlider from "@/views/user-interface/MultipleFullScreenImageSlider.vue";
+import {useToast} from "vue-toast-notification";
 
+const toast = useToast()
 export default {
   name: "Questionnaire",
   components: {MultipleFullScreenImageSlider, ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
   created() {
     httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
-      if (result.success === true) {
-        if (result.authRequired && !this.isLogin) {
-          this.$router.push({
-            name: 'complete-profile',
-            query: {
-              redirectTo: this.$route.fullPath,
-            }
+      try {
+
+
+        if (result.success === true) {
+          if (result.authRequired && !this.isLogin) {
+            this.$router.push({
+              name: 'complete-profile',
+              query: {
+                redirectTo: this.$route.fullPath,
+              }
+            })
+            return;
+          }
+          this.sliders = result['imageSliders'].map(f => f.imageUrl)
+          this.title = result['questionnaireTitle'];
+          this.preTextMessage = result['preText']
+          this.afterTextMessage = result['afterText']
+          this.$store.commit('SET_TOOLBAR_AND_FOOTER_VISIBLE', false)
+          localStorage.setItem('testId', result['questionnaireId']);
+          if (this.$store.getters.isLogin) {
+            this.$store.commit('LOGIN_STATE', true)
+            this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
+          }
+          this.steps = result.levels;
+        } else {
+          this.$swal.fire({
+            icon: 'error',
+            text: result.message,
+            showConfirmButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
           })
-          return;
         }
-        this.$store.commit('SET_TOOLBAR_AND_FOOTER_VISIBLE', false).then().catch()
-        this.title = result['questionnaireTitle'];
-        this.preTextMessage = result['preText']
-        this.afterTextMessage = result['afterText']
-        localStorage.setItem('testId', result['questionnaireId']);
-        if (this.$store.getters.isLogin) {
-          this.$store.commit('LOGIN_STATE', true)
-          this.$store.commit('SET_MOBILE_NUMBER', result.mobileNumber)
-        }
-        this.steps = result.levels;
-      } else {
-        this.$swal.fire({
-          icon: 'error',
-          text: result.message,
-          showConfirmButton: false,
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-        })
+      } catch (e) {
+        console.log(e)
       }
     })
   },
   methods: {
+    finish() {
+      this.slider.visible = false;
+    },
     logout() {
       this.$store.dispatch('logout')
       this.$router.push({
@@ -54,7 +66,7 @@ export default {
     },
     async nextOrSubmit() {
       if (!await this.$refs[`form_${this.selectedStep - 1}`][0].validate()) {
-        this.$toast.error('لطفا خطاهایی که در فرم وجود دارد را برطرف نمایید.')
+        toast.error('لطفا خطاهایی که در فرم وجود دارد را برطرف نمایید.')
         return
       }
       let payload = {}
@@ -65,7 +77,7 @@ export default {
       })
 
 
-      httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, this.model[this.steps[this.selectedStep - 1].id], result => {
+      httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, payload, result => {
         if (this.selectedStep === this.steps.length) {
           this.$swal.fire({
             icon: 'success',
@@ -88,7 +100,11 @@ export default {
   },
   data() {
     return {
+      slider: {
+        visible: true,
+      },
       selectedStep: 1,
+      sliders: [],
       steps: [],
       model: {},
       title: '',
@@ -132,7 +148,6 @@ export default {
               :model-value="selectedStep"
               position="relative"
               flat
-              :mobile="$vuetify.display.mobile"
               @update:modelValue="selectedStep = $event"
               :items="steps"
               alt-labels>
@@ -185,7 +200,11 @@ export default {
 
     </v-card>
   </v-container>
-  <multiple-full-screen-image-slider/>
+    <multiple-full-screen-image-slider
+        v-if="slider.visible && sliders.length > 0"
+        :slides="sliders"
+        @finish="finish"
+    />
 </template>
 
 <style scoped>

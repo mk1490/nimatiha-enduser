@@ -3,10 +3,17 @@
 import BaseSelect from "@/views/Base/BaseSelect.vue";
 import BaseTextArea from "@/views/Base/BaseTextArea.vue";
 import BaseTextField from "@/views/Base/BaseTextField.vue";
+import {getPersianTime} from "@/plugins/commonMethods/commonMethods";
+import VuePersianDatetimePicker from 'vue3-persian-datetime-picker';
 
 export default {
   name: "DynamicStep",
-  components: {BaseSelect, BaseTextArea, BaseTextField},
+  components: {
+    DatePicker: VuePersianDatetimePicker,
+    BaseSelect,
+    BaseTextArea,
+    BaseTextField
+  },
   props: {
     formItems: Array,
     modelValue: Object,
@@ -35,6 +42,7 @@ export default {
     }
   },
   methods: {
+    getPersianTime,
     async validate() {
       const isValid = await this.$refs.form.validate();
       return Promise.resolve(isValid.valid == true)
@@ -89,6 +97,7 @@ export default {
               :label="item.label"
               :class="item.size"
               v-model="model[item.key]"
+              hide-details="auto"
               :type="item.type === 11 ? 'number': ''"
               :required-symbol="item.isRequired"
               :rules="rulesGenerator(item)"
@@ -97,6 +106,7 @@ export default {
               v-if="item.type === 2"
               :label="item.label"
               :class="item.size"
+              hide-details="auto"
               v-model="model[item.key]"
               :required-symbol="item.isRequired"
               :rules="rulesGenerator(item)"
@@ -132,6 +142,7 @@ export default {
                 @update:modelValue="changeItem(item, $event)"
                 item-title="text"
                 item-value="value"
+                hide-details="auto"
                 :multiple="item.type === 7"
                 :required-symbol="item.isRequired"
                 :rules="rulesGenerator(item)"
@@ -145,16 +156,24 @@ export default {
                 :class="item.size">
               <v-text-field
                   :id="item.key"
-                  :model-value="model[item.key]? getPersianTime(model[item.key], 'jYYYY/jMM/jDD'):null"
+                  :model-value="model[item.key]? getPersianTime(model[item.key], 'YYYY/MM/DD'):null"
                   :label="item.label"
-                  prepend-inner-icon="mdi-calendar"
+                  prepend-inner-icon="mdi-calendar-clock"
                   variant="outlined"
                   density="compact"
                   readonly
-                  hide-details
+                  hide-details="auto"
+                  :rules="rulesGenerator(item)"
                   dense
                   clearable
                   @click:clear="model.birthDate = null">
+                <template v-slot:label>
+                  <div class="required--symbol">
+                    {{ item.label }}
+                    <small v-if="item.isRequired">*</small>
+                  </div>
+                </template>
+
               </v-text-field>
               <datePicker
                   v-model="model[item.key]"

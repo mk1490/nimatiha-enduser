@@ -25,13 +25,16 @@ const handleNavScroll = (evt: Event) => {
 
 const store = useStore()
 
+const toolbarAndFooterVisible = computed(() => {
+  return store.getters.toolbarAndFooterVisible;
+})
+
 </script>
 
 <template>
   <!-- eslint-disable vue/no-v-html -->
   <v-navigation-drawer
-      :model-value="store.getters.navbarMenu && $vuetify.display.smAndDown"
-
+      :model-value="toolbarAndFooterVisible && store.getters.navbarMenu && $vuetify.display.smAndDown"
       class="layout-vertical-nav"
   >
     <slot

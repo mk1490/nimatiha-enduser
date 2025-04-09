@@ -6,12 +6,16 @@ import 'swiper/css';
 import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import {serverAddress} from '@/plugins/http/httpRequest'
 
 export default {
   name: 'MultipleFullScreenImageSlider',
+  props: {
+    slides: Array,
+  },
   data() {
     return {
-      slides: ['صفحه 1', 'صفحه 2', 'صفحه 3', 'صفحه 4'], // محتوای اسلایدها
+      selectedSlide: 0,
       swiperInstance: null,
       sliderModules: [EffectCards, Pagination, Navigation]
     };
@@ -20,11 +24,24 @@ export default {
     Swiper,
     SwiperSlide,
   },
+  emits: ['finish'],
   mounted() {
+    this.slides.map(f => {
+      console.log(serverAddress + f)
+    })
   },
   beforeUnmount() {
   },
   methods: {
+    nextOrFinish() {
+      this.$emit('finish')
+    },
+    serverAddress() {
+      return serverAddress
+    },
+    slideChange(value) {
+      this.selectedSlide = value.realIndex
+    },
     handleResize() {
       const sliderElement = this.$el;
       sliderElement.style.height = `${window.innerHeight}px`;
@@ -49,16 +66,18 @@ export default {
   <div>
     <div class="full-screen-slider black-bg">
       <swiper
+          ref="sliderRef"
           :modules="sliderModules"
           :slides-per-view="1"
           :space-between="50"
+          @slideChange="slideChange"
           :navigation="true"
           :pagination="{clickable: true}"
       >
-        <swiper-slide v-for="item in slides">
+        <swiper-slide v-for="sliderItem in slides">
           <v-img
               :aspect-ratio="9/16"
-              src="https://fastly.picsum.photos/id/103/2592/1936.jpg?hmac=aC1FT3vX9bCVMIT-KXjHLhP6vImAcsyGCH49vVkAjPQ"
+              :src="serverAddress() + sliderItem"
           />
 
         </swiper-slide>
@@ -68,7 +87,12 @@ export default {
     <div class="full-width-button">
 
 
-      <v-btn block>متن دکمه شما</v-btn>
+      <v-btn
+          v-if="selectedSlide === slides.length -1 "
+          @click="nextOrFinish()"
+          block>
+        مشاهده و شرکت در آزمون
+      </v-btn>
     </div>
   </div>
 
