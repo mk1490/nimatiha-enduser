@@ -3,7 +3,7 @@ import RegistrationSuccessComponent from "../Registration/Widgets/RegistrationSu
 import {mapGetters} from "vuex";
 import DynamicStep from "../Registration/Steps/DynamicStep.vue";
 import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
-import {httpGet, httpPost} from "@/plugins/http/httpRequest";
+import {httpGet, httpPost, serverAddress} from "@/plugins/http/httpRequest";
 import MultipleFullScreenImageSlider from "@/views/user-interface/MultipleFullScreenImageSlider.vue";
 import {useToast} from "vue-toast-notification";
 
@@ -14,8 +14,6 @@ export default {
   created() {
     httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       try {
-
-
         if (result.success === true) {
           if (result.authRequired && !this.isLogin) {
             this.$router.push({
@@ -27,6 +25,7 @@ export default {
             return;
           }
           this.sliders = result['imageSliders'].map(f => f.imageUrl)
+          this.audioUrl = result['backgroundMusic']
           this.title = result['questionnaireTitle'];
           this.preTextMessage = result['preText']
           this.afterTextMessage = result['afterText']
@@ -52,6 +51,9 @@ export default {
     })
   },
   methods: {
+    serverAddress() {
+      return serverAddress
+    },
     finish() {
       this.slider.visible = false;
     },
@@ -100,6 +102,7 @@ export default {
   },
   data() {
     return {
+      audioUrl: null,
       slider: {
         visible: true,
       },
@@ -200,11 +203,16 @@ export default {
 
     </v-card>
   </v-container>
-    <multiple-full-screen-image-slider
-        v-if="slider.visible && sliders.length > 0"
-        :slides="sliders"
-        @finish="finish"
-    />
+  <multiple-full-screen-image-slider
+      v-if="slider.visible && sliders.length > 0"
+      :slides="sliders"
+      @finish="finish"
+  />
+
+  <audio
+      :src="serverAddress() + audioUrl"
+      hidden="hidden"
+      autoplay="true" controls/>
 </template>
 
 <style scoped>
