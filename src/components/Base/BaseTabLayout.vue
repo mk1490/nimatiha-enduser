@@ -43,7 +43,6 @@ export default {
         if (!f.permission) {
           tabs.push(f)
         } else {
-          console.log(dataStore.checkPermission(f.permission))
           if (dataStore.checkPermission(f.permission)) {
             tabs.push(f)
           }

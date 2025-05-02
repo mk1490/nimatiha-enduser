@@ -9,7 +9,7 @@ const store = useStore()
 
 onMounted(() => {
   httpGet(`/auth/profile`, result => {
-    // store.setRoles(result.roles)
+    store.commit('SET_RULES', result.rules)
     store.dispatch('setUserInfo', {
       name: result.name,
       family: result.family,

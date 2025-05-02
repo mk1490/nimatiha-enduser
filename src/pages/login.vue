@@ -34,8 +34,8 @@ const submit = () => {
   httpPost(`/auth/login`, form.value, async (result) => {
     loading.value = false
 
-    store.setToken(result.access_token)
-    store.setRoles(result.roles)
+    // store.setToken(result.access_token)
+    // store.setRoles(result.roles)
     await router.push('/').then()
   }, error => {
     loading.value = false

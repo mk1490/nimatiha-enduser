@@ -9,9 +9,12 @@ const model = ref({
     visible: false,
   },
 })
+const isLogin = computed(() => store.getters.isLogin)
+
 </script>
 
 <template>
+
   <v-locale-provider rtl class="h-100">
     <VApp style="direction: rtl;">
       <RouterView/>

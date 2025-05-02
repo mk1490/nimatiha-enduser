@@ -45,11 +45,11 @@ export const routes = [
             //     path: '/test-details/:id',
             //     component: () => import('@/pages/Test/Test.vue'),
             // },
-            // {
-            //     name: 'questionnaires',
-            //     path: 'questionnaires',
-            //     component: () => import('@/pages/Questionnaire/QuestionnaireList'),
-            // },
+            {
+                name: 'questionnaires',
+                path: 'questionnaires',
+                component: () => import('../../pages/Questionnaire/QuestionnaireList.vue'),
+            },
             // {
             //     name: 'questionnaire-details',
             //     path: 'questionnaire-details/:slug?',

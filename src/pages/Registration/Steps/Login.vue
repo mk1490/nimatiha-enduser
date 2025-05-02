@@ -25,7 +25,6 @@ const login = () => {
   httpPost(`/auth/login`, form.value, async (result) => {
     loading.value = false
     emits('authSuccess', result.access_token)
-
   }, error => {
     loading.value = false
   })

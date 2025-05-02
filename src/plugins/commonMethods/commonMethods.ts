@@ -1,8 +1,13 @@
 import {useToast} from 'vue-toast-notification'
 import PersianDate from 'persian-date'
+import {App} from "vue";
 
 
 const $toast = useToast()
+
+let store;
+
+let rules = []
 
 export function getKeyValue(title, value) {
     return {title, value}
@@ -51,4 +56,30 @@ export const toastHandler = {
             position: 'bottom',
         })
     },
+}
+
+export function checkPermission(keyOrKeys) {
+    if (Array.isArray(keyOrKeys)) {
+        const keys = keyOrKeys
+        const hasNotValidKey = []
+        keys.map(f => {
+            if (!rules.includes(f)) {
+                hasNotValidKey.push(false)
+            } else {
+                hasNotValidKey.push(true)
+            }
+        })
+        return hasNotValidKey.includes(true)
+
+    } else {
+        return rules.includes(keyOrKeys)
+    }
+    console.log('rules', rules)
+}
+
+export default function (app: App) {
+    store = app.config.globalProperties.$store;
+    store.watch(() => store.getters.userPermissions, () => {
+        rules = store.getters.userPermissions;
+    })
 }

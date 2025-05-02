@@ -55,11 +55,11 @@ export default {
       }
 
       if ([1, 2, 11].includes(item.type)) {
-        if (item.minimum != null) {
-          rules.push(v => v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
+        if (!!item.minimum) {
+          rules.push(v => v && v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
         }
-        if (item.maximum != null) {
-          rules.push(v => v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
+        if (!!item.maximum) {
+          rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
         }
       }
 
@@ -190,8 +190,10 @@ export default {
 
             <div :class="item.size">
 
-              <div class="d-inline-flex align-center">
-                <label>{{ item.label }}</label>
+              <label>{{ item.label }}</label>
+              <div class="d-inline-flex flex-wrap justify-center align-center">
+
+
                 <v-checkbox
                     hide-details
                     v-for="childItem in item.children"

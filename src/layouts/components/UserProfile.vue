@@ -8,8 +8,10 @@ const store = useStore()
 const router = useRouter()
 
 async function logout() {
-  localStorage.removeItem('Authorization')
-  await router.push('/login')
+  await store.dispatch('logout')
+  await router.push({
+    name: 'login'
+  })
 }
 
 </script>
@@ -96,7 +98,7 @@ async function logout() {
           <VDivider class="my-2"/>
 
           <!-- 👉 Logout -->
-          <VListItem @click="logout">
+          <VListItem @click="logout()">
             <template #prepend>
               <VIcon
                   class="me-2"

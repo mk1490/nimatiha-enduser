@@ -9,7 +9,7 @@ export default {
         name: '',
         family: '',
         personnelCode: '',
-        roles: [],
+        rules: [],
         deleteDialog: {
             visible: false, index: 0,
         },
@@ -22,7 +22,7 @@ export default {
         email: (state) => state.email,
         username: (state) => state.username,
         phoneNumber: (state) => state.phoneNumber,
-        roles: (state) => state.roles,
+        rules: (state) => state.rules,
         avatar: (state) => state.avatar,
         loading: (state) => state.loading,
         loginState: (state) => state.loginState,
@@ -37,13 +37,16 @@ export default {
             state.name = payload.name;
             state.family = payload.family;
             state.username = payload.username;
-            if (payload.roles) {
-                state.roles = payload.roles;
+            if (payload.rules) {
+                state.rules = payload.rules;
             } else {
-                state.roles = [];
+                state.rules = [];
             }
             state.avatar = payload.avatar;
             state.isLogin = true;
+        },
+        SET_RULES: (state, payload) => {
+            state.rules = payload;
         },
         SET_PHOTO: (state, payload) => {
             state.avatar = payload;

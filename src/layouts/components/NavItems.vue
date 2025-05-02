@@ -18,13 +18,12 @@ const store = useStore()
         to: '/course',
       }"
   />
-
-  <!--  <VerticalNavLink-->
-  <!--      :item="{-->
-  <!--        title: 'آزمون‌ها',-->
-  <!--        to: '/users',-->
-  <!--      }"-->
-  <!--  />-->
+  <VerticalNavLink
+      :item="{
+        title: 'آزمون‌ها',
+        to: '/users',
+        }"
+  />
   <!--  <VerticalNavGroup-->
   <!--      :item="{-->
   <!--      title: 'داده‌های پایه‌ای',-->

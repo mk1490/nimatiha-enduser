@@ -5,6 +5,7 @@ import {router} from '../router/index'
 import {useStore} from "vuex";
 
 const _serverAddress = import.meta.env.VITE_SERVER_ADDRESS
+// const _serverAddress = "https://api.nimkatiha.com"
 const store = useStore()
 const baseUrl = _serverAddress + '/api/enduser'
 export const serverAddress = _serverAddress

@@ -14,6 +14,7 @@ import nimkat from '@/assets/images/logos/nimkat-logo.png'
 import UserProfile from "@/layouts/components/UserProfile.vue";
 import VerticalNav from "@/@layouts/components/VerticalNav.vue";
 import NavItems from "@/layouts/components/NavItems.vue";
+import {checkPermission} from "@/plugins/commonMethods/commonMethods";
 
 const isOverlayNavActive = ref(true)
 const isLayoutOverlayVisible = ref(false)
@@ -23,7 +24,7 @@ const router = useRouter()
 const store = useStore()
 
 
-const toolbarAndFooterVisible = computed(()=>{
+const toolbarAndFooterVisible = computed(() => {
   return store.getters.toolbarAndFooterVisible
 })
 
@@ -60,8 +61,20 @@ function toggleLayoutOverlayVisibility() {
                 v-if="$vuetify.display.smAndUp"
                 class="align-self-center mr-10">
               <base-button
+                  v-if="checkPermission('courses')"
                   label="دوره ها"
                   to="/course"
+              />
+              <base-button
+                  v-if="checkPermission('courses')"
+                  label="آزمون"
+                  to="/questionnaires"
+              />
+
+              <base-button
+                  v-if="checkPermission('survey')"
+                  label="پرسش‌نامه"
+                  to="/survey"
               />
               <!--              <base-button-->
               <!--                  label="آزمون ها"-->

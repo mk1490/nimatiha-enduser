@@ -56,7 +56,7 @@ const phoneNumber = computed(() => {
 })
 
 onMounted(() => {
-  if (isLogin) {
+  if (isLogin.value) {
     router.push({
       path: '/profile'
     })
