@@ -17,7 +17,7 @@ export default {
         if (result.success === true) {
           if (result.authRequired && !this.isLogin) {
             this.$router.push({
-              name: 'complete-profile',
+              name: 'login',
               query: {
                 redirectTo: this.$route.fullPath,
               }
@@ -29,7 +29,7 @@ export default {
           this.title = result['questionnaireTitle'];
           this.preTextMessage = result['preText']
           this.afterTextMessage = result['afterText']
-          this.$store.commit('SET_TOOLBAR_AND_FOOTER_VISIBLE', false)
+          this.$store.commit('SET_TOOLBAR_AND_FOOTER_VISIBLE', this.isLogin)
           localStorage.setItem('testId', result['questionnaireId']);
           if (this.$store.getters.isLogin) {
             this.$store.commit('LOGIN_STATE', true)
@@ -88,7 +88,7 @@ export default {
             allowOutsideClick: false,
           }).then((res) => {
             if (res.isConfirmed) {
-              localStorage.removeItem('accessToken');
+              localStorage.removeItem('Authorization');
               this.selectedStep = 1;
               this.$store.commit('LOGIN_STATE', false);
               location.reload();
@@ -116,7 +116,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['phoneNumber']),
+    ...mapGetters(['phoneNumber', 'isLogin']),
     cardWidth: function () {
       switch (this.$vuetify.display.name) {
         case 'xl':

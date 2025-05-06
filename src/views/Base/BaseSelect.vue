@@ -134,7 +134,6 @@ export default {
   methods: {
     updateModelValue(event) {
       this.model = event;
-      console.log("UPDATE MODEL VALUE", event)
       this.$emit('update:modelValue', event)
     }
   }

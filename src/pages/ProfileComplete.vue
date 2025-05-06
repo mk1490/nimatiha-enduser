@@ -49,7 +49,7 @@ export default {
   methods: {
     success(data) {
       this.$store.commit('LOGIN_STATE', true)
-      localStorage.setItem('accessToken', data.access_token);
+      localStorage.setItem('Authorization', data.access_token);
       const queryParameter = this.$route.query;
       if (queryParameter && queryParameter.redirectTo) {
         this.$router.push({

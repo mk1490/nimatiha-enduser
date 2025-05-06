@@ -74,7 +74,6 @@ export function checkPermission(keyOrKeys) {
     } else {
         return rules.includes(keyOrKeys)
     }
-    console.log('rules', rules)
 }
 
 export default function (app: App) {

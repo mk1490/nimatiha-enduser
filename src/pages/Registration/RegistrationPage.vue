@@ -56,19 +56,40 @@ const phoneNumber = computed(() => {
 })
 
 onMounted(() => {
+
+
+  const redirectTo = router.currentRoute.value.query.redirectTo
+
   if (isLogin.value) {
-    router.push({
-      path: '/profile'
-    })
+    if (redirectTo) {
+      router.push({
+        path: redirectTo
+      })
+    } else {
+      router.push({
+        path: '/profile'
+      })
+    }
+
+
   }
+
 })
 
 function authSuccess(token) {
   localStorage.setItem('Authorization', token);
   store.commit('LOGIN_STATE', true);
-  router.push({
-    name: 'profile'
-  })
+  const redirectTo = router.currentRoute.value.query.redirectTo
+  if (redirectTo) {
+    router.push({
+      path: redirectTo,
+    })
+  } else {
+    router.push({
+      name: 'profile',
+    })
+  }
+
 }
 
 

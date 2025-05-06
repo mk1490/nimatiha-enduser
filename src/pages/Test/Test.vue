@@ -60,7 +60,7 @@ export default {
             })
         },
         profileCompleteSuccess(data) {
-            localStorage.setItem('accessToken', data['access_token']);
+            localStorage.setItem('Authorization', data['access_token']);
             location.reload();
         }
     }
