@@ -106,7 +106,7 @@ export default {
       slider: {
         visible: true,
       },
-      selectedStep: 1,
+      selectedStep: 5,
       sliders: [],
       steps: [],
       model: {},
