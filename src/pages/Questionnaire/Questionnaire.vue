@@ -106,7 +106,7 @@ export default {
       slider: {
         visible: true,
       },
-      selectedStep: 5,
+      selectedStep: 1,
       sliders: [],
       steps: [],
       model: {},
@@ -216,7 +216,11 @@ export default {
 </template>
 
 <style scoped>
-::v-deep .v-stepper-header {
-  display: none !important;
+@media (max-width: 720px) {
+  ::v-deep .v-stepper-header {
+    display: none !important;
+  }
 }
+
+
 </style>
