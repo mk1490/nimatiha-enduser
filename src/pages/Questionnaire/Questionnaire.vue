@@ -216,5 +216,7 @@ export default {
 </template>
 
 <style scoped>
-
+::v-deep .v-stepper-header {
+  display: none !important;
+}
 </style>

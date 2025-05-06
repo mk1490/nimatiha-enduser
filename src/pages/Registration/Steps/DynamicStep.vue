@@ -117,10 +117,13 @@ export default {
               :class="item.size"
               v-if="item.type === 5">
             <div>
-              <label>{{ item.label }}</label>
+              <div class="required--symbol">
+                <small v-if="item.isRequired">*</small>
+                {{ item.label }}
+              </div>
             </div>
             <v-radio-group
-                inline
+
                 v-model="model[item.key]"
                 :rules="rulesGenerator(item)">
               <v-radio
