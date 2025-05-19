@@ -55,10 +55,9 @@ export default {
       }
 
       if ([1, 2, 11].includes(item.type)) {
-        if (!!item.minimum) {
-          rules.push(v => v && v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
-        }
         if (!!item.maximum) {
+          rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
+        if (item.maximum != null) {
           rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
         }
       }
@@ -145,7 +144,6 @@ export default {
                 @update:modelValue="changeItem(item, $event)"
                 item-title="text"
                 item-value="value"
-                hide-details="auto"
                 :multiple="item.type === 7"
                 :required-symbol="item.isRequired"
                 :rules="rulesGenerator(item)"
