@@ -6,12 +6,16 @@ import ProfileCompleteForm from "@/pages/Shared/ProfileCompleteForm.vue";
 import {httpGet, httpPost, serverAddress} from "@/plugins/http/httpRequest";
 import MultipleFullScreenImageSlider from "@/views/user-interface/MultipleFullScreenImageSlider.vue";
 import {useToast} from "vue-toast-notification";
+import {db} from '@/db'
 
 const toast = useToast()
 export default {
   name: "Questionnaire",
   components: {MultipleFullScreenImageSlider, ProfileCompleteForm, DynamicStep, RegistrationSuccessComponent},
-  created() {
+  async mounted() {
+    if (this.stepId) {
+      await this.setInitializeData();
+    }
     httpGet(`/core/initialize?slug=${this.$route.params.slug}`, result => {
       try {
         if (result.success === true) {
@@ -71,14 +75,22 @@ export default {
         toast.error('لطفا خطاهایی که در فرم وجود دارد را برطرف نمایید.')
         return
       }
+      const id = this.stepId;
       let payload = {}
       Object.keys(this.model).map(f => {
         Object.keys(this.model[f]).map(fieldItem => {
-          payload[fieldItem] = this.model[f][fieldItem];
+          if (this.model[f][fieldItem]) {
+            payload[fieldItem] = Array.isArray(this.model[f][fieldItem]) ? this.model[f][fieldItem].map(f => f + '') : this.model[f][fieldItem];
+          }
         })
       })
 
-
+      console.log("PAYLOAD", payload)
+      const result = await db.tempData.get(id);
+      await db.tempData.delete(id)
+      db.tempData.add({id, jsonData: payload})
+      this.selectedStep++;
+      return
       httpPost(`/form-answer/${this.steps[this.selectedStep - 1].id}`, payload, result => {
         if (this.selectedStep === this.steps.length) {
           this.$swal.fire({
@@ -98,6 +110,13 @@ export default {
           this.selectedStep++;
         }
       })
+    },
+    async setInitializeData() {
+      const result = await db.tempData.get(this.stepId);
+      console.log("RESULT ", result)
+      if (result) {
+        this.model[this.stepId] = result.jsonData;
+      }
     }
   },
   data() {
@@ -106,7 +125,7 @@ export default {
       slider: {
         visible: true,
       },
-      selectedStep: 1,
+      selectedStep: 4,
       sliders: [],
       steps: [],
       model: {},
@@ -128,6 +147,17 @@ export default {
           return 300
         default:
           return 500;
+      }
+    },
+    stepId: function () {
+      const selectedStepItem = this.steps[this.selectedStep - 1];
+      return selectedStepItem ? selectedStepItem.id : null
+    }
+  },
+  watch: {
+    stepId: {
+      async handler(value) {
+        await this.setInitializeData();
       }
     }
   }

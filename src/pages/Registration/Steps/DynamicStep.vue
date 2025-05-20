@@ -18,19 +18,13 @@ export default {
     formItems: Array,
     modelValue: Object,
   },
-  created() {
-
-    this.formItems.map(f => {
-      this.model[f.key] = null
-      if (!f.visibilityCondition) {
-        this.finalFormItems.push(f)
-      }
-    })
+  mounted() {
+    this.setModel();
   },
   data() {
     return {
       model: {},
-      finalFormItems: [],
+      tempSelection: {},
     }
   },
   watch: {
@@ -39,46 +33,90 @@ export default {
         this.$emit('update:modelValue', this.model)
       },
       deep: true,
+    },
+    modelValue: {
+      handler(value) {
+        this.setModel();
+      }
     }
   },
   methods: {
     getPersianTime,
     async validate() {
       const isValid = await this.$refs.form.validate();
-      return Promise.resolve(isValid.valid == true)
+      return Promise.resolve(isValid.valid === true)
     },
     rulesGenerator(item) {
       const rules = [];
-
       if (item.isRequired) {
         rules.push(v => !!v || 'تکمیل این فیلد اجباری است.')
       }
-
       if ([1, 2, 11].includes(item.type)) {
+        if (!!item.minimum) {
+          rules.push(v => v && v.toString().length > item.minimum || `حدأقل تعداد کاراکتر برای این فیلد باید ${item.minimum} رقم باشد.`)
+        }
         if (!!item.maximum) {
-          rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
-        if (item.maximum != null) {
           rules.push(v => v && v.toString().length < item.maximum || `تعداد کاراکترهای مجاز نمی‌تواند بیشتر از ${item.maximum} رقم باشد.`)
         }
       }
 
       return rules;
     },
-    changeItem(item, event) {
+    changeItem(item, childItem, event) {
+      console.log("EVENT", event)
+      if (!this.model[item.key]) {
+        this.model[item.key] = [];
+      }
+      if (!event) {
+        this.model[item.key].splice(this.model[item.key].indexOf(childItem.id), 1);
+      } else {
+        this.model[item.key].push(childItem.id);
+      }
+
+      // const hasKey = Object.keys(this.model).includes(item.key)
+      // this.formItems.map(formItem => {
+      //   if (!formItem.visibilityCondition) {
+      //     final.push(formItem)
+      //   } else if (hasKey && formItem.visibilityCondition.value === event) {
+      //     final.push(formItem)
+      //   } else {
+      //     this.model[formItem.key] = null;
+      //   }
+      // })
+      // this.finalFormItems = final;
+    },
+    setModel() {
+      this.formItems.map(f => {
+        this.model[f.key] = this.modelValue ? this.modelValue[f.key] : null;
+        // this.tempSelection ={}
+        // if (!f.visibilityCondition) {
+        // if (!this.finalFormItems.includes(f)) {
+        //   this.finalFormItems.push(f)
+        // }
+
+        // }
+      })
+    },
+    getCheckboxIsSelected(item, childItem) {
+
+    }
+  },
+  computed: {
+    finalFormItems() {
       const final = [];
-      this.finalFormItems = []
-      const hasKey = Object.keys(this.model).includes(item.key)
-      this.formItems.map(formItem => {
-        if (!formItem.visibilityCondition) {
-          final.push(formItem)
-        } else if (hasKey && formItem.visibilityCondition.value === event) {
-          final.push(formItem)
+      this.formItems.map(f => {
+        if (!f['visibilityCondition']) {
+          final.push(f)
         } else {
-          this.model[formItem.key] = null;
+          if (f['visibilityCondition']) {
+            if (this.model[f.visibilityCondition.key] === f.visibilityCondition.value) {
+              final.push(f)
+            }
+          }
         }
       })
-      this.finalFormItems = final;
-    }
+      return final;
+    },
   },
 }
 </script>
@@ -144,8 +182,9 @@ export default {
                 @update:modelValue="changeItem(item, $event)"
                 item-title="text"
                 item-value="value"
+                hide-details="auto"
                 :multiple="item.type === 7"
-                :required-symbol="item.isRequired"
+                :required-symbol="item['isRequired']"
                 :rules="rulesGenerator(item)"
             />
           </template>
@@ -188,19 +227,17 @@ export default {
 
 
           <template v-if="item.type === 10">
-
             <div class="v-col-12">
-
               <label>{{ item.label }}</label>
               <div class="v-row mt-2 mb-5">
                 <v-checkbox
                     hide-details
-                    v-for="childItem in item.children"
+                    v-for="(childItem) in item.children"
                     class="v-col-sm-12 v-col-md-6 py-0"
                     :label="childItem.text"
-                >
-
-                </v-checkbox>
+                    :true-value="true"
+                    :false-value="false"
+                    @update:modelValue="changeItem(item, childItem, $event)"/>
               </div>
             </div>
           </template>
